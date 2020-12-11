@@ -46,21 +46,34 @@
 \chapter{手法} \label{chap:method}
 
 \section{Weeks-Chandler-Andersen(WCA)ポテンシャル}
-Weeks-Chandler-Andersen(以下WCA)ポテンシャルは、二つの原子間の相互作用ポテンシャルエネルギーを表すモデルの一つである。
+分子動力学計算において頻繁に用いられるモデルの一つにLennard-Jones(以下LJ)ポテンシャルというものがある。
+このモデルにおいて、二つの原子間相互作用ポテンシャルエネルギーは$$\phi(r)=4\varepsilon((\frac{\sigma}{r})^{12}-(\frac{\sigma}{r})^6)$$
+と書ける。
+ここで、rは原子間距離、aは原子直径の長さ、bはポテンシャルの深さを表す。
+この式の一項目4\varepsilon((\frac{\sigma}{r})^{12}は原子間の斥力作用によるものであり、二項目-4\varepsilon((\frac{\sigma}{r})^{6}は原子間の引力作用によるものである。
 
-WCAポテンシャルは、
+LJポテンシャルの斥力作用と引力作用が入れ替わるr=2^{\frac{1}{6}}にカットオフを設けたポテンシャルをWeeks-Chandler-Andersen(以下WCA)ポテンシャルと呼ぶ。
+
+WCAポテンシャルにおけるポテンシャルエネルギーは、
+
 \[
-\phi(r)=
-\begin{cases}
-x=1\\
-x=2
-
-\end{cases}
+  \phi(r) = \left\{ \begin{array}{ll}
+    4\varepsilon((\frac{\sigma}{r})^{12}-(\frac{\sigma}{r})^6) & (r\leq2^{\frac{1}{6}}) \\
+    0 & (r>2^{\frac{1}{6}})
+  \end{array} \right.
 \]
+
+と書ける。
+WCAポテンシャルは、斥力作用と引力作用が入れ替わるr=2^{\frac{1}{6}}にカットオフを設けることにより、二原子間の引力作用を無視し、斥力作用のみを考慮したポテンシャルである。
+
+以下にLJポテンシャルとWCAポテンシャルにおける原子間距離と二原子間のポテンシャルエネルギーの関係を示す。
+
 
 \section{ビリアル展開}
 
+
 \section{ガウス過程回帰・ベイズ推定}
+
 
 \section{引用の仕方}
 
