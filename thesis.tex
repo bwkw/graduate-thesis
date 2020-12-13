@@ -46,7 +46,7 @@
 \chapter{手法} \label{chap:method}
 
 \section{Weeks-Chandler-Andersen(WCA)ポテンシャル}
-分子動力学計算において頻繁に用いられるモデルの一つにLennard-Jones(以下LJ)ポテンシャルというものがある。
+分子動力学計算において頻繁に用いられるモデルの一つにLennard-Jones(以下LJ)ポテンシャルと呼ぶものが存在する。
 このモデルにおいて、二つの原子間相互作用ポテンシャルエネルギーは$$\phi(r)=4{\varepsilon}\left((\frac{\sigma}{r})^{12}-(\frac{\sigma}{r})^6\right)$$
 と書ける。
 ここで、rは原子間距離、${\sigma}$は原子直径の長さ、${\varepsilon}$はポテンシャルの深さを表す。
@@ -68,8 +68,10 @@ WCAポテンシャルは、斥力作用と引力作用が入れ替わる$r=2^{\f
 
 以下にLJポテンシャルとWCAポテンシャルにおける原子間距離と二原子間のポテンシャルエネルギーの関係を示す。
 
+\section{Benedict–Webb–Rubin(BWR)方程式}
+気体の振る舞いを表す有望な記述の一つにビリアル展開と呼ぶものが存在する。
+状態方程式のビリアル展開は、圧力を密度の冪級数を用いて表現し、密度の(n - 1)番目の累乗の係数をn番目のビリアル係数と呼ぶ\cite{virial-expansion}。
 
-\section{ビリアル展開}
 
 
 \section{ガウス過程回帰・ベイズ推定}
