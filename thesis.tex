@@ -44,33 +44,42 @@
 
 
 \chapter{手法} \label{chap:method}
-
 \section{Weeks-Chandler-Andersen(WCA)ポテンシャル}
 分子動力学計算において頻繁に用いられるモデルの一つにLennard-Jones(以下LJ)ポテンシャルと呼ぶものが存在する。
-このモデルにおいて、二つの原子間相互作用ポテンシャルエネルギーは$$\phi(r)=4{\varepsilon}\left((\frac{\sigma}{r})^{12}-(\frac{\sigma}{r})^6\right)$$
+このモデルにおいて、二つの原子間相互作用ポテンシャルエネルギーは
+
+\large
+\begin{equation}
+\phi(r)=4{\varepsilon}\left(\left(\frac{\sigma}{r}\right)^{12}-\left(\frac{\sigma}{r}\right)^6\right)\label{eq:lj}
+\end{equation}
+
+\normalsize
 と書ける。
 ここで、rは原子間距離、${\sigma}$は原子直径の長さ、${\varepsilon}$はポテンシャルの深さを表す。
-この式の一項目$4{\varepsilon}(\frac{\sigma}{r})^{12}$は原子間の斥力作用によるものであり、二項目$-4\varepsilon(\frac{\sigma}{r})^{6}$は原子間の引力作用によるものである。
 
-LJポテンシャルの斥力作用と引力作用が入れ替わる$r=2^{\frac{1}{6}}$にカットオフを設けたポテンシャルをWeeks-Chandler-Andersen(以下WCA)ポテンシャルと呼ぶ。
+式(\ref{eq:lj})の一項目$4{\varepsilon}(\frac{\sigma}{r})^{12}$は原子間の斥力作用によるものであり、二項目$-4\varepsilon(\frac{\sigma}{r})^{6}$は原子間の引力作用によるものである。
+
+このLJポテンシャルの斥力作用と引力作用が入れ替わる$r=2^{\frac{1}{6}}$にカットオフを設けたポテンシャルをWeeks-Chandler-Andersen(以下WCA)ポテンシャルと呼ぶ。
 
 WCAポテンシャルにおけるポテンシャルエネルギーは、
 
-\[
-  \phi(r) = \left\{ \begin{array}{ll}
-    4{\varepsilon}\left((\frac{\sigma}{r})^{12}-(\frac{\sigma}{r})^6\right) & (r\leq2^{\frac{1}{6}}) \\
-    0 & (r>2^{\frac{1}{6}})
-  \end{array} \right.
-\]
+\large
+\begin{equation}
+\phi(r) = \left\{ \begin{array}{ll}
+    4{\varepsilon}\left(\left(\frac{\sigma}{r}\right)^{12}-\left(\frac{\sigma}{r}\right)^6\right) & (r\leq2^{\frac{1}{6}}) \\
+    0 & (r>2^{\frac{1}{6}})\label{eq:wca}
+\end{array} \right.
+\end{equation}
 
-と書ける\cite{doi:10.1063/1.2176675}。
-WCAポテンシャルは、斥力作用と引力作用が入れ替わる$r=2^{\frac{1}{6}}$にカットオフを設けることにより、二原子間の引力作用を無視し、斥力作用のみを考慮したポテンシャルである。
+\normalsize
+と書くことが出来る\cite{doi:10.1063/1.2176675}。
+WCAポテンシャルは、式(\ref{eq:wca})のように斥力作用と引力作用が入れ替わる$r=2^{\frac{1}{6}}$にカットオフを設けることにより、二原子間の引力作用を無視し、斥力作用のみを考慮したポテンシャルである。
 
 以下にLJポテンシャルとWCAポテンシャルにおける原子間距離と二原子間のポテンシャルエネルギーの関係を示す。
 
 \begin{figure}[htbp]
     \begin{center}
-        \includegraphics[width=10cm]{fig/dis-poen.pdf}
+        \includegraphics[width=15cm]{fig/dis-poen.pdf}
     \end{center}
     \caption{wcaとljの原子間距離-ポテンシャルエネルギーの関係。}
     \label{fig:dis-poen}
@@ -78,10 +87,21 @@ WCAポテンシャルは、斥力作用と引力作用が入れ替わる$r=2^{\f
 
 \section{Benedict–Webb–Rubin(BWR)方程式}
 気体の振る舞いを表す有望な記述の一つにビリアル展開と呼ぶものが存在する。
-状態方程式のビリアル展開は、圧力を密度の冪級数を用いて表現し、密度の(n - 1)番目の累乗の係数をn番目のビリアル係数と呼ぶ\cite{virial-expansion}。
+これは、Heike Kamerlingh Onnesによって1901年に提唱されたもので\cite{virial-Heike}、多くの研究で利用されている。
+状態方程式のビリアル展開は、圧力を密度の冪級数を用いて表現するもので、
 
+\large
+\begin{equation}
+P=b_1{\rho}+b_2{\rho}^2+b_3{\rho}^3+b_4{\rho}^4+ ・・・ \label{eq:virial}
+\end{equation}
 
+\normalsize
+のように書くことが出来る。
+式(\ref{eq:virial})の密度のn番目の累乗の係数を第nビリアル係数と呼ぶ\cite{virial-expansion}。
+これらのビリアル係数は、増加する原子数で構成される集団群における原子の相互作用を表し、第2、第3、第4のビリアル係数は、2つ、3つ、4つ...の分子を含む衝突が気体中で重要になったときの理想的な振る舞いからの逸脱を表す。
+圧力の効果は、分子間の距離を減少させることであるので、圧力が高くなるにつれて、考慮されなければならないビリアル項が増加する\cite{virial-Heike}。
 
+上記のように、Heike Kamerlingh Onnesが提唱したビリアル展開は、圧力を密度の冪級数を用いて表現したものであるが、これを経験則的に拡張したものをBenedict–Webb–Rubin(以下BWR)式と呼ぶ。
 \section{ガウス過程回帰・ベイズ推定}
 
 
