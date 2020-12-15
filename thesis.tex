@@ -101,8 +101,23 @@ P=b_1{\rho}+b_2{\rho}^2+b_3{\rho}^3+b_4{\rho}^4+ ・・・ \label{eq:virial}
 これらのビリアル係数は、増加する原子数で構成される集団群における原子の相互作用を表し、第2、第3、第4のビリアル係数は、2つ、3つ、4つ...の分子を含む衝突が気体中で重要になったときの理想的な振る舞いからの逸脱を表す。
 圧力の効果は、分子間の距離を減少させることであるので、圧力が高くなるにつれて、考慮されなければならないビリアル項が増加する\cite{virial-Heike}。
 
-上記のように、Heike Kamerlingh Onnesが提唱したビリアル展開は、圧力を密度の冪級数を用いて表現したものであるが、これを経験則的に拡張したものをBenedict–Webb–Rubin(以下BWR)式と呼ぶ。
-BWR式は、ビリアル展開に$e^{-{\gamma}{\rho}^2}$を含めた項を付け加えたものであり、
+上記のように、Heike Kamerlingh Onnesが提唱したビリアル展開は、圧力を密度の冪級数を用いて表現したものであるが、この式に経験則的に指数の項を付け加えたものをBenedict–Webb–Rubin(以下BWR)式と呼ぶ。
+BWR方程式は、軽質炭化水素とその混合物の熱力学的特性を相関させ、予測するために1940年にBenedict Manson、Webb George B.、Rubin Louis C.によって提唱された\cite{BWR-equation:original}。
+BWR方程式の原式(3)は、圧力Pをモル密度dと絶対温度Tの関数として表現したもので、一般的には
+
+\large
+\begin{equation}
+P=RTd+\left(B_0RT-A_0-{\frac{C_0}{T^2}}\right)d^2+(bRT-a)d^3+{\frac{c}{T^2}}(1+{\gamma}d^2)e^{-{\gamma}d^2}d^3+a{\alpha}d^6\label{eq:BWR}
+\end{equation}
+\normalsize
+と書かれる。
+
+BWR方程式は、気体の状態方程式を表すことに概ね成功していたが、厳密には純粋な物質や混合物の熱力学的性質を予測するのに十分とは言えなかった。
+そこで、1973年には、Jacobsen Richard T.とStewart Richard B.によってBWR方程式の指数項をさらに増やしたmodified-Benedict–Webb–Rubin(以下mBWR)方程式が提唱\cite{m-BWR-equation}されたが、
+気体の状態方程式を完璧に再現することは出来なかった。
+その後も、多くの研究者が気体の状態方程式の項を増やすことで、完璧な再現を試みた\cite{MCCARTY1974276}\cite{BWR-equation:13}\cite{BWR-equation:25}が、そのどれもが完璧な精度とは言えず、項の個数が増え続け、収集がつかなくなった。
+
+
 \section{ガウス過程回帰・ベイズ推定}
 
 
