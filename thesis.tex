@@ -43,8 +43,10 @@
 本研究では、分野Aにおける手法Xの精度改善を行う。以下に本論文の構成を示す。第\ref{chap:introduction}章では、分野Aにおける手法の概観を紹介し、手法Xが広く用いられていることを示した。第\ref{chap:method}章では、本研究で用いる手法X、及びその改善手法であるX'について説明する。第\ref{chap:results}章では、本研究で提案した手法X'と、もととなった手法Xとの精度の比較を行う。第\ref{chap:summary}章では本研究で得られた知見を総括し、結論と今後の展望について述べる。
 
 
+
+
 \chapter{手法} \label{chap:method}
-\section{Weeks-Chandler-Andersen(WCA)ポテンシャル}
+\section{Weeks-Chandler-Andersen(WCA)ポテンシャル}\label{method-sec:WCA}
 分子動力学計算において頻繁に用いられるモデルの一つにLennard-Jones(以下LJ)ポテンシャルと呼ぶものが存在する。
 このモデルにおいて、二つの原子間相互作用ポテンシャルエネルギーは
 
@@ -54,7 +56,7 @@
 \end{equation}
 
 \normalsize
-と書ける。
+と書ける\cite{WATANABE20191}。
 ここで、rは原子間距離、${\sigma}$は原子直径の長さ、${\varepsilon}$はポテンシャルの深さを表す。
 
 式(\ref{eq:lj})の一項目$4{\varepsilon}(\frac{\sigma}{r})^{12}$は原子間の斥力作用によるものであり、二項目$-4\varepsilon(\frac{\sigma}{r})^{6}$は原子間の引力作用によるものである。
@@ -85,7 +87,8 @@ WCAポテンシャルは、式(\ref{eq:wca})のように斥力作用と引力作
     \label{fig:dis-poen}
 \end{figure}
 
-\section{Benedict–Webb–Rubin(BWR)方程式}
+
+\section{Benedict–Webb–Rubin(BWR)方程式}\label{method-sec:BMR}
 気体の振る舞いを表す有望な記述の一つにビリアル展開と呼ぶものが存在する。
 これは、Heike Kamerlingh Onnesによって1901年に提唱されたもので\cite{virial-Heike}、多くの研究で利用されている。
 状態方程式のビリアル展開は、圧力を密度の冪級数を用いて表現するもので、
@@ -118,8 +121,59 @@ BWR方程式は、気体の状態方程式を表すことに概ね成功して�
 その後も、多くの研究者が気体の状態方程式の項を増やすことで、完璧な再現を試みた\cite{MCCARTY1974276}\cite{BWR-equation:13}\cite{BWR-equation:25}が、そのどれもが完璧な精度とは言えず、項の個数が増え続け、収集がつかなくなった。
 
 
-\section{ガウス過程回帰・ベイズ推定}
+\section{Gaussian Process Regression(ガウス過程回帰)}\label{method-sec:Gauss}
 
+ガウス過程回帰は、出力の不確実性も定量化できる確率的な補間予測を提供する\cite{machine-learning}ことができる。
+ガウス過程回帰は、\cite{Gaussian-Processes-for-Machine-Learning}で開発された導出に従って、観測されたラベル$y$と予測されたラベル$y^*$の合同分布が
+
+\large
+\[
+    \left[
+        \begin{array}{l}
+            y \\
+            y^* 
+        \end{array}
+    \right]
+    {\sim} N
+    \left(0,
+        \left[
+            \begin{array}{cc}
+                K(X,X) & K(X,X^*)\\    
+                K(X,X^*) & K(X^*,X^*)
+            \end{array}
+        \right]
+    \right)
+\]
+\normalsize
+
+のようなガウスの事前分布に従う。
+
+
+\section{WCAポテンシャルの圧力推定}\label{method-sec:WCA-press}
+\ref{method-sec:WCA}に示したWCAポテンシャルにおける圧力の推定を分子動力学プログラムlammps\cite{lammps}を用いて行う。
+本研究では、初期設定として1辺Lの立方体の中に2048個の面心立方格子face-centered cubic(以下fcc)構造上に組んだ原子を仮定し、研究を進めるものとする。
+ここで、Lの大きさは、※※とする。
+初期条件における分子の状態を以下に示す。
+
+この初期条件のもと、温度制御を1.0とし、タイムステップ0.001で20000実行のシミュレーションを行った。
+尚、全ての実験で温度制御ができていたことを前提とする。
+
+WCAポテンシャルにおける圧力は、原子の1辺Lの立方体の壁への力と原子間の相互作用(斥力作用)による力に起因する。
+この圧力は、ビリアル定理\cite{virial-therom}によって
+
+\large
+\begin{equation}
+PV=NkT-{\frac{1}{3}}\langle\sum_{i=0}^n x_i\rangle{\label{eq:Theoritical-pressure}}
+\end{equation}
+\normalsize
+
+と書ける\cite{Theoritical-pressure}。
+
+
+
+\section{WCAポテンシャルの状態方程式}
+
+\section{ガウス過程回帰の精度}
 
 \section{引用の仕方}
 
@@ -172,9 +226,15 @@ GitHubのサイトなど、やむを得ずURLを引用する場合には、bibit
 \end{quotation}
 となる。
 
+
+
+
 \chapter{結果} \label{chap:results}
 
-\section{WCAポテンシャルの圧力推定}
+\section{WCAポテンシャルの圧力測定}\label{results-sec:WCA-press}
+\ref{method-sec:WCA-press}の結果を以下に示す。
+実験\ref{results-sec:WCA-press}では、WCAポテンシャルにおける圧力を測定した。
+
 
 \section{WCAポテンシャルの状態方程式}
 
