@@ -95,7 +95,7 @@ WCAポテンシャルは、式(\ref{eq:wca})のように斥力作用と引力作
 
 \large
 \begin{equation}
-P=b_1{\rho}+b_2{\rho}^2+b_3{\rho}^3+b_4{\rho}^4+ ・・・ \label{eq:virial}
+P=b_1{\rho}+b_2{\rho}^2+b_3{\rho}^3+b_4{\rho}^4+\cdots \label{eq:virial}
 \end{equation}
 
 \normalsize
@@ -163,11 +163,12 @@ WCAポテンシャルにおける圧力は、原子の1辺Lの立方体の壁へ
 
 \large
 \begin{equation}
-PV=NkT-{\frac{1}{3}}\langle\sum_{i=0}^n x_i\rangle{\label{eq:Theoritical-pressure}}
+PV=NkT-{\frac{1}{3}}\langle\sum_{i=j}^N\vec{q_{ij}} \cdot \vec{r_{ij}}\rangle{\label{eq:Theoritical-pressure}}
 \end{equation}
 \normalsize
 
-と書ける\cite{Theoritical-pressure}。
+と書ける\cite{Theoritical-pressure}ことが予測される。
+本実験では、lammpsにより測定されたWCAポテンシャルの圧力が式(\ref{eq:Theoritical-pressure})で書けることを確認する。
 
 
 
