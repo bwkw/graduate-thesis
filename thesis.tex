@@ -46,7 +46,8 @@
 
 
 \chapter{手法} \label{chap:method}
-\section{Weeks-Chandler-Andersen(WCA)ポテンシャル}\label{method-sec:WCA}
+\section{WCAポテンシャルの圧力推定}\label{method-sec:WCA-press}
+\subsection{Weeks-Chandler-Andersen(WCA)ポテンシャル}\label{method-sec:WCA}
 分子動力学計算において頻繁に用いられるモデルの一つにLennard-Jones(以下LJ)ポテンシャルと呼ぶものが存在する。
 このモデルにおいて、二つの原子間相互作用ポテンシャルエネルギーは
 
@@ -86,6 +87,28 @@ WCAポテンシャルは、式(\ref{eq:wca})のように斥力作用と引力作
     \caption{wcaとljの原子間距離-ポテンシャルエネルギーの関係。}
     \label{fig:dis-poen}
 \end{figure}
+
+
+\ref{method-sec:WCA}に示したWCAポテンシャルにおける圧力の推定を分子動力学プログラムlammps\cite{lammps}を用いて行う。
+本研究では、初期設定として1辺Lの立方体の中に2048個の面心立方格子face-centered cubic(以下fcc)構造上に組んだ原子を仮定し、研究を進めるものとする。
+ここで、Lの大きさは、※※とする。
+初期条件における分子の状態を以下に示す。
+
+この初期条件のもと、温度制御を1.0とし、タイムステップ0.001で20000実行のシミュレーションを行った。
+尚、全ての実験で温度制御ができていたことを前提とする。
+
+WCAポテンシャルにおける圧力は、原子の1辺Lの立方体の壁への力と原子間の相互作用(斥力作用)による力に起因する。
+この圧力は、ビリアル定理\cite{virial-therom}によって
+
+\large
+\begin{equation}
+PV=NkT-{\frac{1}{3}}\langle\sum_{i=j}^N\vec{q_{ij}} \cdot \vec{r_{ij}}\rangle{\label{eq:Theoritical-pressure}}
+\end{equation}
+\normalsize
+
+と書ける\cite{Theoritical-pressure}ことが予測される。
+本実験では、lammpsにより測定されたWCAポテンシャルの圧力が式(\ref{eq:Theoritical-pressure})で書けることを確認する。
+
 
 
 \section{Benedict–Webb–Rubin(BWR)方程式}\label{method-sec:BMR}
@@ -148,27 +171,6 @@ BWR方程式は、気体の状態方程式を表すことに概ね成功して�
 
 のようなガウスの事前分布に従う。
 
-
-\section{WCAポテンシャルの圧力推定}\label{method-sec:WCA-press}
-\ref{method-sec:WCA}に示したWCAポテンシャルにおける圧力の推定を分子動力学プログラムlammps\cite{lammps}を用いて行う。
-本研究では、初期設定として1辺Lの立方体の中に2048個の面心立方格子face-centered cubic(以下fcc)構造上に組んだ原子を仮定し、研究を進めるものとする。
-ここで、Lの大きさは、※※とする。
-初期条件における分子の状態を以下に示す。
-
-この初期条件のもと、温度制御を1.0とし、タイムステップ0.001で20000実行のシミュレーションを行った。
-尚、全ての実験で温度制御ができていたことを前提とする。
-
-WCAポテンシャルにおける圧力は、原子の1辺Lの立方体の壁への力と原子間の相互作用(斥力作用)による力に起因する。
-この圧力は、ビリアル定理\cite{virial-therom}によって
-
-\large
-\begin{equation}
-PV=NkT-{\frac{1}{3}}\langle\sum_{i=j}^N\vec{q_{ij}} \cdot \vec{r_{ij}}\rangle{\label{eq:Theoritical-pressure}}
-\end{equation}
-\normalsize
-
-と書ける\cite{Theoritical-pressure}ことが予測される。
-本実験では、lammpsにより測定されたWCAポテンシャルの圧力が式(\ref{eq:Theoritical-pressure})で書けることを確認する。
 
 
 
