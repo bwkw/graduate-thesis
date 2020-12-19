@@ -46,7 +46,7 @@
 
 
 \chapter{手法} \label{chap:method}
-\section{WCAポテンシャルの圧力推定}\label{method-sec:WCA-press}
+\section{WCAポテンシャルの圧力}\label{method-sec:WCA-press}
 \subsection{Weeks-Chandler-Andersen(WCA)ポテンシャル}\label{method-subsec:WCA}
 分子動力学計算において頻繁に用いられるモデルの一つにLennard-Jones(以下LJ)ポテンシャルと呼ぶものが存在する。
 このモデルにおいて、二つの原子間相互作用ポテンシャルエネルギーは
@@ -61,8 +61,8 @@
 
 式(\ref{eq:lj})の一項目$4{\varepsilon}(\frac{\sigma}{r})^{12}$は原子間の斥力作用によるものであり、二項目$-4\varepsilon(\frac{\sigma}{r})^{6}$は原子間の引力作用によるものである。
 
-このLJポテンシャルの斥力作用と引力作用が入れ替わる$r=2^{\frac{1}{6}}{\approx}1.12246$にカットオフを設けたポテンシャルをWeeks-Chandler-Andersen(以下WCA)ポテンシャルと呼ぶ。
-
+このLJポテンシャルの斥力作用と引力作用が入れ替わる$r=2^{\frac{1}{6}}{\approx}1.12246$にカットオフ距離を設けたポテンシャルをWeeks-Chandler-Andersen(以下WCA)ポテンシャルと呼ぶ。
+カットオフ距離とは、
 WCAポテンシャルにおけるポテンシャルエネルギーは、
 
 \large
@@ -92,8 +92,8 @@ WCAポテンシャルは、式(\ref{eq:wca})のように斥力作用と引力作
 
 %wcaの相図のポンチ絵
 
-\subsection{WCAポテンシャルの圧力推定}\label{method-subsec:WCA-pressure}
-式(\ref{eq:wca})に示したWCAポテンシャルにおける圧力の推定を分子動力学プログラムlammps\cite{lammps}によるシミュレーションを用いて行う。
+\subsection{WCAポテンシャルの圧力測定}\label{method-subsec:WCA-pressure}
+式(\ref{eq:wca})に示したWCAポテンシャルにおける圧力の測定を分子動力学プログラムlammps\cite{lammps}によるシミュレーションを用いて行う。
 本研究では、初期設定として1辺$L$の立方体の中に2048個の面心立方格子face-centered cubic(以下fcc)構造上に組んだ原子を仮定し、研究を進めるものとする。
 
 この仮定から、用意されたWCAポテンシャルの数密度は、
@@ -104,7 +104,7 @@ WCAポテンシャルは、式(\ref{eq:wca})のように斥力作用と引力作
 \normalsize
 と求まる。
 
-本研究では、数密度0.01〜15.0に0.01ずつ値をとり、lammpsにより圧力を推定した。
+本研究では、数密度0.01〜15.0に0.01ずつ値をとり、lammpsにより圧力を測定した。
 本研究では式(\ref{eq:density})にlammpsで指定した$L$を代入することにより数密度を決定するため、数密度を0にしてlammpsでシミュレーションを行うことが不可能であったため、数密度は0.01からとした。
 ただし、数密度0では圧力が0であることは自明であるため、特に問題はないとする。
 この初期条件のもと、温度制御を1.0とし、タイムステップ0.001で20000実行のシミュレーションを行った。
@@ -115,11 +115,23 @@ WCAポテンシャルにおける圧力は、原子の1辺Lの立方体の壁へ
 
 \large
 \begin{equation}
-PV=NkT-{\frac{1}{3}}\langle\sum_{i=j}^N\vec{q_{ij}} \cdot \vec{r_{ij}}\rangle{\label{eq:Theoritical-pressure}}
+PV=NkT+{\frac{1}{3}}\langle\sum_{i=j}^N\vec{q_{ij}} \cdot \vec{r_{ij}}\rangle{\label{eq:Theoritical-pressure}}
 \end{equation}
 \normalsize
 と書ける\cite{Theoritical-pressure}ことが予測される。
 ここで、$P$は圧力、$V$は体積、$N$は数密度、$k$はボルツマン定数、$T$は温度、$\vec{q_{ij}}$は原子間距離、$\vec{r_{ij}}$は原子間に働く力である。
+
+本研究では、数密度0.01〜15.0に0.01ずつ値をとり、lammpsにより圧力を測定したがカットオフ距離1.12246のWCAポテンシャルにおいて低密度側では、原子間の相互作用(斥力作用)はないことから、
+圧力は式(\ref{eq:Theoritical-pressure})の第一項のみを用いて、
+\large
+\begin{equation}
+PV=NkT{\label{eq:ideal-gas}}
+\end{equation}
+\normalsize
+と書けることが予測される。
+
+原子間の相互作用(斥力作用)が働くほど密度が高くなると、圧力は式(\ref{eq:Theoritical-pressure})の第二項も考慮する必要がある。
+原子の
 本研究では、lammpsによるシミュレーションで測定されたWCAポテンシャルの圧力が式(\ref{eq:Theoritical-pressure})で書けることを確認することを目的とする。
 
 
@@ -191,12 +203,6 @@ BWR方程式は、気体の状態方程式を表すことに概ね成功して�
 のようなガウスの事前分布に従う。
 
 
-
-
-\section{WCAポテンシャルの状態方程式}
-
-\section{ガウス過程回帰の精度}
-
 \section{引用の仕方}
 
 原則として科学技術論文では、引用のない文章は「著者のオリジナル」であるとみなされる。LAMMPSなどのツールを使えばその関連論文を、手法の説明をするならその手法を提案した論文を引用しなければならない。
@@ -253,9 +259,21 @@ GitHubのサイトなど、やむを得ずURLを引用する場合には、bibit
 
 \chapter{結果} \label{chap:results}
 
-\section{WCAポテンシャルの圧力測定}\label{results-sec:WCA-press}
-\ref{method-sec:WCA-press}の結果を以下に示す。
-実験\ref{results-sec:WCA-press}では、WCAポテンシャルにおける圧力を測定した。
+\section{WCAポテンシャルの圧力}\label{results-sec:WCA-press}
+本研究では、lammpsによるシミュレーションで測定されたWCAポテンシャルの圧力が式(\ref{eq:Theoritical-pressure})で書けることを確認することを目的とした。
+まず、\ref{method-sec:WCA-press}の結果を以下に示す。
+\begin{figure}[htbp]
+    \begin{center}
+        \includegraphics[width=15cm]{fig/compare:den-pre.pdf}
+    \end{center}
+    \caption{WCAポテンシャルにおける圧力の理論値と測定値の比較}
+    \label{fig:temperature}
+\end{figure}
+
+
+
+
+
 
 
 \section{WCAポテンシャルの状態方程式}
