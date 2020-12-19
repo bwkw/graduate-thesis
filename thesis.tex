@@ -47,7 +47,7 @@
 
 \chapter{手法} \label{chap:method}
 \section{WCAポテンシャルの圧力推定}\label{method-sec:WCA-press}
-\subsection{Weeks-Chandler-Andersen(WCA)ポテンシャル}\label{method-sec:WCA}
+\subsection{Weeks-Chandler-Andersen(WCA)ポテンシャル}\label{method-subsec:WCA}
 分子動力学計算において頻繁に用いられるモデルの一つにLennard-Jones(以下LJ)ポテンシャルと呼ぶものが存在する。
 このモデルにおいて、二つの原子間相互作用ポテンシャルエネルギーは
 
@@ -55,7 +55,6 @@
 \begin{equation}
 \phi(r)=4{\varepsilon}\left(\left(\frac{\sigma}{r}\right)^{12}-\left(\frac{\sigma}{r}\right)^6\right)\label{eq:lj}
 \end{equation}
-
 \normalsize
 と書ける\cite{WATANABE20191}。
 ここで、rは原子間距離、${\sigma}$は原子直径の長さ、${\varepsilon}$はポテンシャルの深さを表す。
@@ -73,7 +72,6 @@ WCAポテンシャルにおけるポテンシャルエネルギーは、
     0 & (r>2^{\frac{1}{6}})\label{eq:wca}
 \end{array} \right.
 \end{equation}
-
 \normalsize
 と書くことが出来る\cite{doi:10.1063/1.2176675}。
 WCAポテンシャルは、式(\ref{eq:wca})のように斥力作用と引力作用が入れ替わる$r=2^{\frac{1}{6}}$にカットオフを設けることにより、二原子間の引力作用を無視し、斥力作用のみを考慮したポテンシャルである。
@@ -88,12 +86,27 @@ WCAポテンシャルは、式(\ref{eq:wca})のように斥力作用と引力作
     \label{fig:dis-poen}
 \end{figure}
 
+\subsection{WCAポテンシャルの相図}\label{method-subsec:WCA-phase}
+相図とは、熱力学的な状態量と物質や系の関係を表したものであり、相図マッピングは、物理・成分科学の奥の分野で中心的な作業となっている。\cite{phase-diagram}
+式(\ref{eq:wca})に示したWCAポテンシャルにおける相図を確認する。
 
-\ref{method-sec:WCA}に示したWCAポテンシャルにおける圧力の推定を分子動力学プログラムlammps\cite{lammps}を用いて行う。
-本研究では、初期設定として1辺Lの立方体の中に2048個の面心立方格子face-centered cubic(以下fcc)構造上に組んだ原子を仮定し、研究を進めるものとする。
-ここで、Lの大きさは、※※とする。
-初期条件における分子の状態を以下に示す。
+%wcaの相図のポンチ絵
 
+\subsection{WCAポテンシャルの圧力推定}\label{method-subsec:WCA-pressure}
+式(\ref{eq:wca})に示したWCAポテンシャルにおける圧力の推定を分子動力学プログラムlammps\cite{lammps}によるシミュレーションを用いて行う。
+本研究では、初期設定として1辺$L$の立方体の中に2048個の面心立方格子face-centered cubic(以下fcc)構造上に組んだ原子を仮定し、研究を進めるものとする。
+
+この仮定から、用意されたWCAポテンシャルの数密度は、
+\large
+\begin{equation}
+\rho = {\frac{2048}{L^3}}{\label{eq:density}}
+\end{equation}
+\normalsize
+と求まる。
+
+本研究では、数密度0.01〜15.0に0.01ずつ値をとり、lammpsにより圧力を推定した。
+本研究では式(\ref{eq:density})にlammpsで指定した$L$を代入することにより数密度を決定するため、数密度を0にしてlammpsでシミュレーションを行うことが不可能であったため、数密度は0.01からとした。
+ただし、数密度0では圧力が0であることは自明であるため、特に問題はないとする。
 この初期条件のもと、温度制御を1.0とし、タイムステップ0.001で20000実行のシミュレーションを行った。
 尚、全ての実験で温度制御ができていたことを前提とする。
 
@@ -105,15 +118,16 @@ WCAポテンシャルにおける圧力は、原子の1辺Lの立方体の壁へ
 PV=NkT-{\frac{1}{3}}\langle\sum_{i=j}^N\vec{q_{ij}} \cdot \vec{r_{ij}}\rangle{\label{eq:Theoritical-pressure}}
 \end{equation}
 \normalsize
-
 と書ける\cite{Theoritical-pressure}ことが予測される。
-本実験では、lammpsにより測定されたWCAポテンシャルの圧力が式(\ref{eq:Theoritical-pressure})で書けることを確認する。
+ここで、$P$は圧力、$V$は体積、$N$は数密度、$k$はボルツマン定数、$T$は温度、$\vec{q_{ij}}$は原子間距離、$\vec{r_{ij}}$は原子間に働く力である。
+本研究では、lammpsによるシミュレーションで測定されたWCAポテンシャルの圧力が式(\ref{eq:Theoritical-pressure})で書けることを確認することを目的とする。
 
 
 
-\section{Benedict–Webb–Rubin(BWR)方程式}\label{method-sec:BMR}
+\section{WCAポテンシャルの状態方程式の推定}\label{method-sec:WCA-equation}
+\subsection{ビリアル展開}\label{method-subsec:virial}
 気体の振る舞いを表す有望な記述の一つにビリアル展開と呼ぶものが存在する。
-これは、Heike Kamerlingh Onnesによって1901年に提唱されたもので\cite{virial-Heike}、多くの研究で利用されている。
+これは、Heike Kamerlingh Onnesによって1901年に提唱されたもの\cite{virial-Heike}で、多くの研究で利用されている。
 状態方程式のビリアル展開は、圧力を密度の冪級数を用いて表現するもので、
 
 \large
@@ -127,9 +141,10 @@ P=b_1{\rho}+b_2{\rho}^2+b_3{\rho}^3+b_4{\rho}^4+\cdots \label{eq:virial}
 これらのビリアル係数は、増加する原子数で構成される集団群における原子の相互作用を表し、第2、第3、第4のビリアル係数は、2つ、3つ、4つ...の分子を含む衝突が気体中で重要になったときの理想的な振る舞いからの逸脱を表す。
 圧力の効果は、分子間の距離を減少させることであるので、圧力が高くなるにつれて、考慮されなければならないビリアル項が増加する\cite{virial-Heike}。
 
-上記のように、Heike Kamerlingh Onnesが提唱したビリアル展開は、圧力を密度の冪級数を用いて表現したものであるが、この式に経験則的に指数の項を付け加えたものをBenedict–Webb–Rubin(以下BWR)式と呼ぶ。
+\subsection{Benedict–Webb–Rubin(BWR)方程式}\label{method-subsec:BWR}
+\ref{method-subsec:virial}のように、Heike Kamerlingh Onnesが提唱したビリアル展開は、圧力を密度の冪級数を用いて表現したものであるが、この式に経験則的に指数の項を付け加えたものをBenedict–Webb–Rubin(以下BWR)方程式と呼ぶ。
 BWR方程式は、軽質炭化水素とその混合物の熱力学的特性を相関させ、予測するために1940年にBenedict Manson、Webb George B.、Rubin Louis C.によって提唱された\cite{BWR-equation:original}。
-BWR方程式の原式(3)は、圧力Pをモル密度dと絶対温度Tの関数として表現したもので、一般的には
+BWR方程式の原式は、圧力Pをモル密度dと絶対温度Tの関数として表現したもので、一般的には
 
 \large
 \begin{equation}
@@ -143,6 +158,10 @@ BWR方程式は、気体の状態方程式を表すことに概ね成功して�
 気体の状態方程式を完璧に再現することは出来なかった。
 その後も、多くの研究者が気体の状態方程式の項を増やすことで、完璧な再現を試みた\cite{MCCARTY1974276}\cite{BWR-equation:13}\cite{BWR-equation:25}が、そのどれもが完璧な精度とは言えず、項の個数が増え続け、収集がつかなくなった。
 
+\subsection{WCAポテンシャルの状態方程式の推定}\label{method-subsec:WCA-equation}
+\ref{method-subsec:virial}、\ref{method-subsec:BWR}のように状態方程式を項を増やすことによって再現しようという試みは、項の個数が増え続け収集がつかなくなった。
+また、BWR方程式の指数項は経験則的に付け加えたものであり、物理的意味もないことから項を増やし続け、状態方程式の再現をすることには意味がない。
+そこで、本研究では、WCAポテンシャルにおける状態方程式を機械学習により推定することを目的とする。
 
 \section{Gaussian Process Regression(ガウス過程回帰)}\label{method-sec:Gauss}
 
