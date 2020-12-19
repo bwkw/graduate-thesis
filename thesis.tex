@@ -80,12 +80,13 @@ WCAポテンシャルは、式(\ref{eq:wca})のように斥力作用と引力作
 
 \begin{figure}[htbp]
     \begin{center}
-        \includegraphics[width=15cm]{fig/dis-poen.pdf}
+        \includegraphics[width=14cm]{fig/dis-poen.pdf}
     \end{center}
     \caption{wcaとljの原子間距離-ポテンシャルエネルギーの関係。}
     \label{fig:dis-poen}
 \end{figure}
 
+\newpage
 \subsection{WCAポテンシャルの相図}\label{method-subsec:WCA-phase}
 相図とは、熱力学的な状態量と物質や系の関係を表したものであり、相図マッピングは、物理・成分科学の奥の分野で中心的な作業となっている。\cite{phase-diagram}
 式(\ref{eq:wca})に示したWCAポテンシャルにおける相図を確認する。
@@ -121,7 +122,7 @@ PV=NkT+{\frac{1}{3}}\langle\sum_{i=j}^N\vec{q_{ij}} \cdot \vec{r_{ij}}\rangle{\l
 と書ける\cite{Theoritical-pressure}ことが予測される。
 ここで、$P$は圧力、$V$は体積、$N$は数密度、$k$はボルツマン定数、$T$は温度、$\vec{q_{ij}}$は原子間距離、$\vec{r_{ij}}$は原子間に働く力である。
 
-本研究では、数密度0.01〜15.0に0.01ずつ値をとり、lammpsにより圧力を測定したがカットオフ距離1.12246のWCAポテンシャルにおいて低密度側では、原子間の相互作用(斥力作用)はないことから、
+本研究では、数密度0.01〜15.0に0.01ずつ値を取りlammpsによるシミュレーションで圧力を測定したが、カットオフ距離1.12246のWCAポテンシャルにおいて低密度側(再隣接原子間距離$<$1.12246)では、原子間の相互作用(斥力作用)はないことから、
 圧力は式(\ref{eq:Theoritical-pressure})の第一項のみを用いて、
 \large
 \begin{equation}
@@ -131,8 +132,10 @@ PV=NkT{\label{eq:ideal-gas}}
 と書けることが予測される。
 
 原子間の相互作用(斥力作用)が働くほど密度が高くなると、圧力は式(\ref{eq:Theoritical-pressure})の第二項も考慮する必要がある。
-原子の
-本研究では、lammpsによるシミュレーションで測定されたWCAポテンシャルの圧力が式(\ref{eq:Theoritical-pressure})で書けることを確認することを目的とする。
+原子の密度が高くなればなるほど、式(\ref{eq:Theoritical-pressure})の第二項で考慮するものは、再隣接原子、第二隣接原子、第三隣接原子・・・と増えていくが、
+式(\ref{eq:Theoritical-pressure})の第二項への寄与はほとんどが再隣接原子であることから、本研究では、再隣接原子の寄与のみを考えるものとする。
+
+以上を踏まえて、本研究では、lammpsによるシミュレーションで測定されたWCAポテンシャルの圧力が式(\ref{eq:Theoritical-pressure})で書けることを確認することを目的とする。
 
 
 
@@ -261,14 +264,22 @@ GitHubのサイトなど、やむを得ずURLを引用する場合には、bibit
 
 \section{WCAポテンシャルの圧力}\label{results-sec:WCA-press}
 本研究では、lammpsによるシミュレーションで測定されたWCAポテンシャルの圧力が式(\ref{eq:Theoritical-pressure})で書けることを確認することを目的とした。
-まず、\ref{method-sec:WCA-press}の結果を以下に示す。
+まず、\ref{method-sec:WCA-press}の全体結果を以下に示す。
 \begin{figure}[htbp]
     \begin{center}
-        \includegraphics[width=15cm]{fig/compare:den-pre.pdf}
+        \includegraphics[width=14cm]{fig/compare:den-pre.pdf}
     \end{center}
     \caption{WCAポテンシャルにおける圧力の理論値と測定値の比較}
-    \label{fig:temperature}
+    \label{fig:compare:den-pre}
 \end{figure}
+
+図\ref{fig:compare:den-pre}から、理論値と測定値がおおよそ一致することが確認できた。
+以下では、低密度(原子間の相互作用がない)状態、高密度(原子間の相互作用がある)状態について、具体的に見ていく。
+
+\newpage
+\subsection{低密度(原子間の相互作用がない)状態のWCAポテンシャルの圧力}\label{results-sec:WCA-press-low-density}
+\subsection{高密度(原子間の相互作用がある)状態のWCAポテンシャルの圧力}\label{results-sec:WCA-press-high-density}
+lammpsによるシミュレーションで測定されたWCAポテンシャルの圧力が式(\ref{eq:Theoritical-pressure})で書ける
 
 
 
