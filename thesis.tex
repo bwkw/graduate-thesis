@@ -76,25 +76,35 @@ WCAポテンシャルにおけるポテンシャルエネルギーは、
 と書くことが出来る\cite{doi:10.1063/1.2176675}。
 したがって、WCAポテンシャルとは式(\ref{eq:wca})のように斥力作用と引力作用が入れ替わる$r=2^{\frac{1}{6}}$にカットオフ距離を設けることにより、二原子間の引力作用を無視し、斥力作用のみを考慮したポテンシャルである。
 
-以下にLJポテンシャルとWCAポテンシャルにおける原子間距離と二原子間のポテンシャルエネルギーの関係を示す。
+図{\ref{fig:dis-poen}にLJポテンシャルとWCAポテンシャルにおける原子間距離と原子間のポテンシャルエネルギーの関係を示す。
+(図{\ref{fig:dis-poen}ではLJポテンシャルとWCAポテンシャルにおける原子間距離と原子間のポテンシャルエネルギーの違いを表すことだけを必要としたので、LJにカットオフ距離2.5を設けている)
 
 \begin{figure}[htbp]
     \begin{center}
-        \includegraphics[width=14cm]{fig/dis-poen.pdf}
+        \includegraphics[width=13cm]{fig/dis-poen.pdf}
     \end{center}
-    \caption{wcaとljの原子間距離-ポテンシャルエネルギーの関係。}
+    \caption{wcaとljの原子間距離-ポテンシャルエネルギーの関係}
     \label{fig:dis-poen}
 \end{figure}
 
-\newpage
+
 \subsection{WCAポテンシャルの相図}\label{method-subsec:WCA-phase}
-相図とは、熱力学的な状態量と物質や系の関係を表したものであり、相図マッピングは、物理・成分科学の奥の分野で中心的な作業となっている。\cite{phase-diagram}
-式(\ref{eq:wca})に示したWCAポテンシャルにおける相図を確認する。
+相図とは、熱力学的な状態量と物質や系の関係を表したものであり、相図マッピングは、物理・成分科学の奥の分野で中心的な作業となっている\cite{phase-diagram}。
+式(\ref{eq:wca})に示したWCAポテンシャルにおける相図を図\ref{fig:wca-phase-diagram}に示す。
 
-※wcaの相図のポンチ絵入れる
+\begin{figure}[htbp]
+    \begin{center}
+        \includegraphics[width=9cm]{fig/wca-phase-diagram.png}
+    \end{center}
+    \caption{wcaの相図}
+    \label{fig:wca-phase-diagram}
+\end{figure}
 
+\newpage
 \subsection{WCAポテンシャルの圧力測定}\label{method-subsec:WCA-pressure}
 式(\ref{eq:wca})に示したWCAポテンシャルにおける圧力の測定を分子動力学プログラムlammps\cite{lammps}によるシミュレーションを用いて行う。
+尚、本研究では、式(\ref{eq:wca})の${\sigma}$(原子直径の長さ),${\varepsilon}$(ポテンシャルの深さ)を共に1とし、図\ref{fig:wca-phase-diagram}で示した赤線上の状態点について、研究を進めるものとする。(T=1.0)
+
 本研究では、初期設定として1辺$L$の立方体の中に2048個の面心立方格子face-centered cubic(以下fcc)構造上に組んだ分子を仮定し、研究を進めるものとする。
 以下に、初期状態の分子構造を示す。
 *初期状態の分子構造をVMDで可視化し、挿入
@@ -122,12 +132,10 @@ WCAポテンシャルにおける圧力は、原子の1辺Lの立方体の壁へ
 PV=NkT+{\frac{1}{3}}\langle\sum_{i=j}^N\vec{q_{ij}} \cdot \vec{r_{ij}}\rangle{\label{eq:Theoritical-pressure}}
 \end{equation}
 \normalsize
-と書ける\cite{Theoritical-pressure}ことが予測される。
+と書ける\cite{Theoritical-pressure}。
 ここで、$P$は圧力、$V$は体積、$N$は原子数、$k$はボルツマン定数、$T$は温度、$\vec{q_{ij}}$は原子間距離、$\vec{r_{ij}}$は原子間に働く力である。
 
-本研究では、lammpsによるシミュレーションで測定されたWCAポテンシャルの圧力が式(\ref{eq:Theoritical-pressure})で書けることを確認することを目的とする。
-ここで、式(\ref{eq:Theoritical-pressure})は、原子間の相互作用(斥力作用)がある時とない時で振る舞いが変わることに注意し、研究を進めるものとする。
-
+本研究では、lammpsによるシミュレーションで測定されたWCAポテンシャルの圧力の振る舞いを低密度(原子間の相互作用がない)、高密度、中密度において確認することを目的とする。
 
 \section{WCAポテンシャルの状態方程式の推定}\label{method-sec:WCA-equation}
 \subsection{ビリアル展開}\label{method-subsec:virial}
@@ -149,18 +157,25 @@ P=b_1{\rho}+b_2{\rho}^2+b_3{\rho}^3+b_4{\rho}^4+\cdots \label{eq:virial}
 \subsection{Benedict–Webb–Rubin(BWR)方程式}\label{method-subsec:BWR}
 \ref{method-subsec:virial}のように、Heike Kamerlingh Onnesが提唱したビリアル展開は、圧力を密度の冪級数を用いて表現したものであるが、この式に経験則的に指数の項を付け加えたものをBenedict–Webb–Rubin(以下BWR)方程式と呼ぶ。
 BWR方程式は、軽質炭化水素とその混合物の熱力学的特性を相関させ、予測するために1940年にBenedict Manson、Webb George B.、Rubin Louis C.によって提唱された\cite{BWR-equation:original}。
-BWR方程式の原式は、圧力Pをモル密度dと絶対温度Tの関数として表現したもので、一般的には
+BWR方程式の原式は、圧力Pをモル密度dと絶対温度Tの関数として表現したもので、モル密度を$\rho$と表すことにすると、
 
 \large
 \begin{equation}
-P=RTd+\left(B_0RT-A_0-{\frac{C_0}{T^2}}\right)d^2+(bRT-a)d^3+{\frac{c}{T^2}}(1+{\gamma}d^2)e^{-{\gamma}d^2}d^3+a{\alpha}d^6\label{eq:BWR}
+P=RT{\rho}+\left(B_0RT-A_0-{\frac{C_0}{T^2}}\right){\rho}^2+(bRT-a){\rho}^3+{\frac{c}{T^2}}(1+{\gamma}{\rho}^2)e^{-{\gamma}{\rho}^2}{\rho}^3+a{\alpha}{\rho}^6\label{eq:BWR}
 \end{equation}
 \normalsize
 と書かれる。
 
 BWR方程式は、気体の状態方程式を表すことに概ね成功していたが、厳密には純粋な物質や混合物の熱力学的性質を予測するのに十分とは言えなかった。
-そこで、1973年には、Jacobsen Richard T.とStewart Richard B.によってBWR方程式の指数項をさらに増やしたmodified-Benedict–Webb–Rubin(以下mBWR)方程式が提唱\cite{m-BWR-equation}されたが、
-気体の状態方程式を完璧に再現することは出来なかった。
+そこで、1973年には、Jacobsen Richard T.とStewart Richard B.によってBWR方程式の指数項をさらに増やした
+
+\large
+\begin{equation}
+P=\sum_{n=1}^9a_n{\rho}^n+\exp(-{\gamma}{\rho}^2)\sum_{n=10}^{15}a_n{\rho}^{2n-17}\label{eq:mBWR}
+\end{equation}
+\normalsize
+と書かれるmodified-Benedict–Webb–Rubin(以下mBWR)方程式が提唱\cite{m-BWR-equation}されたが、
+依然として気体の状態方程式を完璧に再現することは出来なかった。
 その後も、多くの研究者が気体の状態方程式の項を増やすことで、完璧な再現を試みた\cite{MCCARTY1974276}\cite{BWR-equation:13}\cite{BWR-equation:25}が、そのどれもが完璧な精度とは言えず、項の個数が増え続け、収集がつかなくなった。
 
 \subsection{WCAポテンシャルの状態方程式の推定}\label{method-subsec:WCA-equation}
@@ -256,23 +271,10 @@ GitHubのサイトなど、やむを得ずURLを引用する場合には、bibit
 \chapter{結果} \label{chap:results}
 
 \section{WCAポテンシャルの圧力}\label{results-sec:WCA-press}
-本研究では、lammpsによるシミュレーションで測定されたWCAポテンシャルの圧力が式(\ref{eq:Theoritical-pressure})で書けることを確認することを目的とした。
+本研究では、lammpsによるシミュレーションで測定されたWCAポテンシャルの圧力の振る舞いを低密度(原子間の相互作用がない)、中密度、高密度において確認することを目的とする。
 
-式(\ref{eq:Theoritical-pressure})を「理論値」、本研究におけるlammpsのシミュレーションにより測定された圧力を「測定値」とし、その全体結果を図\ref{fig:compare:den-pre}に示す。
+以下では、低密度(原子間の相互作用がない)状態、高密度状態、中密度状態において、具体的に見ていく。
 
-\begin{figure}[htbp]
-    \begin{center}
-        \includegraphics[width=14cm]{fig/compare:den-pre.pdf}
-    \end{center}
-    \caption{WCAポテンシャルにおける圧力の理論値と測定値の比較}
-    \label{fig:compare:den-pre}
-\end{figure}
-
-図\ref{fig:compare:den-pre}から、理論値と測定値がおおよそ一致することが確認できた。
-
-以下では、低密度(原子間の相互作用がない)状態、高密度(原子間の相互作用がある)状態について、具体的に見ていく。
-
-\newpage
 \subsection{低密度(原子間の相互作用がない)状態のWCAポテンシャルの圧力}\label{results-sec:WCA-press-low-density}
 本研究では、数密度0.01〜15.0に0.01ずつ値を取りlammpsによるシミュレーションで圧力を測定したが、カットオフ距離1.12246のWCAポテンシャルにおいて原子間の相互作用がない低密度(再隣接原子間距離$<$1.12246)状態では、
 圧力は式(\ref{eq:Theoritical-pressure})の第一項のみを用いて、
@@ -311,17 +313,34 @@ P={\rho} \label{eq:ideal-value}
     \label{fig:lowden_compare:den-pre}
 \end{figure}
 
+
 図\ref{fig:lowden_compare:den-pre}から、原子間の相互作用がない低密度状態ではWCAポテンシャルの圧力は式(\ref{eq:ideal-gas})
 と書けることがわかる。
 これは、原子間の相互作用がない低密度状態では、原子が理想気体のように振る舞うことに依存する。
 
-
-\subsection{高密度(原子間の相互作用がある)状態のWCAポテンシャルの圧力}\label{results-sec:WCA-press-high-density}
-原子間の相互作用(斥力作用)が働くほど密度が高くなると、圧力は式(\ref{eq:Theoritical-pressure})の第二項も考慮する必要が生じる。
+\subsection{高密度状態のWCAポテンシャルの圧力}\label{results-sec:WCA-press-high-density}
+高密度状態では、圧力は式(\ref{eq:Theoritical-pressure})の第二項の影響を強く受ける。
+高密度状態では、
 密度が高くなればなるほど、式(\ref{eq:Theoritical-pressure})の第二項で考慮するものは、再隣接原子の寄与、第二隣接原子の寄与、第三隣接原子の寄与・・・と増えていく。
-しかし、
-ここに説明付け加える。
-式(\ref{eq:Theoritical-pressure})の第二項への寄与はほとんどが再隣接原子であることから、本研究では、再隣接原子の寄与のみを考えるものとする。
+
+WCAポテンシャルにおいて原子間に働く力$\vec{r_{ij}}$の大きさは、
+WCAポテンシャルのポテンシャルエネルギーが式(\ref{eq:wca})に従うことから、
+
+\large
+\begin{equation}
+    | {\vec{r_{ij}}} |=\frac{d}{dr}\left(4\left(\left(\frac{1}{r}\right)^{12}-\left(\frac{1}{r}\right)^6\right)\right)=| 48r^{-13}-24r^{-7} |\label{eq:power}
+\end{equation}
+\normalsize
+と書くことができるため、式(\ref{eq:Theoritical-pressure})の第二項の
+
+\large
+\begin{equation}
+    \sum_{i=j}^N\vec{q_{ij}} \cdot \vec{r_{ij}} \label{eq:}
+\end{equation}
+\normalsize
+は、距離に対して6乗で減衰することがわかる。
+
+以上から、式(\ref{eq:Theoritical-pressure})の第二項への寄与はほとんどが再隣接原子であることから、本研究では、再隣接原子の寄与のみを考えるものとする。
 第五隣接原子の寄与が生じる密度は、第五隣接原子間距離がWCAポテンシャルのカットオフ距離以下であればいいことから、
 $\rho=14.697018915508458$と求まる。
 これより高密度の状態では、次々に原子間の相互作用が働いていくが、この高密度状態でも圧力が式(\ref{eq:Theoritical-pressure})において
@@ -341,17 +360,16 @@ $\rho=14.697018915508458$と求まる。
 このことから、第五隣接原子より離れた原子とも相互作用が働くほど高密度の状態でもWCAポテンシャルの圧力は式(\ref{eq:Theoritical-pressure})において
 再隣接原子の寄与のみを考慮したもので十分に表されていることがわかる。
 
-以上を踏まえて、lammpsによるシミュレーションで測定されたWCAポテンシャルの圧力が式(\ref{eq:Theoritical-pressure})で書けることが確認できた。
+\subsection{中密度状態のWCAポテンシャルの圧力}\label{results-sec:WCA-press-middle-density}
+中密度状態では、
+
+以上を踏まえて、lammpsによるシミュレーションで測定されたWCAポテンシャルの圧力の振る舞いを確認できた。
 
 
-
-
-
-
-
-\section{WCAポテンシャルの状態方程式}
-本研究では、WCAポテンシャルの状態方程式を機械学習を用いた関数近似を行うことにより再現することを目的とする。
-まず、本研究で得られたlammpsのシミュレーションによる圧力の値を「実験値」、lammpsを用いて5次式のfittingを行った関数を「5次式近似」とし、
+\section{WCAポテンシャルの状態方程式}\label{results-sec:WCA-equation}
+\ref{results-sec:WCA-press}節で見たように状態方程式を密度で展開する際、中密度すなわち、相転移近傍で困難を極める。
+本研究では、WCAポテンシャルの状態方程式を機械学習を用いた関数近似を行うことにより表現することを目的とする。
+まず、本研究で得られたlammpsのシミュレーションによる圧力の値を「測定値」、gnuplotを用いて5次式のfittingを行った関数を「5次式近似」とし、
 \ref{fig:5den-pre}に示す。
 
 
