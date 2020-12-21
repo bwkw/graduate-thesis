@@ -163,7 +163,9 @@ BWR方程式は、気体の状態方程式を表すことに概ね成功して�
 \subsection{WCAポテンシャルの状態方程式の推定}\label{method-subsec:WCA-equation}
 \ref{method-subsec:virial}、\ref{method-subsec:BWR}のように状態方程式を項を増やすことによって再現しようという試みは、項の個数が増え続け収集がつかなくなった。
 また、BWR方程式の指数項は経験則的に付け加えたものであり、物理的意味もないことから項を増やし続け、状態方程式の再現をすることには意味がない。
-そこで、本研究では、WCAポテンシャルにおける状態方程式を機械学習により推定することを目的とする。
+
+そこで、本研究では、WCAポテンシャルにおける状態方程式をgnuplot\cite{gnuplot}のfittingにより表現することを目的とする。
+gnuplotでのfittingは最小二乗法と呼ばれる方法で近似を行う。
 
 \section{Gaussian Process Regression(ガウス過程回帰)}\label{method-sec:Gauss}
 
@@ -342,6 +344,18 @@ $\rho=14.697018915508458$と求まる。
 
 
 \section{WCAポテンシャルの状態方程式}
+本研究では、WCAポテンシャルの状態方程式を機械学習を用いた関数近似を行うことにより再現することを目的とする。
+まず、本研究で得られたlammpsのシミュレーションによる圧力の値を実験値、lammpsを用いてfittingを行った5次式近似の結果を
+\ref{fig:}に示す。
+
+
+%\begin{figure}[htbp]
+    %\begin{center}
+        %\includegraphics[width=14cm]{fig/5den-pre.pdf}
+    %\end{center}
+    %\caption{WCAポテンシャルの状態方程式の5次近似}
+    %\label{fig:5den-pre.dat}
+%\end{figure}
 
 \section{ガウス過程回帰の精度}
 
