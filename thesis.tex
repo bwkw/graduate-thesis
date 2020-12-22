@@ -48,22 +48,53 @@
 \chapter{手法} \label{chap:method}
 \section{WCAポテンシャルの圧力}\label{method-sec:WCA-press}
 \subsection{Weeks-Chandler-Andersen(WCA)ポテンシャル}\label{method-subsec:WCA}
-分子動力学計算において頻繁に用いられるモデルの一つにLennard-Jones(以下LJ)ポテンシャルと呼ぶものが存在する。
-このモデルにおいて、二つの原子間相互作用ポテンシャルエネルギーは
+分子動力学計算において頻繁に用いられるモデルの一つにLennard-Jones\,(以下LJ)ポテンシャルと呼ばれるものが存在する。
+LJポテンシャルは、アルゴンのような希ガスのファンデルワールス力を記述するために提案\cite{Lennard_Jones_1931}されたもので、
+このポテンシャルモデルにおいて二つの原子間相互作用ポテンシャルエネルギーは
 
 \large
 \begin{equation}
 \phi(r)=4{\varepsilon}\left(\left(\frac{\sigma}{r}\right)^{12}-\left(\frac{\sigma}{r}\right)^6\right)\label{eq:lj}
 \end{equation}
 \normalsize
-と書ける\cite{WATANABE20191}。
+と表される。
 ここで、rは原子間距離、${\sigma}$は原子直径の長さ、${\varepsilon}$はポテンシャルの深さを表す。
-
 式(\ref{eq:lj})の一項目$4{\varepsilon}(\frac{\sigma}{r})^{12}$は原子間の斥力作用によるものであり、二項目$-4\varepsilon(\frac{\sigma}{r})^{6}$は原子間の引力作用によるものである。
+LJポテンシャルでは、単位系としてLJ単位系と呼ばれるものを用いる。
+LJ単位系は、LJポテンシャルパラメーター${\sigma}$\,,\,${\varepsilon}$を元に定義することが出来、単位系を無次元にしたものである。
+LJ単位系を用いることにより、ユニティーに近い値を計算できること、方程式が単純化されること、結果を簡単にスケーリングできることなどに優れる。
+アルゴンでは、${\sigma}=3.40×10^{-10}\,\mathrm{m}$\,,\,${\varepsilon}=1.67×10^{-21}\,\mathrm{J}$と定義\cite{argon-parameters}され、
+他にも多くの気体ごとに値が定められている\cite{graphane-parameters}\cite{many-parameters}。
 
-このLJポテンシャルの斥力作用と引力作用が入れ替わる$r=2^{\frac{1}{6}}{\approx}1.12246$にカットオフ距離を設けたポテンシャルをWeeks-Chandler-Andersen(以下WCA)ポテンシャルと呼ぶ。
+LJ単位系では、温度$T^*$をポテンシャル$\varepsilon$\,,ボルツマン定数$k$を用いて、
+
+\large
+\begin{equation}
+\rho^*=\frac{kT}{\varepsilon}\label{eq:T}
+\end{equation}
+\normalsize
+圧力$P^*$をポテンシャル${\sigma}$\,,${\varepsilon}$を用いて
+
+\large
+\begin{equation}
+P^*=\frac{kT}{\varepsilon}\label{eq:T}
+\end{equation}
+\normalsize
+数密度$\rho^*$をポテンシャル$\sigma$を用いて、
+
+\large
+\begin{equation}
+\rho^*=\rho{\sigma}^3\label{eq:rho}
+\end{equation}
+\normalsize
+と表す。
+
+
+
+このLJポテンシャルの斥力作用と引力作用が入れ替わる$r=2^{\frac{1}{6}}{\approx}1.12246$にカットオフ距離を設けたポテンシャルをWeeks-Chandler-Andersen\,(以下WCA)ポテンシャルと呼ぶ
+(WCAポテンシャルでもLJ単位系を用いる)。
 カットオフ距離とは、その距離内の原子間の相互作用のみを考慮するものであり、それ以上の距離での原子間の力を無視するもの\cite{WATANABE20191}である。
-WCAポテンシャルにおけるポテンシャルエネルギーは、
+WCAポテンシャルにおいて二つの原子間相互作用ポテンシャルエネルギーは、
 
 \large
 \begin{equation}
@@ -73,24 +104,27 @@ WCAポテンシャルにおけるポテンシャルエネルギーは、
 \end{array} \right.
 \end{equation}
 \normalsize
-と書くことが出来る\cite{doi:10.1063/1.2176675}。
+と表される\cite{doi:10.1063/1.2176675}。
 したがって、WCAポテンシャルとは式(\ref{eq:wca})のように斥力作用と引力作用が入れ替わる$r=2^{\frac{1}{6}}$にカットオフ距離を設けることにより、二原子間の引力作用を無視し、斥力作用のみを考慮したポテンシャルである。
 
-図{\ref{fig:dis-poen}にLJポテンシャルとWCAポテンシャルにおける原子間距離と原子間のポテンシャルエネルギーの関係を示す。
-(図{\ref{fig:dis-poen}ではLJポテンシャルとWCAポテンシャルにおける原子間距離と原子間のポテンシャルエネルギーの違いを表すことだけを必要としたので、LJにカットオフ距離2.5を設けている)
+図{\ref{fig:dis-poen}にLJポテンシャルとWCAポテンシャルにおける原子間距離$r$と原子間のポテンシャルエネルギー$E$を示す。
+(図{\ref{fig:dis-poen}ではLJポテンシャルにカットオフ距離2.5を設けている)
 
 \begin{figure}[htbp]
     \begin{center}
         \includegraphics[width=13cm]{fig/dis-poen.pdf}
     \end{center}
-    \caption{wcaとljの原子間距離-ポテンシャルエネルギーの関係}
+    \caption{WCAとLJの原子間距離-ポテンシャルエネルギー}
     \label{fig:dis-poen}
 \end{figure}
+図{\ref{fig:dis-poen}に示すように、WCAポテンシャルはLJポテンシャルにカットオフ距離$r=2^{\frac{1}{6}}{\approx}1.12246$を設けることにより、
+$r>2^{\frac{1}{6}}{\approx}1.12246$でポテンシャルエネルギーが0になっていることが確認できる。
 
-
+\newpage
 \subsection{WCAポテンシャルの相図}\label{method-subsec:WCA-phase}
 相図とは、熱力学的な状態量と物質や系の関係を表したものであり、相図マッピングは、物理・成分科学の奥の分野で中心的な作業となっている\cite{phase-diagram}。
-式(\ref{eq:wca})に示したWCAポテンシャルにおける相図を図\ref{fig:wca-phase-diagram}に示す。
+以下では、WCAポテンシャルにおける相図を確認する。
+式(\ref{eq:wca})に示したWCAポテンシャルにおける相図の概念図を図\ref{fig:wca-phase-diagram}に示す。
 
 \begin{figure}[htbp]
     \begin{center}
@@ -361,7 +395,7 @@ WCAポテンシャルのポテンシャルエネルギーが式(\ref{eq:wca})に
 
 以上から、式(\ref{eq:Theoritical-pressure})の第二項への寄与はほとんどが再隣接原子であることから、本研究では、再隣接原子の寄与のみを考えるものとする。
 第五隣接原子の寄与が生じる密度は、第五隣接原子間距離がWCAポテンシャルのカットオフ距離以下であればいいことから、
-$\rho=14.697018915508458$と求まる。
+$\rho=14.7$と求まる。
 これより高密度の状態では、次々に原子間の相互作用が働いていくが、この高密度状態でも圧力が式(\ref{eq:Theoritical-pressure})において
 再隣接原子の寄与のみを考慮したもので十分に表されることを確認する。
 
@@ -382,7 +416,9 @@ $\rho=14.697018915508458$と求まる。
 \subsection{中密度状態のWCAポテンシャルの圧力}\label{results-sec:WCA-press-middle-density}
 中密度状態では、
 
-以上を踏まえて、lammpsによるシミュレーションで測定されたWCAポテンシャルの圧力の振る舞いを確認できた。
+以上を踏まえて、lammpsによるシミュレーションで測定されたWCAポテンシャルの圧力の振る舞いを
+低密度(原子間の相互作用がない)、高密度、中密度において確認する目的を果たした。
+
 
 
 \section{WCAポテンシャルの状態方程式}\label{results-sec:WCA-equation}
