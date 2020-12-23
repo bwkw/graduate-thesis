@@ -254,9 +254,12 @@ f(x)=\sum_{i=0}^n a_ix^i\label{eq:poly­nomial}
 
 
 
-\section{Gaussian Process Regression(ガウス過程回帰)}\label{method-sec:Gauss}
+\section{Gaussian Process Regression(ガウス過程回帰)による効率的推定}\label{method-sec:Gauss}
+\ref{method-sec:Gauss}では、ガウス過程回帰を用いて、WCAポテンシャルの状態方程式を効率的に求める。
+\ref{method-subsec:Gauss}では、ガウス過程回帰の説明を示し、\ref{}
 
-ガウス過程回帰は、出力の不確実性も定量化できる確率的な補間予測を提供する\cite{machine-learning}ことができる。
+\subsection{Gaussian Process Regression(ガウス過程回帰)}\label{method-subsec:Gauss}
+ガウス過程回帰は、出力の不確実性も定量化できる確率的な補間予測を提供する\cite{machine-learning}。
 ガウス過程回帰は、\cite{Gaussian-Processes-for-Machine-Learning}で開発された導出に従って、観測されたラベル$y$と予測されたラベル$y^*$の合同分布が
 
 \large
@@ -339,54 +342,73 @@ GitHubのサイトなど、やむを得ずURLを引用する場合には、bibit
 \chapter{結果} \label{chap:results}
 
 \section{WCAポテンシャルの圧力}\label{results-sec:WCA-press}
-本研究では、LAMMPSによるシミュレーションで測定されたWCAポテンシャルの圧力の振る舞いを低密度(原子間の相互作用がない)、中密度、高密度において確認することを目的とする。
+\ref{results-sec:WCA-press}節では、各数密度においてLAMMPSのシミュレーションで測定されたWCAポテンシャルの圧力の振る舞いを見る。
+まず、数密度$\rho$とLAMMPSのシミュレーションで測定されたWCAポテンシャルの圧力$P$の関係を
+以下の図\ref{fig:den-pre}に示す。
 
-以下では、低密度(原子間の相互作用がない)状態、高密度状態、中密度状態において、具体的に見ていく。
+\begin{figure}[htbp]
+    \begin{center}
+        \includegraphics[width=14cm]{fig/den-pre.pdf}
+    \end{center}
+    \caption{WCAポテンシャルの圧力の測定値}
+    \label{fig:den-pre}
+\end{figure}
 
-\subsection{低密度(原子間の相互作用がない)状態のWCAポテンシャルの圧力}\label{results-sec:WCA-press-low-density}
-本研究では、数密度0.01〜15.0に0.01ずつ値を取りLAMMPSによるシミュレーションで圧力を測定したが、カットオフ距離1.12246のWCAポテンシャルにおいて原子間の相互作用がない低密度(再隣接原子間距離$<$1.12246)状態では、
-圧力は式(\ref{eq:Theoritical-pressure})の第一項のみを用いて、
+以下、\ref{results-subsec:WCA-press-low-density}節では低密度状態、
+\ref{results-subsec:WCA-press-middle-density}節では中密度状態、
+\ref{results-subsec:WCA-press-high-density}節では高密度状態において、
+LAMMPSによるシミュレーションで測定されたWCAポテンシャルの圧力について具体的に見る。
+
+
+\subsection{低密度状態のWCAポテンシャルの圧力}\label{results-subsec:WCA-press-low-density}
+低密度状態では、原子原子間の相互作用をほとんど無視できる。
+
+よって、低密度状態において、圧力は式(\ref{eq:Theoritical-pressure})の第一項のみを用いて、
 \large
 \begin{equation}
-PV=NkT{\label{eq:ideal-gas}}
+PV\,{\simeq}\,NkT{\label{eq:ideal-gas}}
 \end{equation}
 \normalsize
-と書けることが予測される。
+と近似できる。
 
 
 式(\ref{eq:ideal-gas})より、
 \large
 \begin{eqnarray}
-PV&=NkT\nonumber\\
-{\Leftrightarrow}{\ }{\ }P&={\frac{N}{V}}kT\nonumber\\
-{\Leftrightarrow}{\ }{\ }P&={\rho}kT\nonumber
+PV\,&{\simeq}&\,NkT\nonumber\\
+{\Leftrightarrow}{\ }{\ }P\,&{\simeq}&\,{\frac{N}{V}}kT\nonumber\\
+{\Leftrightarrow}{\ }{\ }P\,&{\simeq}&\,{\rho}kT\nonumber
 \end{eqnarray}
 \normalsize
-と書け、本研究では、$k=1$、$T=1$として、LAMMPSのシミュレーションにより圧力測定を行ったので、
+と書け、本研究では、$k=1$、$T=1$と設定し、LAMMPSのシミュレーションにより圧力測定を行ったので、
 
 \large
 \begin{equation}
-P={\rho} \label{eq:ideal-value}
+P\,{\simeq}\,{\rho} \label{eq:ideal-value}
 \end{equation}
 \normalsize
-と表されることを確認する。
+と表現できることが予測される。
 
-式(\ref{eq:ideal-value})を「理論値」、本研究におけるLAMMPSのシミュレーションにより測定された圧力を「測定値」とし、その結果を図\ref{fig:lowden_compare:den-pre}に示す。
+式(\ref{eq:ideal-value})を「理論近似値」、本研究におけるLAMMPSのシミュレーションにより測定された圧力を「測定値」とし、その結果を図\ref{fig:lowden_compare:den-pre}に示す。
 
 \begin{figure}[htbp]
     \begin{center}
         \includegraphics[width=14cm]{fig/lowden_compare:den-pre.pdf}
     \end{center}
-    \caption{WCAポテンシャルの低密度における圧力の理論値と測定値の比較}
+    \caption{WCAポテンシャルの低密度における圧力の理論近似値と測定値の比較}
     \label{fig:lowden_compare:den-pre}
 \end{figure}
 
 
-図\ref{fig:lowden_compare:den-pre}から、原子間の相互作用がない低密度状態ではWCAポテンシャルの圧力は式(\ref{eq:ideal-gas})
+図\ref{fig:lowden_compare:den-pre}から、低密度状態ではWCAポテンシャルの圧力は式(\ref{eq:ideal-gas})
 と書けることがわかる。
-これは、原子間の相互作用がない低密度状態では、原子が理想気体のように振る舞うことに依存する。
+これは、低密度状態では、「ほぼ」原子間の相互作用を無視でき、原子が理想気体のように振る舞うことに依存する。
 
-\subsection{高密度状態のWCAポテンシャルの圧力}\label{results-sec:WCA-press-high-density}
+
+\subsection{中密度状態のWCAポテンシャルの圧力}\label{results-subsec:WCA-press-middle-density}
+中密度状態では、
+
+\subsection{高密度状態のWCAポテンシャルの圧力}\label{results-subsec:WCA-press-high-density}
 高密度状態では、圧力は式(\ref{eq:Theoritical-pressure})の第二項の影響を強く受ける。
 高密度状態では、
 密度が高くなればなるほど、式(\ref{eq:Theoritical-pressure})の第二項で考慮するものは、再隣接原子の寄与、第二隣接原子の寄与、第三隣接原子の寄与・・・と増えていく。
@@ -410,17 +432,17 @@ WCAポテンシャルのポテンシャルエネルギーが式(\ref{eq:wca})に
 
 以上から、式(\ref{eq:Theoritical-pressure})の第二項への寄与はほとんどが再隣接原子であることから、本研究では、再隣接原子の寄与のみを考えるものとする。
 第五隣接原子の寄与が生じる密度は、第五隣接原子間距離がWCAポテンシャルのカットオフ距離以下であればいいことから、
-$\rho=14.7$と求まる。
+$\rho\,{\simeq}\,14.7$と求まる。
 これより高密度の状態では、次々に原子間の相互作用が働いていくが、この高密度状態でも圧力が式(\ref{eq:Theoritical-pressure})において
 再隣接原子の寄与のみを考慮したもので十分に表されることを確認する。
 
-式(\ref{eq:ideal-value})において再隣接原子の寄与のみを考慮したものを「理論値」、本研究におけるLAMMPSのシミュレーションにより測定された圧力を「測定値」とし、その結果を図\ref{fig:highden_compare:den-pre}に示す。
+式(\ref{eq:ideal-value})において再隣接原子の寄与のみを考慮したものを「理論近似値」、本研究におけるLAMMPSのシミュレーションにより測定された圧力を「測定値」とし、その結果を図\ref{fig:highden_compare:den-pre}に示す。
 
 \begin{figure}[htbp]
     \begin{center}
         \includegraphics[width=14cm]{fig/highden_compare:den-pre.pdf}
     \end{center}
-    \caption{WCAポテンシャルの高密度における圧力の理論値と測定値の比較}
+    \caption{WCAポテンシャルの高密度における圧力の理論近似値と測定値の比較}
     \label{fig:highden_compare:den-pre}
 \end{figure}
 
@@ -428,11 +450,10 @@ $\rho=14.7$と求まる。
 このことから、第五隣接原子より離れた原子とも相互作用が働くほど高密度の状態でもWCAポテンシャルの圧力は式(\ref{eq:Theoritical-pressure})において
 再隣接原子の寄与のみを考慮したもので十分に表されていることがわかる。
 
-\subsection{中密度状態のWCAポテンシャルの圧力}\label{results-sec:WCA-press-middle-density}
-中密度状態では、
 
-以上を踏まえて、LAMMPSによるシミュレーションで測定されたWCAポテンシャルの圧力の振る舞いを
-低密度(原子間の相互作用がない)、高密度、中密度において確認する目的を果たした。
+
+以上から、LAMMPSのシミュレーションにより測定されたWCAポテンシャルの圧力の振る舞いを
+低密度(原子間の相互作用がない)、中密度、高密度において確認できた。
 
 
 
