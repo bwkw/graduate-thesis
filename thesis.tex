@@ -231,20 +231,20 @@ P=\sum_{n=1}^9a_n{\rho}^n+\exp(-{\gamma}{\rho}^2)\sum_{n=10}^{15}a_n{\rho}^{2n-1
 \normalsize
 と書かれるmodified-Benedict–Webb–Rubin(以下mBWR)方程式が提唱\cite{m-BWR-equation}されたが、
 依然として気体の状態方程式を完璧に再現することは出来なかった。
-その後も、多くの研究者が気体の状態方程式の項を増やすことで、完璧な再現を試みた\cite{MCCARTY1974276}\cite{BWR-equation:13}\cite{BWR-equation:25}が、そのどれもが完璧な精度とは言えず、項の個数が増え続け、収集がつかなくなった。
+その後も、多くの研究者が気体の状態方程式の項を増やすことで、完璧な再現を試みた\cite{MCCARTY1974276}\cite{BWR-equation:13}\cite{BWR-equation:25}が、項の個数は際限なく増え続け、項自体の意味も不明確であった。
 
 \subsection{WCAポテンシャルの状態方程式の推定}\label{method-subsec:WCA-equation}
-\ref{method-subsec:virial}、\ref{method-subsec:BWR}のように状態方程式を項を増やすことによって再現しようという試みは、項の個数が増え続け収集がつかなくなった。
+\ref{method-subsec:virial}節、\ref{method-subsec:BWR}節のように気体の状態方程式を項を増やすことによって再現しようと試みたが、項の個数は際限なく増え続けた。
 また、BWR方程式の指数項は経験則的に付け加えたものであり、物理的意味もないことから項を増やし続け、状態方程式の再現をすることには意味がない。
 
-そこで、本研究では、WCAポテンシャルにおける状態方程式をgnuplot\cite{gnuplot}のfittingにより多項式で表現することを目的とする。
-gnuplotでのfittingは最小二乗法と呼ばれる方法で近似を行う。
+そこで、本研究では、WCAポテンシャルにおける状態方程式をgnuplot\cite{gnuplot}を用いた最小二乗法により5次式に近似する。
+
 
 今、想定される多項式を
 
 \large
 \begin{equation}
-f(x)=\sum_{i=0}^n a_ix^i\label{eq:poly­nomial}
+f(x)=\sum_{i=0}^m a_ix^i\label{eq:poly­nomial}
 \end{equation}
 \normalsize
 で表すとし、
@@ -254,8 +254,111 @@ f(x)=\sum_{i=0}^n a_ix^i\label{eq:poly­nomial}
 \{(x_1,y_1)\,,\,(x_2,y_2)\,,\,\cdots\,,\,(x_n,y_n)) \}\label{eq:xy}
 \end{equation}
 \normalsize
-とすると、
+とすると、残差の二乗和$S$は、
 
+\large
+\begin{equation}
+S=\sum_{i=0}^n (y_i-f(x_i))^2\label{eq:residual-error}
+\end{equation}
+\normalsize
+と表され、これを最小にする$f(x)$を求めることで最小二乗法は実現される。
+
+式(\ref{eq:residual-error})を行列表示にすると、
+
+\footnotesize
+\begin{eqnarray}
+S = \left(
+        \left[
+            \begin{array}{c}
+            y_1\\
+            y_2\\
+            \vdots\\
+            y_n
+            \end{array}
+        \right]
+        -
+        \left[
+            \begin{array}{cccc}
+            x_1^m & x_1^{m-1} & \cdots & x_1^0 \\
+            x_2^m & x_2^{m-1} & \cdots & x_2^0 \\
+            \vdots & \vdots & \vdots & \vdots\\
+            x_n^m & x_n^{m-1} & \cdots & x_n^0 \\
+            \end{array}
+        \right]
+        \left[
+            \begin{array}{c}
+            a_m\\
+            a_{m-1}\\
+            \vdots\\
+            a_0
+            \end{array}
+        \right]
+    \right)^T
+    \left(
+        \left[
+            \begin{array}{c}
+            y_1\\
+            y_2\\
+            \vdots\\
+            y_n
+            \end{array}
+        \right]
+        -
+        \left[
+            \begin{array}{cccc}
+            x_1^m & x_1^{m-1} & \cdots & x_1^0 \\
+            x_2^m & x_2^{m-1} & \cdots & x_2^0 \\
+            \vdots & \vdots & \vdots & \vdots\\
+            x_n^m & x_n^{m-1} & \cdots & x_n^0 \\
+            \end{array}
+        \right]
+        \left[
+            \begin{array}{c}
+            a_m\\
+            a_{m-1}\\
+            \vdots\\
+            a_0
+            \end{array}
+        \right]
+  \right)\nonumber
+\end{eqnarray}
+\normalsize
+と表される。
+ここで、
+\large
+\begin{eqnarray}
+Y=  \left[
+        \begin{array}{c}
+        y_1\\
+        y_2\\
+        \vdots\\
+        y_n
+        \end{array}
+    \right]\,,\,
+X=  \left[
+        \begin{array}{cccc}
+        x_1^m & x_1^{m-1} & \cdots & x_1^0 \\
+        x_2^m & x_2^{m-1} & \cdots & x_2^0 \\
+        \vdots & \vdots & \vdots & \vdots\\
+        x_n^m & x_n^{m-1} & \cdots & x_n^0 \\
+        \end{array}
+    \right]\,,\,
+A=  \left[
+        \begin{array}{c}
+        a_m\\
+        a_{m-1}\\
+        \vdots\\
+        a_0
+        \end{array}
+    \right] \nonumber
+\end{eqnarray}
+\normalsize
+とすると、
+\large
+\begin{eqnarray}
+S=  (Y-XA)^T\nonumber
+\end{eqnarray}
+\normalsize
 
 
 \section{Gaussian Process Regression(ガウス過程回帰)による効率的推定}\label{method-sec:Gauss}
