@@ -190,7 +190,7 @@ PV=NkT+{\frac{1}{3}}\langle\sum_{i=j}^N\vec{q_{ij}} \cdot \vec{r_{ij}}\rangle{\l
 \ref{method-subsec:WCA-phase}節に示したように、WCAポテンシャルは中密度あたりで相転移が起こることから、
 中密度で圧力の振る舞いが急激に変化すると考えられる。
 \ref{results-sec:WCA-press}節では、LAMMPSによるシミュレーションで測定されたWCAポテンシャルの圧力の振る舞いを
-原子間の相互作用をほぼ無視できる低密度、流体相から固体層への相転移近傍の中密度、原子間の相互作用の寄与が大きい高密度において調べる。
+原子間の相互作用をほぼ無視できる低密度状態、流体相から固体層への相転移近傍の中密度状態、原子間の相互作用の寄与が大きい高密度状態において調べる。
 
 \section{WCAポテンシャルの状態方程式の推定}\label{method-sec:WCA-equation}
 \ref{method-sec:WCA-equation}節では、\ref{results-sec:WCA-press}節で調べたWCAポテンシャルにおける圧力$P$を数密度$\rho$の状態方程式で表す。
@@ -235,7 +235,7 @@ P=\sum_{n=1}^9a_n{\rho}^n+\exp(-{\gamma}{\rho}^2)\sum_{n=10}^{15}a_n{\rho}^{2n-1
 \normalsize
 と表されるmodified-Benedict–Webb–Rubin(以下mBWR)方程式が提唱\cite{m-BWR-equation}されたが、
 依然として気体の状態方程式を完璧に再現することは出来なかった。
-その後も、多くの研究者が気体の状態方程式の項を増やすことで、完璧な再現を試みた\cite{MCCARTY1974276}\cite{BWR-equation:13}\cite{BWR-equation:25}が、項の個数は際限なく増え続け、項自体の意味も不明確であった。
+その後も、多くの研究者が気体の状態方程式の項を増やすことで、完璧な再現を試みた\cite{MCCARTY1974276}\cite{BWR-equation:13}\cite{BWR-equation:25}が、項の個数は際限なく増え、項自体の物理的意味も不明瞭であった。
 
 \subsection{WCAポテンシャルの状態方程式の推定}\label{method-subsec:WCA-equation}
 \ref{method-subsec:virial}節、\ref{method-subsec:BWR}節のように気体の状態方程式を項を増やすことによって再現しようと試みたが、項の個数は際限なく増え続けた。
@@ -546,7 +546,7 @@ p(\bm{y}^*|\bm{x}^*,\mathcal{D})
 を満たすようなガウス分布に従う。
 
 
-\subsection{ガウス過程回帰による効率的推定}\label{method-subsec:Gaussian-estimation}
+\subsection{ガウス過程回帰によるWCAポテンシャルの状態方程式の効率的推定}\label{method-subsec:Gaussian-estimation}
 \ref{method-subsec:Gauss}節に示したガウス過程回帰を用いて、本研究では、WCAポテンシャルにおける数密度$\rho$と圧力$P$の関係を効率的に推定する。
 \ref{results-sec:WCA-press}節に、数密度$\rho=\{0.00,0.01,0.02,\cdots,15.0\}$と圧力$P$の関係を示したが、全データのうち端点となる、
 $\{(P,\rho)\}=\{(0.00,0.00)\,,\,(15.0,1.83×10^7)\}$の二点を初期値として、ガウス過程回帰を適用する。
@@ -600,11 +600,17 @@ LAMMPSによるシミュレーションで測定されたWCAポテンシャル�
 \end{equation}
 \normalsize
 では、原子間の相互作用をほぼ無視できる。
-上記の式(\ref{eq:lowdensity-density})を満たすような低密度状態における分子の状態の概念図を以下の図\ref{}に示す。
+上記の式(\ref{eq:lowdensity-density})を満たすような低密度状態における分子の状態の概念図を以下の図\ref{fig:lowdensity.png}に示す。
 
+\begin{figure}[htbp]
+    \begin{center}
+        \includegraphics[width=6cm]{fig/lowdensity.png}
+    \end{center}
+    \caption{低密度状態における分子の状態の概念図}
+    \label{fig:lowdensity.png}
+\end{figure}
 
-
-上図の図\ref{}を満たすような低密度状態においては、原子間の相互作用をほとんど無視できるので、
+上図の図\ref{fig:lowdensity.png}のような低密度状態においては、原子間の相互作用をほとんど無視できるので、
 圧力は式(\ref{eq:Theoritical-pressure})の第一項のみを用いて、
 \large
 \begin{equation}
@@ -637,10 +643,9 @@ P\,{\simeq}\,{\rho} \label{eq:ideal-value}
     \begin{center}
         \includegraphics[width=14cm]{fig/lowden_compare:den-pre.pdf}
     \end{center}
-    \caption{WCAポテンシャルの低密度における圧力の理論近似値と測定値の比較}
+    \caption{WCAポテンシャルにおける低密度状態の圧力の理論近似値と測定値の比較}
     \label{fig:lowden_compare:den-pre}
 \end{figure}
-
 
 図\ref{fig:lowden_compare:den-pre}から、低密度状態ではWCAポテンシャルの圧力は式(\ref{eq:ideal-gas})
 と書けることがわかる。
@@ -648,11 +653,49 @@ P\,{\simeq}\,{\rho} \label{eq:ideal-value}
 
 
 \subsection{中密度状態のWCAポテンシャルの圧力}\label{results-subsec:WCA-press-middle-density}
-中密度状態では、
+中密度状態では、相互作用を持つ分子ペアと持たない分子が存在する。
+まず、中密度状態における分子の状態の概念図を以下の図\ref{fig:middledensity.png}に示す。
+
+\begin{figure}[htbp]
+    \begin{center}
+        \includegraphics[width=6cm]{fig/middledensity.png}
+    \end{center}
+    \caption{中密度状態における分子の状態の概念図}
+    \label{fig:middledensity.png}
+\end{figure}
+
+\newpage
+流体相から固体相への相転移近傍の中密度状態では、相転移により圧力の振る舞いが急激に変化すると考えられる。
+相転移近傍の中密度状態での数密度$\rho$とLAMMPSのシミュレーションで測定されたWCAポテンシャルの圧力$P$の関係を
+以下の図\ref{fig:middleden_den-pre}に示す。
+
+\begin{figure}[htbp]
+    \begin{center}
+        \includegraphics[width=14cm]{fig/middleden_den-pre.pdf}
+    \end{center}
+    \caption{WCAポテンシャルにおける中密度状態の数密度と圧力の関係}
+    \label{fig:middleden_den-pre}
+\end{figure}
+
+
+図\ref{fig:middleden_den-pre}から$\rho\,{\simeq}\,1$付近で相転移が起こり、圧力の振る舞いが急激に変化することを確認できた。
+この相転移の存在により、圧力の振る舞いが急激に変わるので、WCAポテンシャルの状態方程式を\ref{method-subsec:virial}節で示したビリアル展開や、
+\ref{method-subsec:BWR}節で示したBWR,m-BWR方程式を用いて表すと項の個数が際限なく増え、項自体の物理的意味も不明瞭になると考えられる。
 
 
 \subsection{高密度状態のWCAポテンシャルの圧力}\label{results-subsec:WCA-press-high-density}
-高密度状態では、圧力は式(\ref{eq:Theoritical-pressure})の第二項の影響を強く受ける。
+高密度状態では、すべての分子ペアが相互作用を持つものと近似できる。
+まず、高密度状態における分子の状態の概念図を以下の図\ref{fig:highdensity.png}に示す。
+
+\begin{figure}[htbp]
+    \begin{center}
+        \includegraphics[width=6cm]{fig/highdensity.png}
+    \end{center}
+    \caption{高密度状態における分子の状態の概念図}
+    \label{fig:highdensity.png}
+\end{figure}
+
+原子間の相互作用の寄与が大きい高密度状態では、圧力は式(\ref{eq:Theoritical-pressure})の第二項の影響を強く受ける。
 高密度状態では、
 密度が高くなればなるほど、式(\ref{eq:Theoritical-pressure})の第二項で考慮するものは、再隣接原子の寄与、第二隣接原子の寄与、第三隣接原子の寄与・・・と増えていく。
 
@@ -674,8 +717,8 @@ WCAポテンシャルのポテンシャルエネルギーが式(\ref{eq:wca})に
 は、距離に対して6乗で減衰することがわかる。
 
 以上から、式(\ref{eq:Theoritical-pressure})の第二項への寄与はほとんどが再隣接原子であることから、本研究では、再隣接原子の寄与のみを考えるものとする。
-第五隣接原子の寄与が生じる密度は、第五隣接原子間距離がWCAポテンシャルのカットオフ距離以下であればいいことから、
-$\rho\,{\simeq}\,14.7$と求まる。
+第五隣接原子の寄与が生じる密度は、第五隣接原子間距離がWCAポテンシャルのカットオフ距離$2^{\frac{1}{6}}{\approx}1.12246$と等しい、すなわち
+$\rho\,{\simeq}\,14.7$と表される。
 これより高密度の状態では、次々に原子間の相互作用が働いていくが、この高密度状態でも圧力が式(\ref{eq:Theoritical-pressure})において
 再隣接原子の寄与のみを考慮したもので十分に表されることを確認する。
 
@@ -685,7 +728,7 @@ $\rho\,{\simeq}\,14.7$と求まる。
     \begin{center}
         \includegraphics[width=14cm]{fig/highden_compare:den-pre.pdf}
     \end{center}
-    \caption{WCAポテンシャルの高密度における圧力の理論近似値と測定値の比較}
+    \caption{WCAポテンシャルにおける高密度状態の圧力の理論近似値と測定値の比較}
     \label{fig:highden_compare:den-pre}
 \end{figure}
 
@@ -696,14 +739,16 @@ $\rho\,{\simeq}\,14.7$と求まる。
 
 
 以上から、LAMMPSのシミュレーションにより測定されたWCAポテンシャルの圧力の振る舞いを
-低密度(原子間の相互作用がない)、中密度、高密度において確認できた。
+原子間の相互作用をほぼ無視できる低密度状態、流体相から固体相への相転移近傍の中密度状態、原子間の相互作用の寄与が大きい高密度状態において確認できた。
 
 
 
 \section{WCAポテンシャルの状態方程式}\label{results-sec:WCA-equation}
-\ref{results-sec:WCA-press}節で見たように状態方程式を密度で展開する際、中密度すなわち、相転移近傍で困難を極める。
+\ref{results-sec:WCA-press}節で示した圧力を数密度を含む項で展開することを試みたとき、\ref{method-subsec:virial}節で示したビリアル展開、
+\ref{method-subsec:BWR}節で示したBWR,m-BWR方程式を用いると、\ref{results-subsec:WCA-press-middle-density}節で示した相転移の存在により、
+項の個数が際限なく増え、項自体の物理的意味も不明瞭になると考えられる。
 本研究では、WCAポテンシャルの状態方程式を機械学習を用いた関数近似を行うことにより表現することを目的とする。
-まず、本研究で得られたLAMMPSのシミュレーションによる圧力の値を「測定値」、gnuplotを用いて5次式のfittingを行った関数を「5次式近似」とし、
+まず、本研究で得られたLAMMPSのシミュレーションによる圧力の値を「測定値」、gnuplotを用いて5次式の最小二乗法を行った関数を「5次式近似」とし、
 \ref{fig:5den-pre}に示す。
 
 
@@ -717,7 +762,7 @@ $\rho\,{\simeq}\,14.7$と求まる。
 
 
 
-\section{ガウス過程回帰の精度}
+\section{ガウス過程回帰によるWCAポテンシャルの状態方程式の効率的推定}
 ガウス過程回帰の過程
 
 ガウス過程回帰とランダムサンプリングの精度の差？
