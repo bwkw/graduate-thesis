@@ -54,6 +54,7 @@
 \ref{method-subsec:WCA-phase}節ではWCAポテンシャルの相図の概念図を示し、
 \ref{method-subsec:WCA-pressure}節ではWCAポテンシャルにおける数密度と圧力の関係を調べる具体的な実験方法を示す。
 
+
 \subsection{Weeks-Chandler-Andersen\,(WCA)ポテンシャル}\label{method-subsec:WCA}
 分子動力学計算において頻繁に用いられるモデルの一つにLennard-Jones\,(LJ)ポテンシャルと呼ばれるものが存在する。
 LJポテンシャルは、アルゴンのような希ガスのファンデルワールス力を記述するために提案\cite{Lennard_Jones_1931}されたもので、
@@ -68,8 +69,8 @@ LJポテンシャルは、アルゴンのような希ガスのファンデルワ
 ここで、rは原子間距離、${\sigma}$は原子直径の長さ、${\varepsilon}$はポテンシャルの深さを表す。
 式(\ref{eq:lj})の一項目$4{\varepsilon}(\frac{\sigma}{r})^{12}$は原子間の斥力作用によるものであり、二項目$-4\varepsilon(\frac{\sigma}{r})^{6}$は原子間の引力作用によるものである。
 LJポテンシャルでは、単位系としてLJ単位系と呼ばれるものを用いる。
-LJ単位系は、LJポテンシャルパラメーター${\sigma}$\,,\,${\varepsilon}$を元に定義することが出来、単位系を無次元にしたものである。
-LJ単位系を用いることにより、ユニティーに近い値を計算できること、方程式が単純化されること、結果を簡単にスケーリングできることなどに優れる。
+LJ単位系は、LJポテンシャルのパラメーター${\sigma}$\,,\,${\varepsilon}$を元に定義することが出来、単位系を無次元にしたものである。
+LJ単位系は、ユニティーに近い値を計算できること、方程式が単純化されること、結果を簡単にスケーリングできることなどに優れる。
 アルゴンでは、${\sigma}=3.40×10^{-10}\,\mathrm{m}$\,,\,${\varepsilon}=1.67×10^{-21}\,\mathrm{J}$と定義\cite{argon-parameters}され、
 他にも多くの気体ごとに値が定められている\cite{graphane-parameters}\cite{many-parameters}。
 
@@ -94,9 +95,7 @@ P^*=\frac{P\sigma^3}{\varepsilon}\label{eq:P}
 \rho^*=\rho{\sigma}^3\label{eq:rho}
 \end{equation}
 \normalsize
-と表す。
-
-
+と表される。
 
 このLJポテンシャルの斥力作用と引力作用が入れ替わる$r=2^{\frac{1}{6}}{\approx}1.12246$にカットオフ距離を設けたポテンシャルをWCAポテンシャルと呼ぶ
 (WCAポテンシャルでもLJ単位系を用いる)。
@@ -156,10 +155,9 @@ $r>2^{\frac{1}{6}}{\approx}1.12246$でポテンシャルエネルギーが0に�
 尚、本研究では、式(\ref{eq:wca})の${\sigma}$(原子直径の長さ)\,,\,${\varepsilon}$(ポテンシャルの深さ)を共に1.0とし、
 図\ref{fig:wca-phase-diagram}で示した赤線上の状態点について、研究を進めるものとする。
 
-本研究では、初期設定として1辺$L$の立方体の中に2048個の面心立方face-centered cubic\,(fcc)構造上に配置した分子を用意し、研究を進めるものとする。
-以下に、初期状態の分子構造を示す。
-*初期状態の分子構造をVMDで可視化し、挿入
 
+本研究では、初期設定として1辺$L$の立方体の中に2048個の面心立方face-centered cubic\,(fcc)構造上に配置した分子を用意し、研究を進めるものとする。
+以下の図\ref{initial-state-molecule}に、初期状態の分子構造を示す。
 
 この仮定から、用意されたWCAポテンシャルの数密度は、
 \large
@@ -167,13 +165,17 @@ $r>2^{\frac{1}{6}}{\approx}1.12246$でポテンシャルエネルギーが0に�
 \rho = {\frac{2048}{L^3}}{\label{eq:density}}
 \end{equation}
 \normalsize
-と求まる。
+と表される。
 
-本研究では、数密度0.01〜15.0に0.01ずつ値をとり、LAMMPSにより圧力を測定した。
+本研究では、数密度$\rho$を0.01〜15.0に0.01ずつ値をとり、LAMMPSにより圧力$P$を測定した。
 本研究では式(\ref{eq:density})にLAMMPSで指定した$L$を代入することにより数密度を決定するため、数密度を0にしてLAMMPSでシミュレーションを行うことが不可能であったため、数密度は0.01からとした。
-ただし、数密度0では圧力が0であることは自明であるため、特に問題はないものとする。
+ただし、数密度0.00では圧力が0.00であることは自明であるため、特に問題はないものとする。
 この初期条件のもと、温度制御を1.0とし、タイムステップ0.001で20000実行のシミュレーションを行った。
-尚、全ての実験で温度制御ができていたことを前提とする。
+尚、全ての研究でnvtによる温度制御ができていたことを前提とする。
+nvtとは、
+
+以下の図\ref{molecule-simulation}に、シミュレーション途中の分子構造を示す。
+
 
 WCAポテンシャルにおける圧力は、ビリアル定理\cite{virial-therom}によって
 
@@ -182,22 +184,22 @@ WCAポテンシャルにおける圧力は、ビリアル定理\cite{virial-ther
 PV=NkT+{\frac{1}{3}}\langle\sum_{i=j}^N\vec{q_{ij}} \cdot \vec{r_{ij}}\rangle{\label{eq:Theoritical-pressure}}
 \end{equation}
 \normalsize
-と書ける\cite{Theoritical-pressure}。
+と表される\cite{Theoritical-pressure}。
 ここで、$P$は圧力、$V$は体積、$N$は原子数、$k$はボルツマン定数、$T$は温度、$\vec{q_{ij}}$は原子間距離、$\vec{r_{ij}}$は原子間に働く力である。
 
 \ref{method-subsec:WCA-phase}節に示したように、WCAポテンシャルは中密度あたりで相転移が起こることから、
 中密度で圧力の振る舞いが急激に変化すると考えられる。
 \ref{results-sec:WCA-press}節では、LAMMPSによるシミュレーションで測定されたWCAポテンシャルの圧力の振る舞いを
-低密度、中密度、高密度において調査する。
+原子間の相互作用をほぼ無視できる低密度、流体相から固体層への相転移近傍の中密度、原子間の相互作用の寄与が大きい高密度において調べる。
 
 \section{WCAポテンシャルの状態方程式の推定}\label{method-sec:WCA-equation}
-\ref{method-sec:WCA-equation}節では、\ref{method-sec:Gauss}で調べたWCAポテンシャルの圧力を状態方程式で表す。
+\ref{method-sec:WCA-equation}節では、\ref{results-sec:WCA-press}節で調べたWCAポテンシャルにおける圧力$P$を数密度$\rho$の状態方程式で表す。
 \ref{method-subsec:virial}節、\ref{method-subsec:BWR}節では、それぞれ圧力を密度の項で展開するビリアル展開、Benedict–Webb–Rubin(BWR)方程式の説明を示し、
 \ref{method-subsec:WCA-equation}節では、WCAポテンシャルの圧力を状態方程式で表す具体的な手法を示す。
 
 \subsection{ビリアル展開}\label{method-subsec:virial}
 気体の振る舞いを表す有望な記述の一つにビリアル展開と呼ぶものが存在する。
-これは、Heike Kamerlingh Onnesによって1901年に提唱されたもの\cite{virial-Heike}で、多くの研究で利用されている。
+これは、Heikeによって1901年に提唱されたもの\cite{virial-Heike}で、多くの研究で利用されている。
 状態方程式のビリアル展開は、圧力を密度の冪級数を用いて表現するもので、
 
 \large
@@ -206,32 +208,32 @@ P=b_1{\rho}+b_2{\rho}^2+b_3{\rho}^3+b_4{\rho}^4+\cdots \label{eq:virial}
 \end{equation}
 
 \normalsize
-のように書くことが出来る。
+と表される。
 式(\ref{eq:virial})の密度のn番目の累乗の係数を第nビリアル係数と呼ぶ\cite{virial-expansion}。
 これらのビリアル係数は、増加する原子数で構成される集団群における原子の相互作用を表し、第2、第3、第4のビリアル係数は、2つ、3つ、4つ...の分子を含む衝突が気体中で重要になったときの理想的な振る舞いからの逸脱を表す。
 圧力の効果は、分子間の距離を減少させることであるので、圧力が高くなるにつれて、考慮されなければならないビリアル項が増加する\cite{virial-Heike}。
 
 \subsection{Benedict–Webb–Rubin(BWR)方程式}\label{method-subsec:BWR}
-\ref{method-subsec:virial}のように、Heike Kamerlingh Onnesが提唱したビリアル展開は、圧力を密度の冪級数を用いて表現したものであるが、この式に経験則的に指数の項を付け加えたものをBenedict–Webb–Rubin(以下BWR)方程式と呼ぶ。
-BWR方程式は、軽質炭化水素とその混合物の熱力学的特性を相関させ、予測するために1940年にBenedict Manson、Webb George B.、Rubin Louis C.によって提唱された\cite{BWR-equation:original}。
-BWR方程式の原式は、圧力Pをモル密度dと絶対温度Tの関数として表現したもので、モル密度を$\rho$と表すことにすると、
+\ref{method-subsec:virial}節のように、Heikeが提唱したビリアル展開は、圧力を密度の冪級数を用いて表現したものであるが、この式に経験則的に指数の項を付け加えたものをBenedict–Webb–Rubin(以下BWR)方程式と呼ぶ。
+BWR方程式は、軽質炭化水素とその混合物の熱力学的特性を相関させ、予測するために1940年にManson、George、Rubinによって提唱された\cite{BWR-equation:original}。
+BWR方程式の原式は、圧力$P$をモル密度$d$と絶対温度$T$の関数として表現したもので、
 
 \large
 \begin{equation}
 P=RT{\rho}+\left(B_0RT-A_0-{\frac{C_0}{T^2}}\right){\rho}^2+(bRT-a){\rho}^3+{\frac{c}{T^2}}(1+{\gamma}{\rho}^2)e^{-{\gamma}{\rho}^2}{\rho}^3+a{\alpha}{\rho}^6\label{eq:BWR}
 \end{equation}
 \normalsize
-と書かれる。
+と表される。
 
 BWR方程式は、気体の状態方程式を表すことに概ね成功していたが、厳密には純粋な物質や混合物の熱力学的性質を予測するのに十分とは言えなかった。
-そこで、1973年には、Jacobsen Richard T.とStewart Richard B.によってBWR方程式の指数項をさらに増やした
+そこで、1973年には、JacobsenとStewartによってBWR方程式の指数項をさらに増やした
 
 \large
 \begin{equation}
 P=\sum_{n=1}^9a_n{\rho}^n+\exp(-{\gamma}{\rho}^2)\sum_{n=10}^{15}a_n{\rho}^{2n-17}\label{eq:mBWR}
 \end{equation}
 \normalsize
-と書かれるmodified-Benedict–Webb–Rubin(以下mBWR)方程式が提唱\cite{m-BWR-equation}されたが、
+と表されるmodified-Benedict–Webb–Rubin(以下mBWR)方程式が提唱\cite{m-BWR-equation}されたが、
 依然として気体の状態方程式を完璧に再現することは出来なかった。
 その後も、多くの研究者が気体の状態方程式の項を増やすことで、完璧な再現を試みた\cite{MCCARTY1974276}\cite{BWR-equation:13}\cite{BWR-equation:25}が、項の個数は際限なく増え続け、項自体の意味も不明確であった。
 
@@ -390,8 +392,7 @@ S &=& (Y-XA)^T(Y-XA)\nonumber\\
     \right]\label{eq:Least-squares-problem}
 \end{eqnarray}
 \normalsize
-から得られる連立方程式を$A$について解くことで表される。
-式(\ref{eq:queue-residual-error})\,,\,式(\ref{eq:Least-squares-problem})より、
+から得られる連立方程式を$A$について解くことで表され、式(\ref{eq:queue-residual-error})\,,\,式(\ref{eq:Least-squares-problem})より、
 
 \large
 \begin{eqnarray}
@@ -539,7 +540,7 @@ p(\bm{y}^*|\bm{x}^*,\mathcal{D})
 \large
 \begin{eqnarray}
     E&=&\bm{k}_*^T\bm{K}^{-1}\bm{y}\\ \label{eq:Gaussian-predicted-average}
-    \sigma^2&=&\bm{k}_{**}-\bm{k}_*^T\bm{K}^{-1}\bm{k}_* \label{eq:Gaussian-predicted-distribution}
+    \sigma^2&=&\bm{k}_{**}-\bm{k}_*^T\bm{K}^{-1}\bm{k}_* \label{eq:Gaussian-predicted-decentration}
 \end{eqnarray}
 \normalsize
 を満たすようなガウス分布に従う。
@@ -565,7 +566,7 @@ $\{(P,\rho)\}=\{(0.00,0.00)\,,\,(15.0,1.83×10^7)\}$の二点を初期値とし�
 \chapter{結果} \label{chap:results}
 
 \section{WCAポテンシャルの圧力}\label{results-sec:WCA-press}
-\ref{results-sec:WCA-press}節では、各数密度においてLAMMPSのシミュレーションで測定されたWCAポテンシャルの圧力の振る舞いを見る。
+\ref{results-sec:WCA-press}節では、各数密度においてLAMMPSのシミュレーションで測定されたWCAポテンシャルの圧力の振る舞いを調べる。
 まず、数密度$\rho$とLAMMPSのシミュレーションで測定されたWCAポテンシャルの圧力$P$の関係を
 以下の図\ref{fig:den-pre}に示す。
 
@@ -577,16 +578,34 @@ $\{(P,\rho)\}=\{(0.00,0.00)\,,\,(15.0,1.83×10^7)\}$の二点を初期値とし�
     \label{fig:den-pre}
 \end{figure}
 
-以下、\ref{results-subsec:WCA-press-low-density}節では低密度状態、
-\ref{results-subsec:WCA-press-middle-density}節では中密度状態、
-\ref{results-subsec:WCA-press-high-density}節では高密度状態において、
-LAMMPSによるシミュレーションで測定されたWCAポテンシャルの圧力について具体的に見る。
+以下、\ref{results-subsec:WCA-press-low-density}節では原子間の相互作用をほぼ無視できる低密度状態、
+\ref{results-subsec:WCA-press-middle-density}節では流体相から固体相への相転移近傍の中密度状態、
+\ref{results-subsec:WCA-press-high-density}節では原子間の相互作用の寄与が大きい高密度状態において、
+LAMMPSによるシミュレーションで測定されたWCAポテンシャルの圧力について具体的に調べる。
 
 
 \subsection{低密度状態のWCAポテンシャルの圧力}\label{results-subsec:WCA-press-low-density}
-低密度状態では、原子原子間の相互作用をほとんど無視できる。
+初期状態において、原子間の相互作用が作用する($原子間距離r=カットオフ距離2^{\frac{1}{6}}{\approx}1.12246$)数密度は
 
-よって、低密度状態において、圧力は式(\ref{eq:Theoritical-pressure})の第一項のみを用いて、
+\large
+\begin{eqnarray}
+\rho\,{\simeq}\,1.00 \nonumber
+\end{eqnarray}
+\normalsize
+と表されるため、
+
+\large
+\begin{equation}
+\rho\,{\leq}\,1.00 \label{eq:lowdensity-density}
+\end{equation}
+\normalsize
+では、原子間の相互作用をほぼ無視できる。
+上記の式(\ref{eq:lowdensity-density})を満たすような低密度状態における分子の状態の概念図を以下の図\ref{}に示す。
+
+
+
+上図の図\ref{}を満たすような低密度状態においては、原子間の相互作用をほとんど無視できるので、
+圧力は式(\ref{eq:Theoritical-pressure})の第一項のみを用いて、
 \large
 \begin{equation}
 PV\,{\simeq}\,NkT{\label{eq:ideal-gas}}
