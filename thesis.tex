@@ -425,7 +425,8 @@ $N$個の観測値、すなわち入力$x$\,,\,$y$の$N$個のペア
     \mathcal{D}=\{(x_1,y_1)\,,\,(x_2,y_2)\,,\,\cdots\,,\,(x_N,y_N)\}
 \]
 \normalsize
-が与えられているとし、簡単のため、$y$は平均が$\bm{0}$となるように正規化してあるとすると、$y=f(x)$という関数$f$が平均0のガウス過程
+が与えられているとし、$\bm{X}=(x_1,\cdots,x_N)$\,,\,$\bm{y}=(y_1,\cdots,y_N)$とする。
+簡単のため、$y$は平均が$\bm{0}$となるように正規化してあるとし、$y=f(x)$という関数$f$が平均$\bm{0}$のガウス過程
 
 \large
 \begin{eqnarray}
@@ -433,7 +434,7 @@ $N$個の観測値、すなわち入力$x$\,,\,$y$の$N$個のペア
 \end{eqnarray}
 \normalsize
 から生成されているとする。
-尚、$k(x,x')$は、カーネルと呼ばれるもので入力$x$の間の類似度を測るために使われるものである\cite{Gauss-machine-learning}。
+尚、$k(x,x')$は、カーネル関数と呼ばれるもので入力$x$の間の類似度を測るために使われるものであり\cite{Gauss-machine-learning}、測定値間の入力$x\,,\,x'$から求められる。
 
 ここで、
 \large
@@ -444,7 +445,7 @@ $N$個の観測値、すなわち入力$x$\,,\,$y$の$N$個のペア
         y_1\\
         y_2\\
         \vdots\\
-        y_n
+        y_N
         \end{array}
     \right] \nonumber
 \end{eqnarray}
@@ -479,16 +480,16 @@ $\bm{y}$に$\bm{y}^*$を含めたものを新しく
         y_1\\
         y_2\\
         \vdots\\
-        y_n\\
+        y_N\\
         y_1^*\\
         y_2^*\\
         \vdots\\
-        y_n^*\\
+        y_M^*\\
         \end{array}
     \right] \nonumber
 \end{eqnarray}
 \normalsize
-とし、$x_1\,,\,{\cdots}\,,\,x_N$および、$x^*$計算される$(N+1)×(N+1)$次元のカーネル行列を$\bm{K'}$とすると、
+とし、$\bm{X}$および、$\bm{X}^*$から計算される$(N+M)×(N+M)$次元のカーネル行列を$\bm{K'}$とすると、
 これら全体がまたガウス分布に従うので、
 
 \large
@@ -499,7 +500,7 @@ $\bm{y}$に$\bm{y}^*$を含めたものを新しく
 \normalsize
 が成立する。
 
-以上から、ガウス過程回帰は、\cite{Gaussian-Processes-for-Machine-Learning}で開発された導出に従って、観測された$\bm{y}$と予測された$\bm{y}^*$の同時分布が
+つまり、ガウス過程回帰は、\cite{Gaussian-Processes-for-Machine-Learning}で開発された導出に従って、観測された$\bm{y}$と予測された$\bm{y}^*$の同時分布が
 
 \large
 \begin{eqnarray}
@@ -521,20 +522,45 @@ $\bm{y}$に$\bm{y}^*$を含めたものを新しく
 \end{eqnarray}
 \normalsize
 のようなガウス分布に従う。
+尚、$\bm{K}$は測定値の入力$x$と$x'$から求められ、$\bm{k}_*$は測定値の入力$x$と測定されていない入力$x'^*$から求められ、
+$\bm{k}_{**}$は測定されていない入力$x^*$と測定されていない入力$x'^*$から求められる。
+
 このガウス過程の予測分布は、式(\ref{eq:Gaussian-distribution})から、
 
 \large
 \begin{eqnarray}
 p(\bm{y}^*|\bm{x}^*,\mathcal{D})
-={\mathcal{N}}(\bm{k}_*^T\bm{K}^{-1}\bm{y}\,,\,\bm{k}_{**}-\bm{k}_*^T\bm{K}^{-1}\bm{k}_*)  \nonumber
+={\mathcal{N}}(\bm{k}_*^T\bm{K}^{-1}\bm{y}\,,\,\bm{k}_{**}-\bm{k}_*^T\bm{K}^{-1}\bm{k}_*)  \label{eq:Gaussian-predicted-distribution}
 \end{eqnarray}
 \normalsize
 と表わされる。
+以上から、未知のデータは平均を$E$、分散を$\sigma^2$とすると
+
+\large
+\begin{eqnarray}
+    E&=&\bm{k}_*^T\bm{K}^{-1}\bm{y}\\ \label{eq:Gaussian-predicted-average}
+    \sigma^2&=&\bm{k}_{**}-\bm{k}_*^T\bm{K}^{-1}\bm{k}_* \label{eq:Gaussian-predicted-distribution}
+\end{eqnarray}
+\normalsize
+を満たすようなガウス分布に従う。
+
 
 \subsection{ガウス過程回帰による効率的推定}\label{method-subsec:Gaussian-estimation}
+\ref{method-subsec:Gauss}節に示したガウス過程回帰を用いて、本研究では、WCAポテンシャルにおける数密度$\rho$と圧力$P$の関係を効率的に推定する。
+\ref{results-sec:WCA-press}節に、数密度$\rho=\{0.00,0.01,0.02,\cdots,15.0\}$と圧力$P$の関係を示したが、全データのうち端点となる、
+$\{(P,\rho)\}=\{(0.00,0.00)\,,\,(15.0,1.83×10^7)\}$の二点を初期値として、ガウス過程回帰を適用する。
 
+本研究では、カーネル関数として、\cite{Gauss-machine-learning}で導入されている
 
-
+\large
+\begin{eqnarray}
+    k(x,x')=\theta_1\exp\left(-\frac{(x-x')^2}{\theta_2}\right)+\theta_3\delta(x,x')\\ \label{eq:Gauss-kernel}
+    (\theta_1=1.0,\theta_2=0.4,\theta_3=0.1) \nonumber \\ 
+    (x=x':\delta(x,x')=1) \nonumber \\
+    (x\,{\neq}\,x':\delta(x,x')=0) \nonumber
+\end{eqnarray}
+\normalsize
+を採用する。
 
 \chapter{結果} \label{chap:results}
 
