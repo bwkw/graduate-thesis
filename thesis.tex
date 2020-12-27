@@ -3,6 +3,8 @@
 \usepackage[dvipdfmx]{graphicx}
 \usepackage{listings}
 \usepackage{url}
+\usepackage{bm}
+\usepackage{cite}
 
 % ソースコードを挿入するための設定
 \lstset{
@@ -414,29 +416,120 @@ WCAポテンシャルの数密度と圧力の関係を効率的に推定する�
 
 \subsection{ガウス過程回帰}\label{method-subsec:Gauss}
 ガウス過程回帰は、出力の不確実性も定量化できる確率的な補間予測を提供する\cite{machine-learning}。
-ガウス過程回帰は、\cite{Gaussian-Processes-for-Machine-Learning}で開発された導出に従って、観測されたラベル$y$と予測されたラベル$y^*$の合同分布が
+
+
+$N$個の観測値、すなわち入力$x$\,,\,$y$の$N$個のペア
 
 \large
 \[
+    \mathcal{D}=\{(x_1,y_1)\,,\,(x_2,y_2)\,,\,\cdots\,,\,(x_N,y_N)\}
+\]
+\normalsize
+が与えられているとし、簡単のため、$y$は平均が$\bm{0}$となるように正規化してあるとすると、$y=f(x)$という関数$f$が平均0のガウス過程
+
+\large
+\begin{eqnarray}
+    f\,{\sim}\,GP(\bm{0},k(x,x'))\nonumber
+\end{eqnarray}
+\normalsize
+から生成されているとする。
+尚、$k(x,x')$は、カーネルと呼ばれるもので入力$x$の間の類似度を測るために使われるものである\cite{Gauss-machine-learning}。
+
+ここで、
+\large
+\begin{eqnarray}
+\bm{y}=  
+    \left[
+        \begin{array}{c}
+        y_1\\
+        y_2\\
+        \vdots\\
+        y_n
+        \end{array}
+    \right] \nonumber
+\end{eqnarray}
+\normalsize
+とおけば、この$\bm{y}$はガウス分布に従い、入力のすべてのペア$(x_n,x_{n'})$についてカーネル関数
+$k(x,x')$を用いて、
+
+\large
+\begin{eqnarray}
+K_{nn'}
+=   k(x_n,x_{n'})\nonumber
+\end{eqnarray}
+\normalsize
+で与えられるカーネル行列$\bm{K}$を使って、
+
+\large
+\begin{eqnarray}
+\bm{y}
+\,{\sim}\,{\mathcal{N}}(\bm{0},\bm{K})  \nonumber
+\end{eqnarray}
+\normalsize
+が成立する。
+
+今、データに含まれない$\bm{X}^*=(x_1^*,\cdots,x_M^*)$での$\bm{y}^*=(y_1^*,\cdots,y_M^*)$の値を予測する。
+$\bm{y}$に$\bm{y}^*$を含めたものを新しく
+
+\large
+\begin{eqnarray}
+\bm{y'}=  
+    \left[
+        \begin{array}{c}
+        y_1\\
+        y_2\\
+        \vdots\\
+        y_n\\
+        y_1^*\\
+        y_2^*\\
+        \vdots\\
+        y_n^*\\
+        \end{array}
+    \right] \nonumber
+\end{eqnarray}
+\normalsize
+とし、$x_1\,,\,{\cdots}\,,\,x_N$および、$x^*$計算される$(N+1)×(N+1)$次元のカーネル行列を$\bm{K'}$とすると、
+これら全体がまたガウス分布に従うので、
+
+\large
+\begin{eqnarray}
+\bm{y'}
+\,{\sim}\,{\mathcal{N}}(\bm{0},\bm{K'})  \nonumber
+\end{eqnarray}
+\normalsize
+が成立する。
+
+以上から、ガウス過程回帰は、\cite{Gaussian-Processes-for-Machine-Learning}で開発された導出に従って、観測された$\bm{y}$と予測された$\bm{y}^*$の同時分布が
+
+\large
+\begin{eqnarray}
     \left[
         \begin{array}{l}
-            y \\
-            y^* 
+            \bm{y} \\
+            \bm{y}^* 
         \end{array}
     \right]
-    {\sim} N
+    {\sim}\,{\mathcal{N}}
     \left(0,
         \left[
             \begin{array}{cc}
-                K(X,X) & K(X,X^*)\\    
-                K(X,X^*) & K(X^*,X^*)
+                \bm{K} & \bm{k}_*\\    
+                \bm{k}_*^T & \bm{k}_{**}
             \end{array}
         \right]
-    \right)
-\]
+    \right) \label{eq:Gaussian-distribution}
+\end{eqnarray}
 \normalsize
+のようなガウス分布に従う。
+このガウス過程の予測分布は、式(\ref{eq:Gaussian-distribution})から、
 
-のようなガウスの事前分布に従う。
+\large
+\begin{eqnarray}
+p(\bm{y}^*|\bm{x}^*,\mathcal{D})
+={\mathcal{N}}(\bm{k}_*^T\bm{K}^{-1}\bm{y}\,,\,\bm{k}_{**}-\bm{k}_*^T\bm{K}^{-1}\bm{k}_*)  \nonumber
+\end{eqnarray}
+\normalsize
+と表わされる。
 
 \subsection{ガウス過程回帰による効率的推定}\label{method-subsec:Gaussian-estimation}
 
