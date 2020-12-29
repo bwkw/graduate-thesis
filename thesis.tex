@@ -12,7 +12,7 @@
      frame = tbrl
 }
 
-\title{卒業論文のタイトル}
+\title{ガウス過程回帰を用いた効率的な相図探索}
 \author{慶應義塾大学理工学部物理情報工学科\\
 指導教員 渡辺宙志\\
 学籍番号 61713173\\
@@ -48,16 +48,17 @@
 
 
 \chapter{手法} \label{chap:method}
-\section{Weeks-Chandler-Anderse\,(WCA)ポテンシャルの圧力}\label{method-sec:WCA-press}
 \ref{method-sec:WCA-press}節ではWeeks-Chandler-Andersen\,(WCA)ポテンシャルにおける数密度と圧力の関係を調べる。
 \ref{method-subsec:WCA}節ではWCAポテンシャルの説明を示し、
 \ref{method-subsec:WCA-phase}節ではWCAポテンシャルの相図の概念図を示し、
 \ref{method-subsec:WCA-pressure}節ではWCAポテンシャルにおける数密度と圧力の関係を調べる具体的な実験方法を示す。
 
+\section{Weeks-Chandler-Anderse\,(WCA)ポテンシャルの圧力}\label{method-sec:WCA-press}
+
 
 \subsection{Weeks-Chandler-Andersen\,(WCA)ポテンシャル}\label{method-subsec:WCA}
 分子動力学計算において頻繁に用いられるモデルの一つにLennard-Jones\,(LJ)ポテンシャルと呼ばれるものが存在する。
-LJポテンシャルは、アルゴンのような希ガスのファンデルワールス力を記述するために提案\cite{Lennard_Jones_1931}されたもので、
+LJポテンシャルは、アルゴンのような貴ガスのファンデルワールス力を記述するために提案\cite{Lennard_Jones_1931}されたもので、
 このポテンシャルモデルにおいて二つの原子間相互作用ポテンシャルエネルギーは
 
 \large
@@ -67,28 +68,26 @@ LJポテンシャルは、アルゴンのような希ガスのファンデルワ
 \normalsize
 と表される。
 ここで、rは原子間距離、${\sigma}$は原子直径の長さ、${\varepsilon}$はポテンシャルの深さを表す。
-式(\ref{eq:lj})の一項目$4{\varepsilon}(\frac{\sigma}{r})^{12}$は原子間の斥力作用によるものであり、二項目$-4\varepsilon(\frac{\sigma}{r})^{6}$は原子間の引力作用によるものである。
-LJポテンシャルでは、単位系としてLJ単位系と呼ばれるものを用いる。
-LJ単位系は、LJポテンシャルのパラメーター${\sigma}$\,,\,${\varepsilon}$を元に定義することが出来、単位系を無次元にしたものである。
-LJ単位系は、ユニティーに近い値を計算できること、方程式が単純化されること、結果を簡単にスケーリングできることなどに優れる。
-アルゴンでは、${\sigma}=3.40×10^{-10}\,\mathrm{m}$\,,\,${\varepsilon}=1.67×10^{-21}\,\mathrm{J}$と定義\cite{argon-parameters}され、
-他にも多くの気体ごとに値が定められている\cite{graphane-parameters}\cite{many-parameters}。
+式(\ref{eq:lj})の右辺第一項は原子間の斥力相互作用を表し、右辺第二項は原子間の引力相互作用を表す。
+LJポテンシャルを用いる系では、パラメータ$\sigma$\,,\,$\varepsilon$を用いて物理量を無次元化したLJ単位系と呼ばれる単位を用いる。
+アルゴンでは、${\sigma}=3.40×10^{-10}\,\mathrm{m}$\,,\,${\varepsilon}=1.67×10^{-21}\,\mathrm{J}$であり\cite{argon-parameters}、
+他にも多くの気体ごとに値が定められている\cite{graphane-parameters,many-parameters}。
 
-LJ単位系では、温度$T^*$をポテンシャル$\varepsilon$\,,ボルツマン定数$k$を用いて、
+LJ単位系では、温度$T^*$はポテンシャル$\varepsilon$\,,ボルツマン定数$k$を用いて、
 
 \large
 \begin{equation}
 T^*=\frac{kT}{\varepsilon}\label{eq:T}
 \end{equation}
 \normalsize
-圧力$P^*$をポテンシャル${\sigma}$\,,\,${\varepsilon}$を用いて
+圧力$P^*$はポテンシャル${\sigma}$\,,\,${\varepsilon}$を用いて
 
 \large
 \begin{equation}
 P^*=\frac{P\sigma^3}{\varepsilon}\label{eq:P}
 \end{equation}
 \normalsize
-数密度$\rho^*$をポテンシャル$\sigma$を用いて、
+数密度$\rho^*$はポテンシャル$\sigma$を用いて、
 
 \large
 \begin{equation}
@@ -99,7 +98,7 @@ P^*=\frac{P\sigma^3}{\varepsilon}\label{eq:P}
 
 このLJポテンシャルの斥力作用と引力作用が入れ替わる$r=2^{\frac{1}{6}}{\approx}1.12246$にカットオフ距離を設けたポテンシャルをWCAポテンシャルと呼ぶ
 (WCAポテンシャルでもLJ単位系を用いる)。
-カットオフ距離とは、その距離内の原子間の相互作用のみを考慮するものであり、それ以上の距離での原子間の力を無視するもの\cite{WATANABE20191}である。
+カットオフ距離とは、その距離内の原子間の相互作用のみを考慮するものであり、それ以上の距離での原子間の力を無視するものである\cite{WATANABE20191}。
 WCAポテンシャルにおいて二つの原子間相互作用ポテンシャルエネルギーは、
 
 \large
@@ -123,13 +122,13 @@ WCAポテンシャルにおいて二つの原子間相互作用ポテンシャ�
     \caption{WCAとLJの原子間距離-ポテンシャルエネルギー}
     \label{fig:dis-poen}
 \end{figure}
-図{\ref{fig:dis-poen}に示すように、WCAポテンシャルはLJポテンシャルにカットオフ距離$r=2^{\frac{1}{6}}{\approx}1.12246$を設けることにより、
-$r>2^{\frac{1}{6}}{\approx}1.12246$でポテンシャルエネルギーが0になっている。
+図{\ref{fig:dis-poen}に示すように、WCAポテンシャルはLJポテンシャルにカットオフ距離$r_c=2^{\frac{1}{6}}{\approx}1.12246$を設けることにより、
+$r>r_c$でポテンシャルエネルギーが0になっている。
 
 
 \newpage
 \subsection{WCAポテンシャルの相図}\label{method-subsec:WCA-phase}
-相図とは、熱力学的な状態量と物質や系の関係を表したものであり、相図マッピングは、物理・成分科学の奥の分野で中心的な作業となっている\cite{phase-diagram}。
+相図とは、熱力学的な状態量と物質や系の関係を表したものであり、相図の作成は、物性物理の分野において非常に重要である\cite{phase-diagram}。
 
 以下の図\ref{fig:wca-phase-diagram}に式(\ref{eq:wca})に示したWCAポテンシャルの相図の概念図を示す。
 
@@ -145,61 +144,60 @@ $r>2^{\frac{1}{6}}{\approx}1.12246$でポテンシャルエネルギーが0に�
 \end{figure}
 
 図\ref{fig:wca-phase-diagram}に示すように、WCAポテンシャルはfluid(流体相)とsolid(固体相)の二相に分離する。
-温度を一定にし密度を高くしていくと、ある密度で流体相から固体相への相転移を生じる。
+温度一定のまま密度を高くしていくと、ある密度で流体相から固体相への相転移を起こす。
 この相転移近傍では、圧力の振る舞いが大きく変化するので、\ref{method-subsec:WCA-pressure}節では、
-相転移近傍での圧力の振る舞いの変化に注意して研究を進めるものとする。
+相転移近傍での圧力の振る舞いの変化を正しく捉えられるような手法を構築する。
 
 
 \subsection{WCAポテンシャルの圧力測定}\label{method-subsec:WCA-pressure}
-式(\ref{eq:wca})に示したWCAポテンシャルにおける圧力の測定を分子動力学プログラムLAMMPS\cite{lammps}によるシミュレーションを用いて行う。
+原子や分子の物理的な動きのコンピューターシミュレーション手法を分子動力学法(Molecular Dynamics method, MD)と言う\cite{molecular-dynamics}。
+\ref{method-WCA-pressure}節では、式(\ref{eq:wca})に示したWCAポテンシャルにおける圧力の測定を分子動力学プログラムLarge-scale Atomic/Molecular Massively Parallel Simulator\,(LAMMPS)\cite{lammps}によるシミュレーションを用いて行う。
 尚、本研究では、式(\ref{eq:wca})の${\sigma}$(原子直径の長さ)\,,\,${\varepsilon}$(ポテンシャルの深さ)を共に1.0とし、
 図\ref{fig:wca-phase-diagram}で示した赤線上の状態点について、研究を進めるものとする。
 
 
-本研究では、初期設定として1辺$L$の立方体の中に2048個の面心立方face-centered cubic\,(fcc)構造上に配置した分子を用意し、研究を進めるものとする。
+本研究では、初期設定として1辺$L$の立方体の中に$N=2048$個の面心立方face-centered cubic\,(fcc)構造上に配置した分子を用意し、研究を進めるものとする。
 以下の図\ref{initial-state-molecule}に、初期状態の分子構造を示す。
 
-この仮定から、用意されたWCAポテンシャルの数密度は、
+この系の数密度は、
 \large
 \begin{equation}
-\rho = {\frac{2048}{L^3}}{\label{eq:density}}
+\rho = {\frac{N}{L^3}}{\label{eq:density}}
 \end{equation}
 \normalsize
 と表される。
 
-本研究では、数密度$\rho$を0.01〜15.0に0.01ずつ値をとり、LAMMPSにより圧力$P$を測定した。
-本研究では式(\ref{eq:density})にLAMMPSで指定した$L$を代入することにより数密度を決定するため、数密度を0にしてLAMMPSでシミュレーションを行うことが不可能であったため、数密度は0.01からとした。
-ただし、数密度0.00では圧力が0.00であることは自明であるため、特に問題はないものとする。
+数密度$\rho=0.01$から15.0まで、0.01刻みで圧力$P$を測定した。圧力の測定にはLAMMPSを用いた。
 この初期条件のもと、温度制御を1.0とし、タイムステップ0.001で20000実行のシミュレーションを行った。
-尚、全ての研究でnvtによる温度制御ができていたことを前提とする。
-nvtとは、
+尚、全ての研究でNVTによる温度制御ができていたことを前提とする。
+NVTとは、
 
 以下の図\ref{molecule-simulation}に、シミュレーション途中の分子構造を示す。
 
 
-WCAポテンシャルにおける圧力は、ビリアル定理\cite{virial-therom}によって
+二体相互作用をする粒子系における圧力は、ビリアル定理によって
 
 \large
 \begin{equation}
 PV=NkT+{\frac{1}{3}}\langle\sum_{i=j}^N\vec{q_{ij}} \cdot \vec{r_{ij}}\rangle{\label{eq:Theoritical-pressure}}
 \end{equation}
 \normalsize
-と表される\cite{Theoritical-pressure}。
-ここで、$P$は圧力、$V$は体積、$N$は原子数、$k$はボルツマン定数、$T$は温度、$\vec{q_{ij}}$は原子間距離、$\vec{r_{ij}}$は原子間に働く力である。
+と表される\cite{Theoritical-pressure,virial-therom}。
+ここで、$P$は圧力、$V$は体積、$N$は原子数、$k$はボルツマン定数、$T$は温度、$\vec{q_{ij}}$は粒子iと粒子jの相対位置ベクトル、$\vec{r_{ij}}$は原子間に働く力ベクトルである。
 
-\ref{method-subsec:WCA-phase}節に示したように、WCAポテンシャルは中密度あたりで相転移が起こることから、
-中密度で圧力の振る舞いが急激に変化すると考えられる。
-\ref{results-sec:WCA-press}節では、LAMMPSによるシミュレーションで測定されたWCAポテンシャルの圧力の振る舞いを
+\ref{method-subsec:WCA-phase}節に示したように、WCAポテンシャルはある密度で流体ー固体相転移を起こすことから、
+相転移点近傍で圧力の振る舞いが急激に変化すると考えられる。
+\ref{results-sec:WCA-press}節では、MDシミュレーションで測定されたWCAポテンシャルの圧力の振る舞いを、
 原子間の相互作用をほぼ無視できる低密度状態、流体相から固体層への相転移近傍の中密度状態、原子間の相互作用の寄与が大きい高密度状態において調べる。
 
 \section{WCAポテンシャルの状態方程式の推定}\label{method-sec:WCA-equation}
 \ref{method-sec:WCA-equation}節では、\ref{results-sec:WCA-press}節で調べたWCAポテンシャルにおける圧力$P$を数密度$\rho$の状態方程式で表す。
-\ref{method-subsec:virial}節、\ref{method-subsec:BWR}節では、それぞれ圧力を密度の項で展開するビリアル展開、Benedict–Webb–Rubin(BWR)方程式の説明を示し、
+\ref{method-subsec:virial}節、\ref{method-subsec:BWR}節では、それぞれ圧力を密度の項で展開するビリアル展開、Benedict-Webb-Rubin(BWR)方程式の説明を示し、
 \ref{method-subsec:WCA-equation}節では、WCAポテンシャルの圧力を状態方程式で表す具体的な手法を示す。
 
 \subsection{ビリアル展開}\label{method-subsec:virial}
 気体の振る舞いを表す有望な記述の一つにビリアル展開と呼ぶものが存在する。
-これは、Heikeによって1901年に提唱されたもの\cite{virial-Heike}で、多くの研究で利用されている。
+これは、Heikeによって1901年に提唱されたもので、多くの研究で利用されている\cite{virial-Heike}。
 状態方程式のビリアル展開は、圧力を密度の冪級数を用いて表現するもので、
 
 \large
@@ -211,11 +209,11 @@ P=b_1{\rho}+b_2{\rho}^2+b_3{\rho}^3+b_4{\rho}^4+\cdots \label{eq:virial}
 と表される。
 式(\ref{eq:virial})の密度のn番目の累乗の係数を第nビリアル係数と呼ぶ\cite{virial-expansion}。
 これらのビリアル係数は、増加する原子数で構成される集団群における原子の相互作用を表し、第2、第3、第4のビリアル係数は、2つ、3つ、4つ...の分子を含む衝突が気体中で重要になったときの理想的な振る舞いからの逸脱を表す。
-圧力の効果は、分子間の距離を減少させることであるので、圧力が高くなるにつれて、考慮されなければならないビリアル項が増加する\cite{virial-Heike}。
+高密度になるほど、多体の相互作用の寄与が大きくなるので、圧力が高くなるにつれて、考慮されなければならないビリアル項が増加する\cite{virial-Heike}。
 
-\subsection{Benedict–Webb–Rubin(BWR)方程式}\label{method-subsec:BWR}
-\ref{method-subsec:virial}節のように、Heikeが提唱したビリアル展開は、圧力を密度の冪級数を用いて表現したものであるが、この式に経験則的に指数の項を付け加えたものをBenedict–Webb–Rubin(以下BWR)方程式と呼ぶ。
-BWR方程式は、軽質炭化水素とその混合物の熱力学的特性を相関させ、予測するために1940年にManson、George、Rubinによって提唱された\cite{BWR-equation:original}。
+\subsection{Benedict-Webb-Rubin(BWR)方程式}\label{method-subsec:BWR}
+\ref{method-subsec:virial}節のように、Heikeが提唱したビリアル展開は、圧力を密度の冪級数を用いて表現したものであるが、この式に経験則的に指数の項を付け加えたものをBenedict-Webb-Rubin(BWR)方程式と呼ぶ。
+BWR方程式は、軽質炭化水素の熱力学的性質を予測するために、1940年にManson、George、Rubinによって提唱された\cite{BWR-equation:original}。
 BWR方程式の原式は、圧力$P$をモル密度$d$と絶対温度$T$の関数として表現したもので、
 
 \large
@@ -235,13 +233,15 @@ P=\sum_{n=1}^9a_n{\rho}^n+\exp(-{\gamma}{\rho}^2)\sum_{n=10}^{15}a_n{\rho}^{2n-1
 \normalsize
 と表されるmodified-Benedict–Webb–Rubin(以下mBWR)方程式が提唱\cite{m-BWR-equation}されたが、
 依然として気体の状態方程式を完璧に再現することは出来なかった。
-その後も、多くの研究者が気体の状態方程式の項を増やすことで、完璧な再現を試みた\cite{MCCARTY1974276}\cite{BWR-equation:13}\cite{BWR-equation:25}が、項の個数は際限なく増え、項自体の物理的意味も不明瞭であった。
+その後も、多くの研究者が気体の状態方程式の項を増やすことで、完璧な再現を試みた\cite{MCCARTY1974276,BWR-equation:13,BWR-equation:25}が、項の個数は際限なく増え、項自体の物理的意味も不明瞭であった。
 
 \subsection{WCAポテンシャルの状態方程式の推定}\label{method-subsec:WCA-equation}
 \ref{method-subsec:virial}節、\ref{method-subsec:BWR}節のように気体の状態方程式を項を増やすことによって再現しようと試みたが、項の個数は際限なく増え続けた。
-また、BWR方程式の指数項は経験則的に付け加えたものであり、物理的意味もないことから項を増やし続け、状態方程式の再現をすることには意味がない。
+また、BWR方程式に含まれる指数項は経験的に付け加えられたものであり、物理的な意味が不明瞭である。
 
-そこで、本研究では、WCAポテンシャルにおける状態方程式をgnuplot\cite{gnuplot}を用いた最小二乗法により5次式に近似する。
+そこで、本研究では機械学習により、より多くの候補からWCAポテンシャルにおける状態方程式を推定する方が効果的であると言える。
+最終的には、機械学習が推定してきた項の物理的意味を考察することが目標であるが、まず本研究では最小二乗法による低次の多項式近似により状態方程式を推定し、
+展開係数が先行研究と矛盾しないことを確認する。
 
 以下、最小二乗法の説明を簡潔に示す。
 今、想定される多項式を
@@ -404,8 +404,8 @@ S &=& (Y-XA)^T(Y-XA)\nonumber\\
 で与えられる$A$を求めることで最小二乗法は完結する\cite{least-squares}。
 
 \ref{results-sec:WCA-equation}節では、\ref{results-sec:WCA-press}節で示したWCAポテンシャルにおける数密度と圧力の関係に
-上記で示した最小二乗法を適用し、5次式で近似する。
-その後、5次式で近似した方程式の精度を調べる。
+上記で示した最小二乗法を適用し、密度に関する低次の多項式で近似する。
+その後、近似した方程式の精度を調べる。
 
 
 \section{Gaussian Process Regression(ガウス過程回帰)による効率的推定}\label{method-sec:Gauss}
@@ -546,15 +546,13 @@ p(\bm{y}^*|\bm{x}^*,\mathcal{D})
 を満たすようなガウス分布に従う\cite{Gauss-machine-learning}。
 
 式(\ref{eq:Gaussian-predicted-distribution})に示すようなガウス分布に基づき、未知のデータを推定するが、
-このガウス分布を元に次に評価する状態点を決定する必要が生じる。この際に、式(\ref{eq:Gaussian-predicted-decentration})の分散$\sigma^2$の関数として
+このガウス分布を元に次に評価する点を決定する必要が生じる。この際に、式(\ref{eq:Gaussian-predicted-decentration})の分散$\sigma^2$の関数として
 「獲得関数」と呼ばれるものを使用する。
 獲得関数とは関連分野から借りてきた試行状態の「情報性」を定量化する用語に過ぎない\cite{acquisition-function}。
 
 
 \subsection{ガウス過程回帰によるWCAポテンシャルの状態方程式の効率的推定}\label{method-subsec:Gaussian-estimation}
 \ref{method-subsec:Gauss}節に示したガウス過程回帰を用いて、本研究では、WCAポテンシャルにおける数密度$\rho$と圧力$P$の関係を効率的に推定する。
-\ref{results-sec:WCA-press}節に、数密度$\rho=\{0.00,0.01,0.02,\cdots,15.0\}$と圧力$P$の関係を示したが、全データのうち端点となる、
-$\{(P,\rho)\}=\{(0.00,0.00)\,,\,(15.0,1.83×10^7)\}$の二点を初期値として、ガウス過程回帰を適用する。
 
 本研究では、カーネル関数として、\cite{Gauss-machine-learning}で導入されている
 
@@ -566,14 +564,20 @@ $\{(P,\rho)\}=\{(0.00,0.00)\,,\,(15.0,1.83×10^7)\}$の二点を初期値とし�
     (x\,{\neq}\,x':\delta(x,x')=0) \nonumber
 \end{eqnarray}
 \normalsize
-を採用し、式(\ref{eq:Gaussian-predicted-average})の平均$E$が、測定された点から予測される関数を、
-式(\ref{eq:Gaussian-predicted-decentration})の分散$\sigma^2$が予測される関数の不確かさを示すものとする。
+を採用する。
+
+\ref{results-sec:WCA-press}節に、数密度$\rho=\{0.00,0.01,0.02,\cdots,15.0\}$と圧力$P$の関係を示したが、全データのうち端点となる、
+$\{(P,\rho)\}=\{(0.00,0.00)\,,\,(15.0,1.83×10^7)\}$の二点を初期の入力データとして、ガウス過程回帰を適用する。
+式(\ref{eq:Gaussian-predicted-average})の平均$E$が入力データから予測される関数を、
+式(\ref{eq:Gaussian-predicted-decentration})の分散$\sigma^2$が入力データから予測される関数の不確かさを示すものとする。
+また、各数密度における分散の平方根を取った標準偏差$\sigma$の大きさを獲得関数とし、この関数を最大にする、すなわち不確かさが最大の数密度を次の試行点として選択する。
+この数密度におけるWCAポテンシャルの圧力をMDシミュレーションにより測定し、入力データを更新し、
 
 \chapter{結果} \label{chap:results}
 
 \section{WCAポテンシャルの圧力}\label{results-sec:WCA-press}
-\ref{results-sec:WCA-press}節では、各数密度においてLAMMPSのシミュレーションで測定されたWCAポテンシャルの圧力の振る舞いを調べる。
-まず、数密度$\rho$とLAMMPSのシミュレーションで測定されたWCAポテンシャルの圧力$P$の関係を
+\ref{results-sec:WCA-press}節では、各数密度においてMDシミュレーションで測定されたWCAポテンシャルの圧力の振る舞いを調べる。
+まず、数密度$\rho$とMDシミュレーションで測定されたWCAポテンシャルの圧力$P$の関係を
 以下の図\ref{fig:den-pre}に示す。
 
 \begin{figure}[htbp]
@@ -587,7 +591,7 @@ $\{(P,\rho)\}=\{(0.00,0.00)\,,\,(15.0,1.83×10^7)\}$の二点を初期値とし�
 以下、\ref{results-subsec:WCA-press-low-density}節では原子間の相互作用をほぼ無視できる低密度状態、
 \ref{results-subsec:WCA-press-middle-density}節では流体相から固体相への相転移近傍の中密度状態、
 \ref{results-subsec:WCA-press-high-density}節では原子間の相互作用の寄与が大きい高密度状態において、
-LAMMPSによるシミュレーションで測定されたWCAポテンシャルの圧力について具体的に調べる。
+MDシミュレーションで測定されたWCAポテンシャルの圧力について具体的に調べる。
 
 
 \subsection{低密度状態のWCAポテンシャルの圧力}\label{results-subsec:WCA-press-low-density}
@@ -634,7 +638,7 @@ PV\,&{\simeq}&\,NkT\nonumber\\
 {\Leftrightarrow}{\ }{\ }P\,&{\simeq}&\,{\rho}kT\nonumber
 \end{eqnarray}
 \normalsize
-と書け、本研究では、$k=1$、$T=1$と設定し、LAMMPSのシミュレーションにより圧力測定を行ったので、
+と書け、本研究では、$k=1$、$T=1$と設定し、MDシミュレーションにより圧力測定を行ったので、
 
 \large
 \begin{equation}
@@ -643,7 +647,7 @@ P\,{\simeq}\,{\rho} \label{eq:ideal-value}
 \normalsize
 と表現できることが予測される。
 
-式(\ref{eq:ideal-value})を「理論近似値」、本研究におけるLAMMPSのシミュレーションにより測定された圧力を「測定値」とし、その結果を図\ref{fig:lowden_compare:den-pre}に示す。
+式(\ref{eq:ideal-value})を「理論近似値」、本研究におけるMDシミュレーションにより測定された圧力を「測定値」とし、その結果を図\ref{fig:lowden_compare:den-pre}に示す。
 
 \begin{figure}[htbp]
     \begin{center}
@@ -672,7 +676,7 @@ P\,{\simeq}\,{\rho} \label{eq:ideal-value}
 
 \newpage
 流体相から固体相への相転移近傍の中密度状態では、相転移により圧力の振る舞いが急激に変化すると考えられる。
-相転移近傍の中密度状態での数密度$\rho$とLAMMPSのシミュレーションで測定されたWCAポテンシャルの圧力$P$の関係を
+相転移近傍の中密度状態での数密度$\rho$とMDシミュレーションで測定されたWCAポテンシャルの圧力$P$の関係を
 以下の図\ref{fig:middleden_den-pre}に示す。
 
 \begin{figure}[htbp]
@@ -685,7 +689,7 @@ P\,{\simeq}\,{\rho} \label{eq:ideal-value}
 
 
 図\ref{fig:middleden_den-pre}から$\rho\,{\simeq}\,1$付近で相転移が起こり、圧力の振る舞いが急激に変化することを確認できた。
-この相転移の存在により、圧力の振る舞いが急激に変わるので、WCAポテンシャルの状態方程式を\ref{method-subsec:virial}節で示したビリアル展開や、
+この相転移の存在により、圧力の振る舞いが急激に変化するので、WCAポテンシャルの状態方程式を\ref{method-subsec:virial}節で示したビリアル展開や、
 \ref{method-subsec:BWR}節で示したBWR,m-BWR方程式を用いて表すと項の個数が際限なく増え、項自体の物理的意味も不明瞭になると考えられる。
 
 
@@ -728,7 +732,7 @@ $\rho\,{\simeq}\,14.7$と表される。
 これより高密度の状態では、次々に原子間の相互作用が働いていくが、この高密度状態でも圧力が式(\ref{eq:Theoritical-pressure})において
 再隣接原子の寄与のみを考慮したもので十分に表されることを確認する。
 
-式(\ref{eq:ideal-value})において再隣接原子の寄与のみを考慮したものを「理論近似値」、本研究におけるLAMMPSのシミュレーションにより測定された圧力を「測定値」とし、その結果を図\ref{fig:highden_compare:den-pre}に示す。
+式(\ref{eq:ideal-value})において再隣接原子の寄与のみを考慮したものを「理論近似値」、本研究におけるMDシミュレーションにより測定された圧力を「測定値」とし、その結果を図\ref{fig:highden_compare:den-pre}に示す。
 
 \begin{figure}[htbp]
     \begin{center}
@@ -744,7 +748,7 @@ $\rho\,{\simeq}\,14.7$と表される。
 
 
 
-以上から、LAMMPSのシミュレーションにより測定されたWCAポテンシャルの圧力の振る舞いを
+以上から、MDシミュレーションにより測定されたWCAポテンシャルの圧力の振る舞いを
 原子間の相互作用をほぼ無視できる低密度状態、流体相から固体相への相転移近傍の中密度状態、原子間の相互作用の寄与が大きい高密度状態において確認できた。
 
 
@@ -754,7 +758,7 @@ $\rho\,{\simeq}\,14.7$と表される。
 \ref{method-subsec:BWR}節で示したBWR,m-BWR方程式を用いると、\ref{results-subsec:WCA-press-middle-density}節で示した相転移の存在により、
 項の個数が際限なく増え、項自体の物理的意味も不明瞭になると考えられる。
 本研究では、WCAポテンシャルの状態方程式を機械学習を用いた関数近似を行うことにより表現することを目的とする。
-まず、本研究で得られたLAMMPSのシミュレーションによる圧力の値を「測定値」、gnuplotを用いて5次式の最小二乗法を行った関数を「5次式近似」とし、
+まず、本研究で得られたMDシミュレーションによる圧力の値を「測定値」、gnuplotを用いて5次式の最小二乗法を行った関数を「5次式近似」とし、
 以下の図\ref{fig:5den-pre}に示す。
 
 
