@@ -543,7 +543,12 @@ p(\bm{y}^*|\bm{x}^*,\mathcal{D})
     \sigma^2&=&\bm{k}_{**}-\bm{k}_*^T\bm{K}^{-1}\bm{k}_* \label{eq:Gaussian-predicted-decentration}
 \end{eqnarray}
 \normalsize
-を満たすようなガウス分布に従う。
+を満たすようなガウス分布に従う\cite{Gauss-machine-learning}。
+
+式(\ref{eq:Gaussian-predicted-distribution})に示すようなガウス分布に基づき、未知のデータを推定するが、
+このガウス分布を元に次に評価する状態点を決定する必要が生じる。この際に、式(\ref{eq:Gaussian-predicted-decentration})の分散$\sigma^2$の関数として
+「獲得関数」と呼ばれるものを使用する。
+獲得関数とは関連分野から借りてきた試行状態の「情報性」を定量化する用語に過ぎない\cite{acquisition-function}。
 
 
 \subsection{ガウス過程回帰によるWCAポテンシャルの状態方程式の効率的推定}\label{method-subsec:Gaussian-estimation}
@@ -561,7 +566,8 @@ $\{(P,\rho)\}=\{(0.00,0.00)\,,\,(15.0,1.83×10^7)\}$の二点を初期値とし�
     (x\,{\neq}\,x':\delta(x,x')=0) \nonumber
 \end{eqnarray}
 \normalsize
-を採用する。
+を採用し、式(\ref{eq:Gaussian-predicted-average})の平均$E$が、測定された点から予測される関数を、
+式(\ref{eq:Gaussian-predicted-decentration})の分散$\sigma^2$が予測される関数の不確かさを示すものとする。
 
 \chapter{結果} \label{chap:results}
 
@@ -749,7 +755,7 @@ $\rho\,{\simeq}\,14.7$と表される。
 項の個数が際限なく増え、項自体の物理的意味も不明瞭になると考えられる。
 本研究では、WCAポテンシャルの状態方程式を機械学習を用いた関数近似を行うことにより表現することを目的とする。
 まず、本研究で得られたLAMMPSのシミュレーションによる圧力の値を「測定値」、gnuplotを用いて5次式の最小二乗法を行った関数を「5次式近似」とし、
-\ref{fig:5den-pre}に示す。
+以下の図\ref{fig:5den-pre}に示す。
 
 
 \begin{figure}[htbp]
