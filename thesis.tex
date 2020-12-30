@@ -151,7 +151,7 @@ $r>r_c$でポテンシャルエネルギーが0になっている。
 
 \subsection{WCAポテンシャルの圧力測定}\label{method-subsec:WCA-pressure}
 原子や分子の物理的な動きのコンピューターシミュレーション手法を分子動力学法(Molecular Dynamics method, MD)と言う\cite{molecular-dynamics}。
-\ref{method-WCA-pressure}節では、式(\ref{eq:wca})に示したWCAポテンシャルにおける圧力の測定を分子動力学プログラムLarge-scale Atomic/Molecular Massively Parallel Simulator\,(LAMMPS)\cite{lammps}によるシミュレーションを用いて行う。
+\ref{method-subsec:WCA-pressure}節では、式(\ref{eq:wca})に示したWCAポテンシャルにおける圧力の測定を分子動力学プログラムLarge-scale Atomic/Molecular Massively Parallel Simulator\,(LAMMPS)\cite{lammps}によるシミュレーションを用いて行う。
 尚、本研究では、式(\ref{eq:wca})の${\sigma}$(原子直径の長さ)\,,\,${\varepsilon}$(ポテンシャルの深さ)を共に1.0とし、
 図\ref{fig:wca-phase-diagram}で示した赤線上の状態点について、研究を進めるものとする。
 
@@ -197,17 +197,26 @@ PV=NkT+{\frac{1}{3}}\langle\sum_{i=j}^N\vec{q_{ij}} \cdot \vec{r_{ij}}\rangle{\l
 
 \subsection{ビリアル展開}\label{method-subsec:virial}
 気体の振る舞いを表す有望な記述の一つにビリアル展開と呼ぶものが存在する。
-これは、Heikeによって1901年に提唱されたもので、多くの研究で利用されている\cite{virial-Heike}。
-状態方程式のビリアル展開は、圧力を密度の冪級数を用いて表現するもので、
+これは、Heikeによって1901年に提唱されたもの\cite{virial-Heike}で、多くの研究で利用されている\cite{virial-expansion-example1,virial-expansion-example2,virial-expansion-example3}。
+
+理想気体の状態方程式は、
 
 \large
 \begin{equation}
-P=b_1{\rho}+b_2{\rho}^2+b_3{\rho}^3+b_4{\rho}^4+\cdots \label{eq:virial}
+P=RT{\rho} \label{eq:ideal-gas-virial}
 \end{equation}
-
 \normalsize
-と表される。
-式(\ref{eq:virial})の密度のn番目の累乗の係数を第nビリアル係数と呼ぶ\cite{virial-expansion}。
+と表されるが、
+実存気体の状態方程式のビリアル展開は、式(\ref{eq:ideal-gas-virial})にずれを補正する項を付け加えたもので、
+
+\large
+\begin{equation}
+P=RT{\rho}+b_2{\rho}^2+b_3{\rho}^3+b_4{\rho}^4+\cdots \label{eq:virial}
+\end{equation}
+\normalsize
+と表され、圧力$P$を密度$\rho$の冪級数を用いて表現する。
+ここで、$T$は温度、$R$は気体定数である。
+式(\ref{eq:virial})の密度$\rho$のn番目の累乗の係数を第nビリアル係数と呼ぶ\cite{virial-expansion}。
 これらのビリアル係数は、増加する原子数で構成される集団群における原子の相互作用を表し、第2、第3、第4のビリアル係数は、2つ、3つ、4つ...の分子を含む衝突が気体中で重要になったときの理想的な振る舞いからの逸脱を表す。
 高密度になるほど、多体の相互作用の寄与が大きくなるので、圧力が高くなるにつれて、考慮されなければならないビリアル項が増加する\cite{virial-Heike}。
 
@@ -239,9 +248,10 @@ P=\sum_{n=1}^9a_n{\rho}^n+\exp(-{\gamma}{\rho}^2)\sum_{n=10}^{15}a_n{\rho}^{2n-1
 \ref{method-subsec:virial}節、\ref{method-subsec:BWR}節のように気体の状態方程式を項を増やすことによって再現しようと試みたが、項の個数は際限なく増え続けた。
 また、BWR方程式に含まれる指数項は経験的に付け加えられたものであり、物理的な意味が不明瞭である。
 
-そこで、本研究では機械学習により、より多くの候補からWCAポテンシャルにおける状態方程式を推定する方が効果的であると言える。
-最終的には、機械学習が推定してきた項の物理的意味を考察することが目標であるが、まず本研究では最小二乗法による低次の多項式近似により状態方程式を推定し、
-展開係数が先行研究と矛盾しないことを確認する。
+そこで、機械学習により、より多くの候補からWCAポテンシャルにおける状態方程式を推定する方が効果的であると言える。
+最終的には、機械学習が推定してきた項の物理的意味を考察することが目標であるが、
+まず本研究では\ref{results-sec:WCA-press}節で示したWCAポテンシャルにおける圧力と数密度の関係に上記で示した最小二乗法を適用し、
+圧力を数密度に関する低次の多項式で近似することにより、WCAポテンシャルの状態方程式を推定する。
 
 以下、最小二乗法の説明を簡潔に示す。
 今、想定される多項式を
@@ -403,9 +413,9 @@ S &=& (Y-XA)^T(Y-XA)\nonumber\\
 \normalsize
 で与えられる$A$を求めることで最小二乗法は完結する\cite{least-squares}。
 
-\ref{results-sec:WCA-equation}節では、\ref{results-sec:WCA-press}節で示したWCAポテンシャルにおける数密度と圧力の関係に
-上記で示した最小二乗法を適用し、密度に関する低次の多項式で近似する。
-その後、近似した方程式の精度を調べる。
+\ref{results-sec:WCA-equation}節では、上記で述べたように\ref{results-sec:WCA-press}節で示したWCAポテンシャルにおける圧力と数密度の関係に
+上記で示した最小二乗法を適用し、圧力を数密度に関する低次の多項式で近似することにより、WCAポテンシャルの状態方程式を推定する。
+その後、推定したWCAポテンシャルの状態方程式の展開係数が先行研究と矛盾しないことを確認する。
 
 
 \section{Gaussian Process Regression(ガウス過程回帰)による効率的推定}\label{method-sec:Gauss}
@@ -757,7 +767,9 @@ $\rho\,{\simeq}\,14.7$と表される。
 \ref{results-sec:WCA-press}節で示した圧力を数密度を含む項で展開することを試みたとき、\ref{method-subsec:virial}節で示したビリアル展開、
 \ref{method-subsec:BWR}節で示したBWR,m-BWR方程式を用いると、\ref{results-subsec:WCA-press-middle-density}節で示した相転移の存在により、
 項の個数が際限なく増え、項自体の物理的意味も不明瞭になると考えられる。
-本研究では、WCAポテンシャルの状態方程式を機械学習を用いた関数近似を行うことにより表現することを目的とする。
+そこで、\ref{results-sec:WCA-equation}節では、\ref{results-sec:WCA-press}節で示したWCAポテンシャルにおける圧力と数密度の関係に上記で示した最小二乗法を適用し、
+圧力を数密度に関する低次の多項式で近似することにより、WCAポテンシャルの状態方程式を推定する。
+
 まず、本研究で得られたMDシミュレーションによる圧力の値を「測定値」、gnuplotを用いて5次式の最小二乗法を行った関数を「5次式近似」とし、
 以下の図\ref{fig:5den-pre}に示す。
 
