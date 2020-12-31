@@ -769,7 +769,7 @@ $\rho\,{\simeq}\,14.7$と表される。
 項の個数が際限なく増え、項自体の物理的意味も不明瞭になると考えられる。
 そこで、\ref{results-sec:WCA-equation}節では、\ref{results-sec:WCA-press}節で示したWCAポテンシャルにおける圧力と数密度の関係に上記で示した最小二乗法を適用し、
 圧力を数密度に関する低次の多項式で近似することにより、WCAポテンシャルの状態方程式を推定する。
-尚、本研究における低次の多項式近似とは、
+尚、本研究における多項式近似とは、
 
 \large
 \begin{eqnarray}
@@ -778,14 +778,20 @@ $\rho\,{\simeq}\,14.7$と表される。
     &=& {\rho}kT \nonumber
 \end{eqnarray}
 \normalsize
-を元に、式(\ref{eq:virial})のビリアル展開を
+を元に、($k$:ボルツマン定数)式(\ref{eq:virial})のビリアル展開を
 
 \large
 \begin{equation}
     P=kT\rho+b_2\rho^2+b_3\rho^3+b_4\rho^4+\cdots\label{eq:search-virial}
 \end{equation}
 \normalsize
-と表したものである。
+と表したものであるが、\ref{results-sec:WCA-press}節では、ボルツマン定数$k=1.0$、温度$T=1.0$としているので、式(\ref{eq:search-virial})より、
+\large
+\begin{equation}
+    P=\rho+b_2\rho^2+b_3\rho^3+b_4\rho^4+\cdots\label{eq:modified-search-virial}
+\end{equation}
+\normalsize
+と表される。
 
 近似精度$A$を、各数密度$\rho$における圧力の測定値$P$と近似値$P'$の百分率誤差の絶対値の平均として定義すると、
 近似精度は、
@@ -797,13 +803,13 @@ $\rho\,{\simeq}\,14.7$と表される。
 \normalsize
 と表される。
 WCAポテンシャルの圧力を式(\ref{eq:search-virial})のように数密度で2次〜5次に近似し、その近似精度を式(\ref{eq:percentage-error})に基づいて評価する。
-この結果を以下の表\ref{approximation-accuracy}に示す。
+この結果を以下の表\ref{table:approximation-accuracy}に示す。
 
 \begin{table}[htbp]
     \begin{center}
         \caption{最小二乗法によるn次近似の近似精度}
             \begin{tabular}{c c}
-                \hline
+               
                     n\,(次) & {\it{A}}\,(％) \\ \hline\hline
                     2 & 1.93E5 \\ 
                     3 & 2.32E5 \\ 
@@ -814,24 +820,34 @@ WCAポテンシャルの圧力を式(\ref{eq:search-virial})のように数密�
                 
             \end{tabular}
     \end{center}
-    \label{approximation-accuracy}
+    \label{table:approximation-accuracy}
 \end{table}
 
 低次から近似を行い、\ref{results-sec:WCA-press}節のMDシミュレーションにより測定されたWCAポテンシャルの圧力を数密度に関する多項式で近似することを試みたが、
-上記の表\ref{approximation-accuracy}に基づくn次近似の近似精度から、本研究では、低次の多項式として5次の多項式を採用する。
+上記の表\ref{table:approximation-accuracy}に基づくn次近似の近似精度から、本研究では、低次の多項式として5次の多項式を採用した。
 
-まず、本研究で得られたMDシミュレーションによる圧力の値を「測定値」、gnuplotを用いて5次式の最小二乗法を行った関数を「5次式近似」とし、
+最小二乗法により5次に近似されたWCAポテンシャルの状態方程式は、
+
+\large
+\begin{equation}
+    P=\rho+8.40579\rho^2+-29.0885\rho^3+0.0158545\rho^4+24.2634\rho^5 \label{eq:5den-pre}
+\end{equation}
+\normalsize
+と表された。
+本研究で得られたMDシミュレーションによる圧力の値を「測定値」、式(\ref{eq:5den-pre})から得られる圧力の値を「5次近似値」とし、
 以下の図\ref{fig:5den-pre}に示す。
-
 
 \begin{figure}[htbp]
     \begin{center}
         \includegraphics[width=14cm]{fig/5den-pre.pdf}
     \end{center}
-    \caption{WCAポテンシャルの状態方程式の5次式近似}
+    \caption{WCAポテンシャルにおけるMDシミュレーションによる圧力の測定値と5次近似値の比較}
     \label{fig:5den-pre}
 \end{figure}
 
+\newpage
+図\ref{fig:5den-pre}から、WCAポテンシャルの状態方程式は、式(\ref{eq:5den-pre})で書き表せているようではあるが、
+表\ref{table:approximation-accuracy}から、近似精度としては十分と言えない。
 
 
 \section{ガウス過程回帰によるWCAポテンシャルの状態方程式の効率的推定}
