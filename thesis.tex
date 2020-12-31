@@ -203,7 +203,7 @@ PV=NkT+{\frac{1}{3}}\langle\sum_{i=j}^N\vec{q_{ij}} \cdot \vec{r_{ij}}\rangle{\l
 
 \large
 \begin{equation}
-P=RT{\rho} \label{eq:ideal-gas-virial}
+P=RT{\rho}' \label{eq:ideal-gas-virial}
 \end{equation}
 \normalsize
 と表されるが、
@@ -211,23 +211,23 @@ P=RT{\rho} \label{eq:ideal-gas-virial}
 
 \large
 \begin{equation}
-P=RT{\rho}+b_2{\rho}^2+b_3{\rho}^3+b_4{\rho}^4+\cdots \label{eq:virial}
+P=RT{\rho}'+b_2{{\rho}'}^2+b_3{{\rho}'}^3+b_4{{\rho}'}^4+\cdots \label{eq:virial}
 \end{equation}
 \normalsize
-と表され、圧力$P$を密度$\rho$の冪級数を用いて表現する。
+と表され、圧力$P$をモル密度${\rho}'$の冪級数を用いて表現する。
 ここで、$T$は温度、$R$は気体定数である。
-式(\ref{eq:virial})の密度$\rho$のn番目の累乗の係数を第nビリアル係数と呼ぶ\cite{virial-expansion}。
+式(\ref{eq:virial})のモル密度${\rho}'$のn番目の累乗の係数を第nビリアル係数と呼ぶ\cite{virial-expansion}。
 これらのビリアル係数は、増加する原子数で構成される集団群における原子の相互作用を表し、第2、第3、第4のビリアル係数は、2つ、3つ、4つ...の分子を含む衝突が気体中で重要になったときの理想的な振る舞いからの逸脱を表す。
 高密度になるほど、多体の相互作用の寄与が大きくなるので、圧力が高くなるにつれて、考慮されなければならないビリアル項が増加する\cite{virial-Heike}。
 
 \subsection{Benedict-Webb-Rubin(BWR)方程式}\label{method-subsec:BWR}
 \ref{method-subsec:virial}節のように、Heikeが提唱したビリアル展開は、圧力を密度の冪級数を用いて表現したものであるが、この式に経験則的に指数の項を付け加えたものをBenedict-Webb-Rubin(BWR)方程式と呼ぶ。
 BWR方程式は、軽質炭化水素の熱力学的性質を予測するために、1940年にManson、George、Rubinによって提唱された\cite{BWR-equation:original}。
-BWR方程式の原式は、圧力$P$をモル密度$d$と絶対温度$T$の関数として表現したもので、
+BWR方程式の原式は、圧力$P$をモル密度${\rho}'$と絶対温度$T$の関数として表現したもので、
 
 \large
 \begin{equation}
-P=RT{\rho}+\left(B_0RT-A_0-{\frac{C_0}{T^2}}\right){\rho}^2+(bRT-a){\rho}^3+{\frac{c}{T^2}}(1+{\gamma}{\rho}^2)e^{-{\gamma}{\rho}^2}{\rho}^3+a{\alpha}{\rho}^6\label{eq:BWR}
+P=RT{\rho}'+\left(B_0RT-A_0-{\frac{C_0}{T^2}}\right){{\rho}'}^2+(bRT-a){{\rho}'}^3+{\frac{c}{T^2}}(1+{\gamma}{{\rho}'}^2)e^{-{\gamma}{{\rho}'}^2}{{\rho}'}^3+a{\alpha}{{\rho}'}^6\label{eq:BWR}
 \end{equation}
 \normalsize
 と表される。
@@ -237,7 +237,7 @@ BWR方程式は、気体の状態方程式を表すことに概ね成功して�
 
 \large
 \begin{equation}
-P=\sum_{n=1}^9a_n{\rho}^n+\exp(-{\gamma}{\rho}^2)\sum_{n=10}^{15}a_n{\rho}^{2n-17}\label{eq:mBWR}
+P=\sum_{n=1}^9a_n{{\rho}'}^n+\exp(-{\gamma}{{\rho}'}^2)\sum_{n=10}^{15}a_n{{\rho}'}^{2n-17}\label{eq:mBWR}
 \end{equation}
 \normalsize
 と表されるmodified-Benedict–Webb–Rubin(以下mBWR)方程式が提唱\cite{m-BWR-equation}されたが、
@@ -605,7 +605,7 @@ MDシミュレーションで測定されたWCAポテンシャルの圧力につ
 
 
 \subsection{低密度状態のWCAポテンシャルの圧力}\label{results-subsec:WCA-press-low-density}
-初期状態において、原子間の相互作用が作用する($原子間距離r=カットオフ距離2^{\frac{1}{6}}{\approx}1.12246$)数密度は
+初期状態において、原子間の相互作用が作用する($原子間距離r=カットオフ距離r_c$)数密度は
 
 \large
 \begin{eqnarray}
@@ -723,21 +723,21 @@ WCAポテンシャルにおいて原子間に働く力$\vec{r_{ij}}$の大きさ
 WCAポテンシャルのポテンシャルエネルギーが式(\ref{eq:wca})に従うことから、
 
 \large
-\begin{equation}
-    | {\vec{r_{ij}}} |=\frac{d}{dr}\left(4\left(\left(\frac{1}{r}\right)^{12}-\left(\frac{1}{r}\right)^6\right)\right)=| 48r^{-13}-24r^{-7} |\label{eq:power}
-\end{equation}
+\begin{eqnarray}
+    | {\vec{r_{ij}}} |=\frac{d}{dr}\left(4\left(\left(\frac{1}{r}\right)^{12}-\left(\frac{1}{r}\right)^6\right)\right)=| 48r^{-13}-24r^{-7}| \nonumber
+\end{eqnarray}
 \normalsize
 と書くことができるため、式(\ref{eq:Theoritical-pressure})の第二項の
 
 \large
-\begin{equation}
-    \sum_{i=j}^N\vec{q_{ij}} \cdot \vec{r_{ij}} \label{eq:}
-\end{equation}
+\begin{eqnarray}
+    \sum_{i=j}^N\vec{q_{ij}} \cdot \vec{r_{ij}} \nonumber
+\end{eqnarray}
 \normalsize
 は、距離に対して6乗で減衰することがわかる。
 
 以上から、式(\ref{eq:Theoritical-pressure})の第二項への寄与はほとんどが再隣接原子であることから、本研究では、再隣接原子の寄与のみを考えるものとする。
-第五隣接原子の寄与が生じる密度は、第五隣接原子間距離がWCAポテンシャルのカットオフ距離$2^{\frac{1}{6}}{\approx}1.12246$と等しい、すなわち
+第五隣接原子の寄与が生じる密度は、第五隣接原子間距離がWCAポテンシャルのカットオフ距離$r_c$と等しい、すなわち
 $\rho\,{\simeq}\,14.7$と表される。
 これより高密度の状態では、次々に原子間の相互作用が働いていくが、この高密度状態でも圧力が式(\ref{eq:Theoritical-pressure})において
 再隣接原子の寄与のみを考慮したもので十分に表されることを確認する。
@@ -770,9 +770,35 @@ $\rho\,{\simeq}\,14.7$と表される。
 そこで、\ref{results-sec:WCA-equation}節では、\ref{results-sec:WCA-press}節で示したWCAポテンシャルにおける圧力と数密度の関係に上記で示した最小二乗法を適用し、
 圧力を数密度に関する低次の多項式で近似することにより、WCAポテンシャルの状態方程式を推定する。
 
-本研究では、低次から近似を行い、各数密度における\ref{results-sec:WCA-press}節のMDシミュレーションによる測定値
-圧力を数密度に関する低次の多項式で近似することにより、WCAポテンシャルの状態方程式を推定すると述べたが、本研究では、5次の多項式で近似することとする。
-低次から近似を行った\ref{results-sec:WCA-press}節のMDシミュレーションによる測定値を
+低次から近似を行い、\ref{results-sec:WCA-press}節のMDシミュレーションにより測定されたWCAポテンシャルの圧力を数密度に関する多項式で近似することを試みたが、
+本研究では、低次の多項式として5次の多項式を採用する。
+近似の精度$A$を、各数密度$\rho$における圧力の測定値$P$と近似値$P'$の百分率誤差の絶対値の平均として定義すると、
+近似の精度は、
+
+\large
+\begin{equation}
+    A=\frac{\sum_{i=1}^N\left(|\frac{P'-P}{P}\times100|\right)}{N} \label{eq:}
+\end{equation}
+\normalsize
+と表される。
+尚、本研究における低次の多項式近似とは、
+
+\large
+\begin{eqnarray}
+    {{\rho}'}RT \nonumber &=& \frac{n}{V}RT \nonumber \\ 
+    &=& \frac{N}{V}kT \nonumber \\ 
+    &=& {\rho}kT \nonumber
+\end{eqnarray}
+\normalsize
+を元に、式(\ref{eq:virial})のビリアル展開を
+
+\large
+\begin{equation}
+    P=kT\rho+b\rho^2+c\rho^3+\cdots\label{eq:}
+\end{equation}
+\normalsize
+と表したものであり、
+
 まず、本研究で得られたMDシミュレーションによる圧力の値を「測定値」、gnuplotを用いて5次式の最小二乗法を行った関数を「5次式近似」とし、
 以下の図\ref{fig:5den-pre}に示す。
 
