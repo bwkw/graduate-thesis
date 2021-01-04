@@ -34,20 +34,22 @@
 研究の背景は「なぜこの研究をしなければならないか」を、「大きい理由から小さい理由」へ書いていく。「大きい理由」は、「エネルギー問題」「安全」「便利」といった、「多くの人がほぼ納得するような理由」を挙げる。次に、その「大きな理由」を実現するために、これまでどのような試みがなされてきたかを説明する。これまでに読んだ論文のイントロダクションを参考に、必要な文献を引用しながら説得力のある文章を書くこと。
 
 様々な実存気体の状態方程式や、相図の作成は物性物理の分野において非常に重要な役割を果たす。
-実存気体の状態方程式を再現しようとする試みは、1901年にHeikeが提唱したビリアル展開\cite{eq:virial}、
-1940年にManson、George、Rubinが提唱したBenedict-Webb-Rubin(BWR)方程式\ref{eq:BWR}、1973年にJacobsen、Stewartが提唱したmodified-Benedict-Webb-Rubin(mBWR)方程式
-しかし、実用性が高い反面、手間とコストがかかる作業であるのもまた事実である。
+実存気体の状態方程式を再現しようとする試みは、1901年にHeikeが提唱したビリアル展開\cite{virial-Heike}、
+1940年にManson、George、Rubinが提唱したBenedict-Webb-Rubin(BWR)方程式\cite{BWR-equation:original}、1973年にJacobsen、Stewartが提唱したmodified-Benedict-Webb-Rubin(mBWR)方程式\cite{m-BWR-equation}
+を応用することにより、多くの研究者により行われてきた\cite{MCCARTY1974276,BWR-equation:13,BWR-equation:25}が、項の個数は際限なく増え、項自体の物理的意味も不明瞭であった。
+
+相図の作成は、実用性が高い反面、手間とコストがかかる作業である。
 従来は、この手間とコストを削減するためにグリッド探索\cite{grid1,grid2}を用いていたが、事前にグリッド上に一様に配置された状態点を実験し評価するグリッド探索は、
 以前の実験からの情報を抽出できないため非効率であった。
 そこで、近年では、不確実性サンプリング\cite{uncertainty-sampling1,uncertainty-sampling2}やガウス過程回帰\cite{gaussian-phase}といった高度なサンプリングアルゴリズムが実装されている。
 
 
 
-本研究では、WCAポテンシャルにおける圧力$P$を数密度$\rho$を含む項で書き下す状態方程式を推定しながら、相転移を効率的に確認することでWCAポテンシャルにおける相図を作成することを目標とする。
-WCAポテンシャルは、温度一定のまま数密度を高くしていくと、ある密度で流体相から固体相への相転移を起こす。
+
+WCAポテンシャルは、温度一定のまま数密度を高くしていくと、ある数密度で流体相から固体相への相転移を起こす。
 相転移近傍では、圧力の振る舞いが大きく変化するので、圧力$P$と数密度$\rho$の関係を調べることで、状態方程式の推定を行いつつ、相転移の存在を確認でき、WCAポテンシャルにおける相図も作成することが出来ると考えられる。
 本研究では、相図作成で用いられている高度なサンプリングアルゴリズムであるガウス過程回帰をWCAポテンシャルにおける圧力$P$と数密度$\rho$の関係に適用し、
-相転移近傍を効率的に探索するようなアルゴリズムを構築することにより、WCAポテンシャルの相図を効率的に作成する。
+WCAポテンシャルの状態方程式を効率的に求めつつ、相転移近傍を効率的に探索するようなアルゴリズムを構築することにより、WCAポテンシャルの相図を効率的に作成することを目標とする。
 
 \section{研究の目的}
 
@@ -59,7 +61,7 @@ WCAポテンシャルは、温度一定のまま数密度を高くしていく�
 
 
 本研究では、WCAポテンシャルにおける相図を効率的に探索する。以下に本論文の構成を示す。
-第\ref{chap:introduction}章では、相図の作成の重要性と、相図探索に用いられている手法を示した。
+第\ref{chap:introduction}章では、実存気体の状態方程式及び相図作成に用いられている手法を示した。
 第\ref{chap:method}章では、WCAポテンシャルの相図を効率的に推定する手法を示す。
 第\ref{chap:results}章では、第\ref{chap:method}章で提案した手法の精度の確認を行う。
 第\ref{chap:summary}章では本研究で得られた知見を総括し、結論と今後の展望について述べる。
@@ -189,7 +191,7 @@ $r>r_c$でポテンシャルエネルギーが0になっている。
 
 数密度$\rho=0.01$から15.0まで、0.01刻みで圧力$P$を測定した。圧力の測定にはLAMMPSを用いた。
 この初期条件のもと、温度制御を1.0とし、タイムステップ0.001で20000実行のシミュレーションを行った。
-尚、全ての研究でNVTによる温度制御ができていたことを前提とする。
+尚、全ての研究でNVTアンサンブルによる温度制御ができていたことを前提とする。
 NVTとは、
 
 以下の図\ref{molecule-simulation}に、シミュレーション途中の分子構造を示す。
@@ -883,47 +885,67 @@ WCAポテンシャルの圧力を式(\ref{eq:search-virial})のように数密�
 \section{ガウス過程回帰によるWCAポテンシャルの状態方程式の効率的推定}\label{results-sec:Gauss}
 \ref{results-sec:Gauss}節では、\ref{results-sec:WCA-press}節で示した圧力$P$と数密度$\rho$の関係を効率的に推定する。
 
-まず、\ref{results-sec:WCA-press}節のように数密度$\rho=0.0〜15.0$における圧力$P$を効率的に推定することを試みた。
+\ref{method-subsec:Gaussian-estimation}節に示したように、$\{(\rho,P)\}=\{(0.00,0.00)\,,\,(15.0,1.83×10^7)\}$の二点を初期の入力データとして、圧力$P$と数密度$\rho$の関係にガウス過程回帰を適用する。
+以下の図\ref{fig:8plot}と\ref{fig:9plot}に本研究で採用したガウス過程回帰の推移の一部を示す。
 
-\section{図の入れ方}
+\begin{figure}[htbp]
+    \begin{minipage}{0.5\hsize}
+    \begin{center}
+     \includegraphics[width=75mm]{fig/8plot-Gauss.png}
+     \caption{8点を入力とした時の平均と標準偏差}
+     \label{fig:8plot}
+    \end{center}
+    \end{minipage}
+    \begin{minipage}{0.5\hsize}
+    \begin{center}
+     \includegraphics[width=75mm]{fig/9plot-Gauss.png}
+     \caption{9点を入力とした時の平均と標準偏差}
+     \label{fig:9plot}
+    \end{center}
+    \end{minipage}
+   \end{figure}
 
-図は、数が多くなければとりえあずfigといったディレクトリにまとめて入れておくと良いだろう。数が増えてきて管理が難しくなったら節ごとにわけるなど工夫すること。画像ファイルは原則としてPDFにすること。例えば\verb|temperature.pdf|を入れたいなら、
+上図\ref{fig:8plot}は、測定した8点を入力データとしてガウス過程回帰を適用し、平均と標準偏差を示したものである。
+（尚、本研究では、標準偏差の可視化のために標準偏差を1000000倍に調整している）
+\ref{method-subsec:Gaussian-estimation}節に示したように、図\ref{fig:8plot}において標準偏差（＝不確かさ）の大きさが最大となる数密度${\rho}\simeq9$
+の点を次の試行点として選択する。
+この試行点を入力データに追加し、ガウス過程回帰を適用したものが図\ref{fig:9plot}である。
+図\ref{fig:8plot}に比べ、\ref{fig:9plot}は標準偏差（＝不確かさ）が小さくなっていることが確認できる。
+このように、不確かさが最大となる点を選択し、ガウス過程回帰を適用することを繰り返すことで、効率的にプロットを行っていく。
 
-\begin{lstlisting}[language=TeX]
-    \begin{figure}[htbp]
-        \begin{center}
-            \includegraphics[width=10cm]{fig/temperature.pdf}
-        \end{center}
-        \caption{温度の時間発展。}
-        \label{fig:temperature}
-    \end{figure}
-\end{lstlisting}
-
-とすると、以下のような図が得られる。
+上記に示したガウス過程回帰を行うことによって26点を入力データとした時、\ref{results-sec:WCA-press}節で示した
+圧力$P$と密度$\rho$の関係を再現することに成功した。
+以下の図\ref{fig:26plot}にその様子を示す。
 
 \begin{figure}[htbp]
     \begin{center}
-        \includegraphics[width=10cm]{fig/temperature.pdf}
+        \includegraphics[width=15cm]{fig/26plot-Gauss.png}
     \end{center}
-    \caption{温度の時間発展。}
-    \label{fig:temperature}
+    \caption{26点を入力とした時の平均と標準偏差}
+    \label{fig:26plot}
 \end{figure}
 
-この時、元データと、データからPDFを作るためのプロットファイルもしくはスクリプトファイルを一緒に入れておく。この時、画像ファイルとプロットファイルの名前を同じにしておくと良い。例えばgnuplotを使って\verb|temperature.pdf|という画像を作るなら、プロットファイルを\verb|temperature.plt|にしておく。すると、
+上図\ref{fig:26plot}に示した試行点を元に、WCAポテンシャルの状態方程式の推定が効率的に行えるかを調べる。
+$\rho=0.00,0.60,1.20,\cdots,15.0$と$\rho=0.00〜15.0$に26点等間隔で用意したものを入力データ1、
+図\ref{fig:26plot}に示した26点の試行点を入力データ2として、
+それぞれの入力データに\ref{results-sec:WCA-equation}節で採用した最小二乗法の5次式近似を適用する。
 
-\begin{lstlisting}[language=bash]
-gnuplot temperature.plt
-\end{lstlisting}
+まず、以下に入力データ1と入力データ2における数密度$\rho$を示す。
 
-を実行することで\verb|temperature.pdf|ができるのでわかりやすい。
-
-また、名前を揃えておくとmakefileとの相性が良くなる。例えば\verb|pressure.pdf|、\verb|temperature.pdf|、\verb|error.pdf|の三つのファイルが、同名のpltファイルから作成されるなら
-
-\lstinputlisting[language=make]{fig/makefile}
-
-といったmakefileを作っておけば、make一発で三つのファイルを作ることができるので便利だ。
-
-もちろんPythonのMatplotlibを使っても良いが、いずれにせよ「データとスクリプトからコマンド一発で図のファイルが作成できる状況にしておく。
+\begin{table}[htbp]
+    \begin{center}
+        \caption{最小二乗法によるn次近似の近似精度}
+            \begin{tabular}{c||c c c c c c c c c c c c c c c c c c c c c c c c c c}
+               
+                    入力データ1& 0.00&0.60&1.20&1.80&2.40&3.00&3.60&4.20&4.80&5.40&6.00&6.60&7.20&7.80&8.40\\
+                    &9.00&9.60&10.2&10.8&11.4&12.0&12.6&13.2&13.8&14.4&15.0\\ \hline
+                    入力データ2& \\ 
+                    
+                
+            \end{tabular}
+    \end{center}
+    \label{table:approximation-accuracy}
+\end{table}
 
 \chapter{考察および結論} \label{chap:summary}
 
