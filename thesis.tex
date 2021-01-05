@@ -928,15 +928,14 @@ WCAポテンシャルの圧力を式(\ref{eq:search-virial})のように数密�
 \end{figure}
 
 上図\ref{fig:26plot}に示した試行点を元に、WCAポテンシャルの状態方程式の推定が効率的に行えるかを調べる。
-$\rho=0.00,0.60,1.20,\cdots,15.0$と$\rho=0.00〜15.0$に26点等間隔で用意したものを入力データ1、
-図\ref{fig:26plot}に示した26点の試行点を入力データ2として、
-それぞれの入力データに\ref{results-sec:WCA-equation}節で採用した最小二乗法の5次式近似を適用する。
+$\rho=0.00,0.60,1.20,\cdots,15.0$と$\rho=0.00〜15.0$に26点等間隔で用意したものとその圧力のペアを入力データ1、
+図\ref{fig:26plot}に示した26点の試行点を入力データ2とする。
 
 まず、以下に入力データ1と入力データ2における数密度$\rho$を示す。
 
 \begin{table}[htbp]
     \begin{center}
-        \caption{最小二乗法によるn次近似の近似精度}
+        \caption{入力データ1,2における数密度$\rho$}
             \begin{tabular}{c||c c c c c c c c c c c c c c c c c c c c c c c c c c}
                
                     入力データ1& 0.00&0.60&1.20&1.80&2.40&3.00&3.60&4.20&4.80&5.40&6.00&6.60&7.20\\
@@ -948,6 +947,10 @@ $\rho=0.00,0.60,1.20,\cdots,15.0$と$\rho=0.00〜15.0$に26点等間隔で用意
     \end{center}
     \label{table:compare-Gauss}
 \end{table}
+
+上記の表\ref{table:compare-Gauss}で示した各入力データにおける数密度$\rho$と圧力$P$に対して、\ref{results-sec:WCA-equation}節で採用した最小二乗法の5次式近似
+を適用し、それそれの入力データに対する近似精度を評価する。
+
 
 \chapter{考察および結論} \label{chap:summary}
 
