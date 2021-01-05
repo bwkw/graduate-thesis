@@ -12,7 +12,7 @@
      frame = tbrl
 }
 
-\title{ガウス過程回帰を用いた効率的な相図探索}
+\title{ガウス過程回帰を用いた効率的な状態方程式推定及び相図探索}
 \author{慶應義塾大学理工学部物理情報工学科\\
 指導教員 渡辺宙志\\
 学籍番号 61713173\\
@@ -37,7 +37,6 @@
 実存気体の状態方程式を再現しようとする試みは、1901年にHeikeが提唱したビリアル展開\cite{virial-Heike}、
 1940年にManson、George、Rubinが提唱したBenedict-Webb-Rubin(BWR)方程式\cite{BWR-equation:original}、1973年にJacobsen、Stewartが提唱したmodified-Benedict-Webb-Rubin(mBWR)方程式\cite{m-BWR-equation}
 を応用することにより、多くの研究者により行われてきた\cite{MCCARTY1974276,BWR-equation:13,BWR-equation:25}が、項の個数は際限なく増え、項自体の物理的意味も不明瞭であった。
-
 相図の作成は、実用性が高い反面、手間とコストがかかる作業である。
 従来は、この手間とコストを削減するためにグリッド探索\cite{grid1,grid2}を用いていたが、事前にグリッド上に一様に配置された状態点を実験し評価するグリッド探索は、
 以前の実験からの情報を抽出できないため非効率であった。
@@ -60,22 +59,25 @@ WCAポテンシャルの状態方程式を効率的に求めつつ、相転移�
 論文の構成を説明する。まず本研究の目的を一行で書いてから、各章に何が書いてあるかを説明する。以下は例である。
 
 
-本研究では、WCAポテンシャルにおける相図を効率的に探索する。以下に本論文の構成を示す。
+本研究では、WCAポテンシャルにおける状態方程式の推定と相図の作成を効率的に行うことを目標とする。以下に本論文の構成を示す。
 第\ref{chap:introduction}章では、実存気体の状態方程式及び相図作成に用いられている手法を示した。
-第\ref{chap:method}章では、WCAポテンシャルの相図を効率的に推定する手法を示す。
+第\ref{chap:method}章では、WCAポテンシャルにおける状態方程式の推定と相図の作成を効率的に行う手法を示す。
 第\ref{chap:results}章では、第\ref{chap:method}章で提案した手法の精度の確認を行う。
 第\ref{chap:summary}章では本研究で得られた知見を総括し、結論と今後の展望について述べる。
 
 
-
-
 \chapter{手法} \label{chap:method}
-\ref{method-sec:WCA-press}節ではWeeks-Chandler-Andersen\,(WCA)ポテンシャルにおける数密度と圧力の関係を調べる。
-\ref{method-subsec:WCA}節ではWCAポテンシャルの説明を示し、
-\ref{method-subsec:WCA-phase}節ではWCAポテンシャルの相図の概念図を示し、
-\ref{method-subsec:WCA-pressure}節ではWCAポテンシャルにおける数密度と圧力の関係を調べる具体的な実験方法を示す。
+\ref{method-sec:WCA-press}節では、Weeks-Chandler-Andersen\,(WCA)ポテンシャル粒子系において各数密度$\rho$における圧力$P$を定義し、
+\ref{method-sec:WCA-equation}節では、\ref{method-sec:WCA-press}節で得た圧力$P$と数密度$\rho$の関係から、WCAポテンシャルの状態方程式を推定し、
+\ref{method-sec:Gauss}節では、\ref{method-sec:WCA-press}節で得た圧力$P$と数密度$\rho$の関係にガウス過程回帰を適用し、
+WCAポテンシャルの状態方程式を効率的に推定しつつ、WCAポテンシャルの相図を効率的に推定する。
+
 
 \section{Weeks-Chandler-Anderse\,(WCA)ポテンシャルの圧力}\label{method-sec:WCA-press}
+\ref{method-sec:WCA-press}節ではWCAポテンシャルにおける数密度と圧力の関係を調べる。
+\ref{method-subsec:WCA}節ではWCAポテンシャルの説明を示し、
+\ref{method-subsec:WCA-phase}節ではWCAポテンシャルの相図の概念図を示し、
+\ref{method-subsec:WCA-pressure}節ではWCAポテンシャルにおける数密度$\rho$と圧力$P$の関係を調べる具体的な実験方法を示す。
 
 
 \subsection{Weeks-Chandler-Andersen\,(WCA)ポテンシャル}\label{method-subsec:WCA}
