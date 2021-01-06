@@ -815,9 +815,9 @@ $\rho\,{\simeq}\,14.7$と表される。
 を元に、($k$:ボルツマン定数)式(\ref{eq:virial})のビリアル展開を
 
 \large
-\begin{equation}
-    P=kT\rho+b_2\rho^2+b_3\rho^3+b_4\rho^4+\cdots\label{eq:search-virial}
-\end{equation}
+\begin{eqnarray}
+    P=kT\rho+b_2\rho^2+b_3\rho^3+b_4\rho^4+\cdots\label{eq:search-virial} \nonumber
+\end{eqnarray}
 \normalsize
 と表したものであるが、\ref{results-sec:WCA-press}節では、ボルツマン定数$k=1.0$、温度$T=1.0$としているので、式(\ref{eq:search-virial})より、
 \large
@@ -836,7 +836,7 @@ $\rho\,{\simeq}\,14.7$と表される。
 \end{equation}
 \normalsize
 と表される。
-WCAポテンシャルの圧力を式(\ref{eq:search-virial})のように数密度で2次〜5次に近似し、その近似精度を式(\ref{eq:percentage-error})に基づいて評価する。
+WCAポテンシャルの圧力を式(\ref{eq:modified-search-virial})のように数密度で2次〜5次に近似し、その近似精度を式(\ref{eq:percentage-error})に基づいて評価する。
 この結果を以下の表\ref{table:approximation-accuracy}に示す。
 
 \begin{table}[htbp]
@@ -910,12 +910,11 @@ WCAポテンシャルの圧力を式(\ref{eq:search-virial})のように数密�
 上図\ref{fig:8plot}は、測定した8点を入力データとしてガウス過程回帰を適用し、平均と標準偏差を示したものである。
 （尚、本研究では、標準偏差の可視化のために標準偏差を1000000倍に調整している）
 \ref{method-subsec:Gaussian-estimation}節に示したように、図\ref{fig:8plot}において標準偏差（＝不確かさ）の大きさが最大となる数密度${\rho}\simeq9$
-の点を次の試行点として選択する。
-この試行点を入力データに追加し、ガウス過程回帰を適用したものが図\ref{fig:9plot}である。
+の点を次の試行点として選択する。この数密度$\rho$における圧力$P$をMDシミュレーションにより求め、入力データに追加し、ガウス過程回帰を適用したものが図\ref{fig:9plot}である。
 図\ref{fig:8plot}に比べ、\ref{fig:9plot}は標準偏差（＝不確かさ）が小さくなっていることが確認できる。
 このように、不確かさが最大となる点を選択し、ガウス過程回帰を適用することを繰り返すことで、効率的にプロットを行っていく。
 
-上記に示したガウス過程回帰を行うことによって26点を入力データとした時、\ref{results-sec:WCA-press}節で示した
+上記のようなガウス過程回帰を行うことにより、26点を入力データとした時、\ref{results-sec:WCA-press}節で示した
 圧力$P$と密度$\rho$の関係を再現することに成功した。
 以下の図\ref{fig:26plot}にその様子を示す。
 
@@ -927,7 +926,10 @@ WCAポテンシャルの圧力を式(\ref{eq:search-virial})のように数密�
     \label{fig:26plot}
 \end{figure}
 
-上図\ref{fig:26plot}に示した試行点を元に、WCAポテンシャルの状態方程式の推定が効率的に行えるかを調べる。
+上図\ref{fig:26plot}から、26点の入力データで\ref{results-sec:WCA-press}節で示した
+圧力$P$と密度$\rho$の関係を再現することに成功していることが読み取れる。
+
+続いて、上図\ref{fig:26plot}に示した試行点を元に、WCAポテンシャルの状態方程式の推定が効率的に行えるかを調べる。
 $\rho=0.00,0.60,1.20,\cdots,15.0$と$\rho=0.00〜15.0$に26点等間隔で用意したものとその圧力のペアを入力データ1、
 図\ref{fig:26plot}に示した26点の試行点を入力データ2とする。
 
@@ -949,7 +951,28 @@ $\rho=0.00,0.60,1.20,\cdots,15.0$と$\rho=0.00〜15.0$に26点等間隔で用意
 \end{table}
 
 上記の表\ref{table:compare-Gauss}で示した各入力データにおける数密度$\rho$と圧力$P$に対して、\ref{results-sec:WCA-equation}節で採用した最小二乗法の5次式近似
-を適用し、それそれの入力データに対する近似精度を評価する。
+を適用し、それそれの入力データに対する近似精度を式(\ref{eq:percentage-error})で評価する。
+
+以下の表\ref{table:compare-approximation-accuracy}に、入力データ1と入力データ2に対する近似精度を示す。
+
+\begin{table}[htbp]
+    \begin{center}
+        \caption{入力データ1,2に対する近似精度$A$}
+            \begin{tabular}{c c}
+                    入力データ1\,(％) & 入力データ2\,(％) \\ \hline\hline
+                    9.191 & 9.139
+                    
+            \end{tabular}
+    \end{center}
+    \label{table:compare-approximation-accuracy}
+\end{table}
+
+上記の表\ref{table:compare-approximation-accuracy}から、入力データ2すなわちガウス過程回帰を適用したデータを元にした時、
+WCAポテンシャルの状態方程式を推定出来ていることがわかる。
+
+以上から、\ref{method-subsec:Gaussian-estimation}節で提示したアルゴリズムにより、WCAポテンシャルの状態方程式を効率的に推定することに成功した。
+
+
 
 
 \chapter{考察および結論} \label{chap:summary}
