@@ -75,7 +75,7 @@ WCAポテンシャル粒子系では、温度一定のまま数密度を高く�
 
 
 \chapter{手法} \label{chap:method}
-\ref{method-sec:WCA-press}節では、Weeks-Chandler-Andersen\,(WCA)ポテンシャル粒子系において各数密度$\rho$における圧力$P$を定義し、圧力$P$と数密度$\rho$の関係を調べる。
+\ref{method-sec:WCA-press}節では、WCAポテンシャル粒子系において各数密度$\rho$における圧力$P$を定義し、圧力$P$と数密度$\rho$の関係を調べる。
 \ref{method-sec:WCA-equation}節では、\ref{results-sec:WCA-press}節で得た圧力$P$と数密度$\rho$の関係から、WCAポテンシャル粒子系における状態方程式の推定を行う。
 \ref{method-sec:Gauss}節では、\ref{results-sec:WCA-press}節で得た圧力$P$と数密度$\rho$の関係にガウス過程回帰を適用し、
 WCAポテンシャル粒子系における状態方程式を効率的に推定しつつ、相図を効率的に作成する。
@@ -83,12 +83,12 @@ WCAポテンシャル粒子系における状態方程式を効率的に推定�
 
 \section{WCAポテンシャル粒子系の圧力}\label{method-sec:WCA-press}
 \ref{method-sec:WCA-press}節ではWCAポテンシャル粒子系において各数密度$\rho$における圧力$P$を定義し、圧力$P$と数密度$\rho$の関係を調べる。
-\ref{method-subsec:WCA}節ではWCAポテンシャル粒子系の説明を示し、
-\ref{method-subsec:WCA-phase}節ではWCAポテンシャル粒子系の相図の概念図を示し、
+\ref{method-subsec:WCA}節ではWCAポテンシャルの説明を示し、
+\ref{method-subsec:WCA-phase}節ではWCAポテンシャル粒子系における相図の概念図を示し、
 \ref{method-subsec:WCA-pressure}節ではWCAポテンシャル粒子系における数密度$\rho$と圧力$P$の関係を調べる具体的な手法を示す。
 
 
-\subsection{Weeks-Chandler-Andersen\,(WCA)ポテンシャル}\label{method-subsec:WCA}
+\subsection{WCAポテンシャル}\label{method-subsec:WCA}
 分子動力学計算において頻繁に用いられるモデルの一つにLennard-Jones\,(LJ)ポテンシャルと呼ばれるものが存在する。
 LJポテンシャルは、アルゴンのような貴ガスのファンデルワールス力を記述するために提案\cite{Lennard_Jones_1931}されたもので、
 このポテンシャルモデルにおいて二つの原子間相互作用ポテンシャルエネルギーは
@@ -105,6 +105,7 @@ LJポテンシャルを用いる系では、パラメータ$\sigma$\,,\,$\vareps
 アルゴンでは、${\sigma}=3.40×10^{-10}\,\mathrm{m}$\,,\,${\varepsilon}=1.67×10^{-21}\,\mathrm{J}$であり\cite{argon-parameters}、
 他にも多くの気体ごとに値が定められている\cite{graphane-parameters,many-parameters}。
 
+\newpage
 LJ単位系では、温度$T^*$はポテンシャル$\varepsilon$\,,ボルツマン定数$k$を用いて、
 
 \large
@@ -128,8 +129,8 @@ P^*=\frac{P\sigma^3}{\varepsilon}\label{eq:P}
 \normalsize
 と表される。
 
-このLJポテンシャルの斥力作用と引力作用が入れ替わる$r=2^{\frac{1}{6}}{\approx}1.12246$にカットオフ距離を設けたポテンシャルをWCAポテンシャルと呼ぶ
-(WCAポテンシャル粒子系でもLJ単位系を用いる)。
+このLJポテンシャルの斥力作用と引力作用が入れ替わる$r_c=2^{\frac{1}{6}}{\approx}1.12246$にカットオフ距離を設けたポテンシャルをWCAポテンシャルと呼ぶ
+(WCAポテンシャル粒子系においてもLJ単位系を用いる)。
 カットオフ距離とは、その距離内の原子間の相互作用のみを考慮するものであり、それ以上の距離での原子間の力を無視するものである\cite{WATANABE20191}。
 WCAポテンシャル粒子系において二つの原子間相互作用ポテンシャルエネルギーは、
 
@@ -142,7 +143,7 @@ WCAポテンシャル粒子系において二つの原子間相互作用ポテ�
 \end{equation}
 \normalsize
 と表される\cite{doi:10.1063/1.2176675}。
-したがって、WCAポテンシャルとは式(\ref{eq:wca})のように斥力作用と引力作用が入れ替わる$r=2^{\frac{1}{6}}$にカットオフ距離を設けることにより、二原子間の引力作用を無視し、斥力作用のみを考慮したポテンシャルである。
+したがって、WCAポテンシャルとはLJポテンシャルの斥力作用と引力作用が入れ替わる$r=r_c$にカットオフ距離を設けることにより、式(\ref{eq:wca})のように二原子間の引力作用を無視し、斥力作用のみを考慮したポテンシャルである。
 
 以下の図{\ref{fig:dis-poen}にLJポテンシャルとWCAポテンシャル粒子系における原子間距離$r$と原子間のポテンシャルエネルギー$E$を示す。
 (図{\ref{fig:dis-poen}ではLJポテンシャルにカットオフ距離2.5を設けている)
@@ -154,7 +155,7 @@ WCAポテンシャル粒子系において二つの原子間相互作用ポテ�
     \caption{WCAとLJの原子間距離-ポテンシャルエネルギー}
     \label{fig:dis-poen}
 \end{figure}
-図{\ref{fig:dis-poen}に示すように、WCAポテンシャルはLJポテンシャルにカットオフ距離$r_c=2^{\frac{1}{6}}{\approx}1.12246$を設けることにより、
+図{\ref{fig:dis-poen}に示すように、WCAポテンシャルはLJポテンシャルにカットオフ距離$r=r_c$を設けることにより、
 $r>r_c$でポテンシャルエネルギーが0になっている。
 
 
