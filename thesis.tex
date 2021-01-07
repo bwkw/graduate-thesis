@@ -81,7 +81,7 @@ WCAポテンシャル粒子系では、温度一定のまま数密度を高く�
 WCAポテンシャル粒子系における状態方程式を効率的に推定しつつ、相図を効率的に作成する。
 
 
-\section{WCAポテンシャル粒子系の圧力}\label{method-sec:WCA-press}
+\section{WCAポテンシャル粒子系における圧力測定}\label{method-sec:WCA-press}
 \ref{method-sec:WCA-press}節ではWCAポテンシャル粒子系において各数密度$\rho$における圧力$P$を定義し、圧力$P$と数密度$\rho$の関係を調べる。
 \ref{method-subsec:WCA}節ではWCAポテンシャルの説明を示し、
 \ref{method-subsec:WCA-phase}節ではWCAポテンシャル粒子系における相図の概念図を示し、
@@ -148,18 +148,19 @@ WCAポテンシャル粒子系において二つの原子間相互作用ポテ�
 以下の図{\ref{fig:dis-poen}にLJポテンシャルとWCAポテンシャル粒子系における原子間距離$r$と原子間のポテンシャルエネルギー$E$を示す。
 (図{\ref{fig:dis-poen}ではLJポテンシャルにカットオフ距離2.5を設けている)
 
+\newpage
 \begin{figure}[htbp]
     \begin{center}
-        \includegraphics[width=13cm]{fig/dis-poen.pdf}
+        \includegraphics[width=15cm]{fig/dis-poen.pdf}
     \end{center}
-    \caption{WCAとLJの原子間距離-ポテンシャルエネルギー}
+    \caption{WCAとLJの原子間距離-ポテンシャルエネルギー。
+    WCAポテンシャルはLJポテンシャルにカットオフ距離$r=r_c$を設けることにより、$r>r_c$でポテンシャルエネルギーが0になっている。}
     \label{fig:dis-poen}
 \end{figure}
 図{\ref{fig:dis-poen}に示すように、WCAポテンシャルはLJポテンシャルにカットオフ距離$r=r_c$を設けることにより、
 $r>r_c$でポテンシャルエネルギーが0になっている。
 
 
-\newpage
 \subsection{WCAポテンシャル粒子系の相図}\label{method-subsec:WCA-phase}
 相図とは、熱力学的な状態量と物質や系の関係を表したものであり、相図の作成は、物性物理の分野において非常に重要である\cite{gaussian-phase}。
 
@@ -167,45 +168,50 @@ $r>r_c$でポテンシャルエネルギーが0になっている。
 
 \begin{figure}[htbp]
     \begin{center}
-        \includegraphics[width=9cm]{fig/wca-phase-diagram.png}
+        \includegraphics[width=12cm]{fig/wca-phase-diagram.png}
     \end{center}
-    \caption{WCAポテンシャル粒子系の相図の概念図
-    数密度、温度とWCAポテンシャル粒子系の相の関係を示す相図の概念図。
+    \caption{WCAポテンシャル粒子系の相図の概念図。
+    数密度、温度とWCAポテンシャル粒子系の相の関係を示す。
     \ref{method-subsec:WCA-pressure}節では赤線上の状態点($T^*$=1.0)を観測する。}
     
     \label{fig:wca-phase-diagram}
 \end{figure}
 
+\newpage
 図\ref{fig:wca-phase-diagram}に示すように、WCAポテンシャル粒子系はfluid(流体相)とsolid(固体相)の二相に分離する。
 温度一定のまま密度を高くしていくと、ある密度で流体相から固体相への相転移を起こす。
 この相転移近傍では、圧力の振る舞いが大きく変化するので、\ref{method-subsec:WCA-pressure}節では、
 相転移近傍での圧力の振る舞いの変化を正しく捉えられるような手法を構築する。
 
 
-\subsection{WCAポテンシャル粒子系の圧力測定}\label{method-subsec:WCA-pressure}
+\subsection{WCAポテンシャル粒子系における圧力測定}\label{method-subsec:WCA-pressure}
 原子や分子の物理的な動きのコンピューターシミュレーション手法を分子動力学法(Molecular Dynamics method, MD)と言う\cite{molecular-dynamics}。
 \ref{method-subsec:WCA-pressure}節では、式(\ref{eq:wca})に示したWCAポテンシャル粒子系における圧力の測定を分子動力学プログラムLarge-scale Atomic/Molecular Massively Parallel Simulator\,(LAMMPS)\cite{lammps}によるシミュレーションを用いて行う。
 尚、本研究では、式(\ref{eq:wca})の${\sigma}$(原子直径の長さ)\,,\,${\varepsilon}$(ポテンシャルの深さ)を共に1.0とし、
 図\ref{fig:wca-phase-diagram}で示した赤線上の状態点について、研究を進めるものとする。
 
 
-本研究では、初期設定として1辺$L$の立方体の中に$N=2048$個の面心立方face-centered cubic\,(fcc)構造上に配置した分子を用意し、研究を進めるものとする。
-以下の図\ref{initial-state-molecule}に、初期状態の分子構造を示す。
+本研究では、初期状態として1辺$L$、体積$V$の立方体の中に$N=2048$個の面心立方face-centered cubic\,(fcc)構造上に配置した分子を用意し、研究を進めるものとする。
+
+\newpage
+まず、以下の図\ref{initial-state-molecule}に、初期状態の分子構造を示す。
+
+上図\ref{initial-state-molecule}に示すように初期状態では、分子がfcc構造上に配置されている。
 
 この系の数密度は、
 \large
 \begin{equation}
-\rho = {\frac{N}{L^3}}{\label{eq:density}}
+\rho = {\frac{N}{V}}{\label{eq:density}}
 \end{equation}
 \normalsize
 と表される。
 
 数密度$\rho=0.01$から15.0まで、0.01刻みで圧力$P$を測定した。圧力の測定にはLAMMPSを用いた。
-この初期条件のもと、温度制御を1.0とし、タイムステップ0.001で20000実行のシミュレーションを行った。
-尚、全ての研究でNVTアンサンブルによる温度制御ができていたことを前提とする。
-NVTとは、
+この初期条件のもと、タイムステップ0.001で20000実行のシミュレーションを行った。
+尚、本研究ではNVTアンサンブルによりシミュレーション中の粒子数$N$、体積$V$、温度$T$が一定であることを前提とし、
+温度は、$T=1.0$で制御できていたものとする。
 
-以下の図\ref{molecule-simulation}に、シミュレーション途中の分子構造を示す。
+以下の図\ref{molecule-simulation}に、シミュレーション中の分子構造を示す。
 
 
 二体相互作用をする粒子系における圧力は、ビリアル定理によって
@@ -220,8 +226,8 @@ PV=NkT+{\frac{1}{3}}\langle\sum_{i=j}^N\vec{q_{ij}} \cdot \vec{r_{ij}}\rangle{\l
 
 \ref{method-subsec:WCA-phase}節に示したように、WCAポテンシャル粒子系はある密度で流体ー固体相転移を起こすことから、
 相転移点近傍で圧力の振る舞いが急激に変化すると考えられる。
-\ref{results-sec:WCA-press}節では、MDシミュレーションで測定されたWCAポテンシャル粒子系の圧力の振る舞いを、
-原子間の相互作用をほぼ無視できる低密度状態、流体相から固体層への相転移近傍の中密度状態、原子間の相互作用の寄与が大きい高密度状態において調べる。
+\ref{results-sec:WCA-press}節では、MDシミュレーションで測定されたWCAポテンシャル粒子系における圧力の振る舞いを、
+原子間の相互作用をほぼ無視できる低密度状態、流体相から固体相への相転移近傍の中密度状態、原子間の相互作用の寄与が大きい高密度状態において調べる。
 
 \section{WCAポテンシャル粒子系における状態方程式の推定}\label{method-sec:WCA-equation}
 \ref{method-sec:WCA-equation}節では、WCAポテンシャル粒子系における状態方程式の推定を行う。
@@ -277,14 +283,14 @@ P=\sum_{n=1}^9a_n{{\rho}'}^n+\exp(-{\gamma}{{\rho}'}^2)\sum_{n=10}^{15}a_n{{\rho
 依然として気体の状態方程式を完璧に再現することは出来なかった。
 その後も、多くの研究者が気体の状態方程式の項を増やすことで、完璧な再現を試みた\cite{MCCARTY1974276,BWR-equation:13,BWR-equation:25}が、項の個数は際限なく増え、項自体の物理的意味も不明瞭であった。
 
-\subsection{WCAポテンシャル粒子系の状態方程式の推定}\label{method-subsec:WCA-equation}
+\subsection{WCAポテンシャル粒子系における状態方程式の推定}\label{method-subsec:WCA-equation}
 \ref{method-subsec:virial}節、\ref{method-subsec:BWR}節のように気体の状態方程式を項を増やすことによって再現しようと試みたが、項の個数は際限なく増え続けた。
 また、BWR方程式に含まれる指数項は経験的に付け加えられたものであり、物理的な意味が不明瞭である。
 
 そこで、機械学習により、より多くの候補からWCAポテンシャル粒子系における状態方程式を推定する方が効果的であると言える。
 最終的には、機械学習が推定してきた項の物理的意味を考察することが目標であるが、
 まず本研究では\ref{results-sec:WCA-press}節で示したWCAポテンシャル粒子系における圧力と数密度の関係に上記で示した最小二乗法を適用し、
-圧力を数密度に関する低次の多項式で近似することにより、WCAポテンシャル粒子系の状態方程式を推定する。
+圧力を数密度に関する低次の多項式で近似することにより、WCAポテンシャル粒子系における状態方程式を推定する。
 
 以下、最小二乗法の説明を簡潔に示す。
 今、想定される多項式を
@@ -448,7 +454,7 @@ S &=& (Y-XA)^T(Y-XA)\nonumber\\
 
 \ref{results-sec:WCA-equation}節では、上記で述べたように\ref{results-sec:WCA-press}節で示したWCAポテンシャル粒子系における圧力と数密度の関係に
 上記で示した最小二乗法を適用し、圧力を数密度に関する低次の多項式で近似することにより、WCAポテンシャル粒子系の状態方程式を推定する。
-その後、推定したWCAポテンシャル粒子系の状態方程式の展開係数が先行研究と矛盾しないことを確認する。
+その後、推定したWCAポテンシャル粒子系における状態方程式の展開係数が先行研究と矛盾しないことを確認する。
 
 
 \section{ガウス過程回帰によるWCAポテンシャル粒子系における効率的な状態方程式推定及び相図作成}\label{method-sec:Gauss}
@@ -620,7 +626,7 @@ $\{(P,\rho)\}=\{(0.00,0.00)\,,\,(15.0,1.83×10^7)\}$の二点を初期の入力�
 
 \begin{figure}[htbp]
     \begin{center}
-        \includegraphics[width=14cm]{fig/algorithm.png}
+        \includegraphics[width=15cm]{fig/algorithm.png}
     \end{center}
     \caption{本研究で用いるアルゴリズムの簡易図}
     \label{fig:algorithm}
@@ -628,14 +634,14 @@ $\{(P,\rho)\}=\{(0.00,0.00)\,,\,(15.0,1.83×10^7)\}$の二点を初期の入力�
 
 \chapter{結果} \label{chap:results}
 
-\section{WCAポテンシャル粒子系の圧力}\label{results-sec:WCA-press}
-\ref{results-sec:WCA-press}節では、各数密度においてMDシミュレーションで測定されたWCAポテンシャル粒子系の圧力の振る舞いを調べる。
-まず、数密度$\rho$とMDシミュレーションで測定されたWCAポテンシャル粒子系の圧力$P$の関係を
+\section{WCAポテンシャル粒子系における圧力測定}\label{results-sec:WCA-press}
+\ref{results-sec:WCA-press}節では、各数密度においてMDシミュレーションで測定されたWCAポテンシャル粒子系における圧力の振る舞いを調べる。
+まず、数密度$\rho$とMDシミュレーションで測定されたWCAポテンシャル粒子系における圧力$P$の関係を
 以下の図\ref{fig:den-pre}に示す。
 
 \begin{figure}[htbp]
     \begin{center}
-        \includegraphics[width=14cm]{fig/den-pre.pdf}
+        \includegraphics[width=15cm]{fig/den-pre.pdf}
     \end{center}
     \caption{WCAポテンシャル粒子系の圧力の測定値}
     \label{fig:den-pre}
@@ -644,10 +650,10 @@ $\{(P,\rho)\}=\{(0.00,0.00)\,,\,(15.0,1.83×10^7)\}$の二点を初期の入力�
 以下、\ref{results-subsec:WCA-press-low-density}節では原子間の相互作用をほぼ無視できる低密度状態、
 \ref{results-subsec:WCA-press-middle-density}節では流体相から固体相への相転移近傍の中密度状態、
 \ref{results-subsec:WCA-press-high-density}節では原子間の相互作用の寄与が大きい高密度状態において、
-MDシミュレーションで測定されたWCAポテンシャル粒子系の圧力について具体的に調べる。
+MDシミュレーションで測定されたWCAポテンシャル粒子系における圧力の振る舞いを抽出する。
 
 
-\subsection{低密度状態のWCAポテンシャル粒子系の圧力}\label{results-subsec:WCA-press-low-density}
+\subsection{WCAポテンシャル粒子系における低密度状態の圧力}\label{results-subsec:WCA-press-low-density}
 初期状態において、原子間の相互作用が作用する($原子間距離r=カットオフ距離r_c$)数密度は
 
 \large
@@ -667,9 +673,10 @@ MDシミュレーションで測定されたWCAポテンシャル粒子系の圧
 
 \begin{figure}[htbp]
     \begin{center}
-        \includegraphics[width=6cm]{fig/lowdensity.png}
+        \includegraphics[width=7cm]{fig/lowdensity.png}
     \end{center}
-    \caption{低密度状態における分子の状態の概念図}
+    \caption{低密度状態における分子の状態の概念図。
+    低密度状態では、分子間の相互作用はほぼ無視できる。}
     \label{fig:lowdensity.png}
 \end{figure}
 
@@ -704,7 +711,7 @@ P\,{\simeq}\,{\rho} \label{eq:ideal-value}
 
 \begin{figure}[htbp]
     \begin{center}
-        \includegraphics[width=14cm]{fig/lowden_compare:den-pre.pdf}
+        \includegraphics[width=15cm]{fig/lowden_compare:den-pre.pdf}
     \end{center}
     \caption{WCAポテンシャル粒子系における低密度状態の圧力の理論近似値と測定値の比較}
     \label{fig:lowden_compare:den-pre}
@@ -714,29 +721,31 @@ P\,{\simeq}\,{\rho} \label{eq:ideal-value}
 と書けることがわかる。
 これは、低密度状態では、「ほぼ」原子間の相互作用を無視でき、原子が理想気体のように振る舞うことに依存する。
 
-
+\newpage
 \subsection{WCAポテンシャル粒子系における中密度状態の圧力}\label{results-subsec:WCA-press-middle-density}
-中密度状態では、相互作用を持つ分子ペアと持たない分子が存在する。
+中密度状態では、相互作用がある分子ペアと持たない分子が存在する。
 まず、中密度状態における分子の状態の概念図を以下の図\ref{fig:middledensity.png}に示す。
 
 \begin{figure}[htbp]
     \begin{center}
-        \includegraphics[width=6cm]{fig/middledensity.png}
+        \includegraphics[width=7cm]{fig/middledensity.png}
     \end{center}
-    \caption{中密度状態における分子の状態の概念図}
+    \caption{中密度状態における分子の状態の概念図。
+    中密度状態では、相互作用がある分子ペアと持たない分子が存在する}
     \label{fig:middledensity.png}
 \end{figure}
 
-\newpage
+
 流体相から固体相への相転移近傍の中密度状態では、相転移により圧力の振る舞いが急激に変化すると考えられる。
 相転移近傍の中密度状態での数密度$\rho$とMDシミュレーションで測定されたWCAポテンシャル粒子系の圧力$P$の関係を
 以下の図\ref{fig:middleden_den-pre}に示す。
 
+\newpage
 \begin{figure}[htbp]
     \begin{center}
-        \includegraphics[width=14cm]{fig/middleden_den-pre.pdf}
+        \includegraphics[width=15cm]{fig/middleden_den-pre.pdf}
     \end{center}
-    \caption{WCAポテンシャル粒子系における中密度状態の数密度と圧力の関係}
+    \caption{WCAポテンシャル粒子系における中密度状態の数密度と圧力の関係。}
     \label{fig:middleden_den-pre}
 \end{figure}
 
@@ -746,18 +755,19 @@ P\,{\simeq}\,{\rho} \label{eq:ideal-value}
 \ref{method-subsec:BWR}節で示したBWR,m-BWR方程式を用いて表すと項の個数が際限なく増え、項自体の物理的意味も不明瞭になると考えられる。
 
 
-\subsection{高密度状態のWCAポテンシャル粒子系の圧力}\label{results-subsec:WCA-press-high-density}
+\subsection{WCAポテンシャル粒子系における高密度状態の圧力}\label{results-subsec:WCA-press-high-density}
 高密度状態では、すべての分子ペアが相互作用を持つものと近似できる。
 まず、高密度状態における分子の状態の概念図を以下の図\ref{fig:highdensity.png}に示す。
 
 \begin{figure}[htbp]
     \begin{center}
-        \includegraphics[width=6cm]{fig/highdensity.png}
+        \includegraphics[width=7cm]{fig/highdensity.png}
     \end{center}
     \caption{高密度状態における分子の状態の概念図}
     \label{fig:highdensity.png}
 \end{figure}
 
+\newpage
 原子間の相互作用の寄与が大きい高密度状態では、圧力は式(\ref{eq:Theoritical-pressure})の第二項の影響を強く受ける。
 高密度状態では、
 密度が高くなればなるほど、式(\ref{eq:Theoritical-pressure})の第二項で考慮するものは、再隣接原子の寄与、第二隣接原子の寄与、第三隣接原子の寄与・・・と増えていく。
@@ -789,24 +799,22 @@ $\rho\,{\simeq}\,14.7$と表される。
 
 \begin{figure}[htbp]
     \begin{center}
-        \includegraphics[width=14cm]{fig/highden_compare:den-pre.pdf}
+        \includegraphics[width=15cm]{fig/highden_compare:den-pre.pdf}
     \end{center}
     \caption{WCAポテンシャル粒子系における高密度状態の圧力の理論近似値と測定値の比較}
     \label{fig:highden_compare:den-pre}
 \end{figure}
 
+\newpage
 図\ref{fig:highden_compare:den-pre}から、理論値と測定値のズレは1.2％以下であることがわかる。
 このことから、第五隣接原子より離れた原子とも相互作用が働くほど高密度の状態でもWCAポテンシャル粒子系の圧力は式(\ref{eq:Theoritical-pressure})において
 再隣接原子の寄与のみを考慮したもので十分に表されていることがわかる。
-
-
 
 以上から、MDシミュレーションにより測定されたWCAポテンシャル粒子系の圧力の振る舞いを
 原子間の相互作用をほぼ無視できる低密度状態、流体相から固体相への相転移近傍の中密度状態、原子間の相互作用の寄与が大きい高密度状態において確認できた。
 
 
-
-\section{WCAポテンシャル粒子系の状態方程式の推定}\label{results-sec:WCA-equation}
+\section{WCAポテンシャル粒子系における状態方程式の推定}\label{results-sec:WCA-equation}
 \ref{results-sec:WCA-press}節で示した圧力を数密度を含む項で展開することを試みたとき、\ref{method-subsec:virial}節で示したビリアル展開、
 \ref{method-subsec:BWR}節で示したBWR,m-BWR方程式を用いると、\ref{results-subsec:WCA-press-middle-density}節で示した相転移の存在により、
 項の個数が際限なく増え、項自体の物理的意味も不明瞭になると考えられる。
