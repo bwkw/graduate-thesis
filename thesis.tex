@@ -75,17 +75,17 @@ WCAポテンシャル粒子系では、温度一定のまま数密度を高く�
 
 
 \chapter{手法} \label{chap:method}
-\ref{method-sec:WCA-press}節では、Weeks-Chandler-Andersen\,(WCA)ポテンシャル粒子系において各数密度$\rho$における圧力$P$を定義し、
-\ref{method-sec:WCA-equation}節では、\ref{method-sec:WCA-press}節で得た圧力$P$と数密度$\rho$の関係から、WCAポテンシャル粒子系の状態方程式を推定し、
-\ref{method-sec:Gauss}節では、\ref{method-sec:WCA-press}節で得た圧力$P$と数密度$\rho$の関係にガウス過程回帰を適用し、
-WCAポテンシャル粒子系の状態方程式を効率的に推定しつつ、相図を効率的に作成する。
+\ref{method-sec:WCA-press}節では、Weeks-Chandler-Andersen\,(WCA)ポテンシャル粒子系において各数密度$\rho$における圧力$P$を定義し、圧力$P$と数密度$\rho$の関係を調べる。
+\ref{method-sec:WCA-equation}節では、\ref{results-sec:WCA-press}節で得た圧力$P$と数密度$\rho$の関係から、WCAポテンシャル粒子系における状態方程式の推定を行う。
+\ref{method-sec:Gauss}節では、\ref{results-sec:WCA-press}節で得た圧力$P$と数密度$\rho$の関係にガウス過程回帰を適用し、
+WCAポテンシャル粒子系における状態方程式を効率的に推定しつつ、相図を効率的に作成する。
 
 
 \section{WCAポテンシャル粒子系の圧力}\label{method-sec:WCA-press}
-\ref{method-sec:WCA-press}節ではWCAポテンシャル粒子系における数密度と圧力の関係を調べる。
+\ref{method-sec:WCA-press}節ではWCAポテンシャル粒子系において各数密度$\rho$における圧力$P$を定義し、圧力$P$と数密度$\rho$の関係を調べる。
 \ref{method-subsec:WCA}節ではWCAポテンシャル粒子系の説明を示し、
 \ref{method-subsec:WCA-phase}節ではWCAポテンシャル粒子系の相図の概念図を示し、
-\ref{method-subsec:WCA-pressure}節ではWCAポテンシャル粒子系における数密度$\rho$と圧力$P$の関係を調べる具体的な実験方法を示す。
+\ref{method-subsec:WCA-pressure}節ではWCAポテンシャル粒子系における数密度$\rho$と圧力$P$の関係を調べる具体的な手法を示す。
 
 
 \subsection{Weeks-Chandler-Andersen\,(WCA)ポテンシャル}\label{method-subsec:WCA}
@@ -222,10 +222,10 @@ PV=NkT+{\frac{1}{3}}\langle\sum_{i=j}^N\vec{q_{ij}} \cdot \vec{r_{ij}}\rangle{\l
 \ref{results-sec:WCA-press}節では、MDシミュレーションで測定されたWCAポテンシャル粒子系の圧力の振る舞いを、
 原子間の相互作用をほぼ無視できる低密度状態、流体相から固体層への相転移近傍の中密度状態、原子間の相互作用の寄与が大きい高密度状態において調べる。
 
-\section{WCAポテンシャル粒子系の状態方程式の推定}\label{method-sec:WCA-equation}
-\ref{method-sec:WCA-equation}節では、\ref{results-sec:WCA-press}節で調べたWCAポテンシャル粒子系における圧力$P$を数密度$\rho$の状態方程式で表す。
-\ref{method-subsec:virial}節、\ref{method-subsec:BWR}節では、それぞれ圧力を密度の項で展開するビリアル展開、Benedict-Webb-Rubin(BWR)方程式の説明を示し、
-\ref{method-subsec:WCA-equation}節では、WCAポテンシャル粒子系の圧力を状態方程式で表す具体的な手法を示す。
+\section{WCAポテンシャル粒子系における状態方程式の推定}\label{method-sec:WCA-equation}
+\ref{method-sec:WCA-equation}節では、WCAポテンシャル粒子系における状態方程式の推定を行う。
+\ref{method-subsec:virial}節、\ref{method-subsec:BWR}節では、圧力を密度に関する項で展開するビリアル展開、Benedict-Webb-Rubin\,(BWR)方程式、modified-Benedict–Webb–Rubin\,(mBWR)方程式の説明を示し、
+\ref{method-subsec:WCA-equation}節では、\ref{results-sec:WCA-press}節で得た圧力$P$と数密度$\rho$の関係からWCAポテンシャル粒子系における状態方程式の推定を行う具体的な手法を示す。
 
 \subsection{ビリアル展開}\label{method-subsec:virial}
 気体の振る舞いを表す有望な記述の一つにビリアル展開と呼ぶものが存在する。
@@ -272,7 +272,7 @@ BWR方程式は、気体の状態方程式を表すことに概ね成功して�
 P=\sum_{n=1}^9a_n{{\rho}'}^n+\exp(-{\gamma}{{\rho}'}^2)\sum_{n=10}^{15}a_n{{\rho}'}^{2n-17}\label{eq:mBWR}
 \end{equation}
 \normalsize
-と表されるmodified-Benedict–Webb–Rubin(mBWR)方程式が提唱\cite{m-BWR-equation}されたが、
+と表されるmodified-Benedict–Webb–Rubin\,(mBWR)方程式が提唱\cite{m-BWR-equation}されたが、
 依然として気体の状態方程式を完璧に再現することは出来なかった。
 その後も、多くの研究者が気体の状態方程式の項を増やすことで、完璧な再現を試みた\cite{MCCARTY1974276,BWR-equation:13,BWR-equation:25}が、項の個数は際限なく増え、項自体の物理的意味も不明瞭であった。
 
@@ -450,11 +450,11 @@ S &=& (Y-XA)^T(Y-XA)\nonumber\\
 その後、推定したWCAポテンシャル粒子系の状態方程式の展開係数が先行研究と矛盾しないことを確認する。
 
 
-\section{ガウス過程回帰によるWCAポテンシャル粒子系の状態方程式及び相図の効率的推定}\label{method-sec:Gauss}
-\ref{method-sec:Gauss}節では、ガウス過程回帰を用いて、WCAポテンシャル粒子系の状態方程式を効率的に求める。
+\section{ガウス過程回帰によるWCAポテンシャル粒子系における効率的な状態方程式推定及び相図作成}\label{method-sec:Gauss}
+\ref{method-sec:Gauss}節では、WCAポテンシャル粒子系における状態方程式を効率的に推定しつつ、相図を効率的に作成する。
 \ref{method-subsec:Gauss}節では、ガウス過程回帰の説明を示し、
-\ref{method-subsec:Gaussian-estimation}節では、\ref{results-sec:WCA-press}節で示したWCAポテンシャル粒子系における数密度と圧力のペア($\rho$\,,\,$P$)の数点にガウス過程回帰を適用し、
-WCAポテンシャル粒子系の数密度と圧力の関係を効率的に推定する具体的な方法を示す。
+\ref{method-subsec:Gaussian-estimation}節では、\ref{results-sec:WCA-press}節で得た圧力$P$と数密度$\rho$の関係にガウス過程回帰を適用し、
+WCAポテンシャル粒子系における状態方程式を効率的に推定しつつ、相図を効率的に作成する具体的な手法を示す。
 
 
 \subsection{ガウス過程回帰}\label{method-subsec:Gauss}
@@ -892,7 +892,7 @@ WCAポテンシャル粒子系の圧力を式(\ref{eq:modified-search-virial})�
 表\ref{table:approximation-accuracy}から、近似精度としては十分と言えない。
 
 
-\section{ガウス過程回帰によるWCAポテンシャル粒子系の状態方程式及び相図の効率的推定}\label{results-sec:Gauss}
+\section{ガウス過程回帰によるWCAポテンシャル粒子系における効率的な状態方程式推定及び相図作成}\label{results-sec:Gauss}
 \ref{results-sec:Gauss}節では、\ref{results-sec:WCA-press}節で示した圧力$P$と数密度$\rho$の関係を効率的に推定する。
 
 \ref{method-subsec:Gaussian-estimation}節に示したように、$\{(\rho,P)\}=\{(0.00,0.00)\,,\,(15.0,1.83×10^7)\}$の二点を初期の入力データとして、圧力$P$と数密度$\rho$の関係にガウス過程回帰を適用する。
