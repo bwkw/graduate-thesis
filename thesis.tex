@@ -27,59 +27,65 @@
 
 \chapter{はじめに} \label{chap:introduction}
 
-「はじめに」もしくは「緒言」では、研究背景、目的、そして論文の構成を書く。
+\section{研究の背景} \label{intro-background}
+様々な実存気体の状態方程式の推定や、相図の作成は物性物理の分野において非常に重要な役割を果たす。
+粒子系の相図、特に温度-数密度をパラメタにとった相図作成には、圧力の温度$T$、数密度$\rho$依存性をあらゆる温度$T$、数密度$\rho$で測定する必要が生じるが、
+これは、圧力$P$を温度$T$、数密度$\rho$に関する項で書き下す状態方程式の微分不連続の線を探すことと同義とみなせる。
 
-\section{研究の背景}
-
-研究の背景は「なぜこの研究をしなければならないか」を、「大きい理由から小さい理由」へ書いていく。「大きい理由」は、「エネルギー問題」「安全」「便利」といった、「多くの人がほぼ納得するような理由」を挙げる。次に、その「大きな理由」を実現するために、これまでどのような試みがなされてきたかを説明する。これまでに読んだ論文のイントロダクションを参考に、必要な文献を引用しながら説得力のある文章を書くこと。
-
-様々な実存気体の状態方程式や、相図の作成は物性物理の分野において非常に重要な役割を果たす。
 実存気体の状態方程式を再現しようとする試みは、1901年にHeikeが提唱したビリアル展開\cite{virial-Heike}、
-1940年にManson、George、Rubinが提唱したBenedict-Webb-Rubin(BWR)方程式\cite{BWR-equation:original}、1973年にJacobsen、Stewartが提唱したmodified-Benedict-Webb-Rubin(mBWR)方程式\cite{m-BWR-equation}
-を応用することにより、多くの研究者により行われてきた\cite{MCCARTY1974276,BWR-equation:13,BWR-equation:25}が、項の個数は際限なく増え、項自体の物理的意味も不明瞭であった。
+1940年にManson、George、Rubinが提唱したBenedict-Webb-Rubin\,(BWR)方程式\cite{BWR-equation:original}、1973年にJacobsen、Stewartが提唱したmodified-Benedict-Webb-Rubin\,(mBWR)方程式\cite{m-BWR-equation}
+を応用することにより、多くの研究者により行われてきた\cite{MCCARTY1974276,BWR-equation:13,BWR-equation:25}。
+これらの多くの研究者の努力により、実存気体を広い範囲で概ね再現する有効な状態方程式を構築することに成功したが、
+その精度は十分とは言えず、項の個数は際限なく増え、項自体の物理的意味も不明瞭であった。
+
 相図の作成は、実用性が高い反面、手間とコストがかかる作業である。
 従来は、この手間とコストを削減するためにグリッド探索\cite{grid1,grid2}を用いていたが、事前にグリッド上に一様に配置された状態点を実験し評価するグリッド探索は、
 以前の実験からの情報を抽出できないため非効率であった。
-そこで、近年では、不確実性サンプリング\cite{uncertainty-sampling1,uncertainty-sampling2}やガウス過程回帰\cite{gaussian-phase}といった高度なサンプリングアルゴリズムが実装されている。
+そこで、近年では、不確実性サンプリング\cite{uncertainty-sampling1,uncertainty-sampling2}やガウス過程回帰\cite{gaussian-phase}といった高度なサンプリングアルゴリズムを実装することにより、
+手間とコストを削減することに成功している。
+しかし、これらの研究は状態点の相が全て判別されている前提で、それを知らない機械がその中から必要な状態点を取得し、状態点の相を形式的に効率的に特定しているに過ぎない。
 
 
+\section{研究の目的} \label{intro-purpose}
+様々な実存気体の状態方程式は\ref{intro-background}節で述べたように、ビリアル展開・BWR方程式・m-BWR方程式を応用し、項の個数を増やすことによって広範囲である程度有効なものを構築することに成功したが、
+項の個数は際限なく増え、その物理的意味も不明瞭であった。
+そこで、ビリアル展開・BWR方程式・m-BWR方程式を用いて状態方程式の項の係数を決定するのではなく、
+機械学習により、より多くの項の候補から状態方程式を推定することが1つ目の目的である。
+また相図の作成は、\ref{intro-background}節で述べたように、様々な高度なサンプリングアルゴリズムにより効率的に行われてきたが、
+これらの研究は予め状態点の相が全て判別されている前提で、それを知らない機械がその中から必要な状態点を取得し、状態点の相を形式的に効率的に特定しているに過ぎない。
+つまり、この手法は状態点の相が分からない未知の系に適用する際、状態点の相を効率的に特定する手法とは言えない。
+そこで、状態点の相が分からない未知の系に対しても相図作成が自動でできるような手法、すなわち機械が次の状態点を選択し、
+その状態点における相を自動的に特定していくような手法を構築するのが2つ目の目的である。
+本研究では上記の2点の目的を受け、状態方程式が比較的容易に書け、状態点の相の判別が容易であるWeeks-Chandler-Andersen\,(WCA)ポテンシャル粒子系を採用する。
+WCAポテンシャル粒子系では、温度一定のまま数密度を高くしていくと、ある数密度で流体相から固体相への相転移を起こす。
+\ref{intro-background}節でも述べたように、相転移近傍では、圧力の振る舞いが大きく変化するので、圧力$P$と数密度$\rho$の関係を調べることで状態方程式の推定を行いつつ、相転移の存在を確認し、WCAポテンシャル粒子系における相図も作成することが出来る。
 
-\section{研究の目的}
-研究の背景を受けて、この研究分野は重要であるが、なんらかの不満点があることを述べる。その不満点は解決すべき問題であることを文献を引用しながら読者に納得させる。本研究の目的は、その不満点を解消することであることを述べ、その方法について簡単に述べる。
-
-WCAポテンシャルは、温度一定のまま数密度を高くしていくと、ある数密度で流体相から固体相への相転移を起こす。
-相転移近傍では、圧力の振る舞いが大きく変化するので、圧力$P$と数密度$\rho$の関係を調べることで、状態方程式の推定を行いつつ、相転移の存在を確認でき、WCAポテンシャルにおける相図も作成することが出来ると考えられる。
-本研究では、相図作成で用いられている高度なサンプリングアルゴリズムであるガウス過程回帰をWCAポテンシャルにおける圧力$P$と数密度$\rho$の関係に適用し、
-相転移近傍を効率的に探索するようなアルゴリズムを構築することにより、WCAポテンシャルの状態方程式を効率的に求めつつ、WCAポテンシャルの相図を効率的に作成することを目標とする。
+本研究においては、上記の2点の目的の前身として、WCAポテンシャル粒子系における圧力$P$を数密度$\rho$に関する低次の多項式で近似することにより状態方程式を推定できることを確認した上で、
+ガウス過程回帰を適用することにより、状態方程式を効率的に推定しつつ、相図を効率的に作成することを目的とする。
 
 
+\section{本論文の構成} \label{intro-constitution}
+本研究では、WCAポテンシャル粒子系における圧力$P$を数密度$\rho$に関する低次の多項式で近似することにより状態方程式を推定できることを確認した上で、
+ガウス過程回帰を適用することにより、状態方程式を効率的に推定しつつ、相図を効率的に作成することを目的とする。
 
-
-
-\section{本論文の構成}
-
-論文の構成を説明する。まず本研究の目的を一行で書いてから、各章に何が書いてあるかを説明する。以下は例である。
-
-
-本研究では、WCAポテンシャルにおける状態方程式の推定と相図の作成を効率的に行うことを目標とする。以下に本論文の構成を示す。
-第\ref{chap:introduction}章では、実存気体の状態方程式及び相図作成に用いられている手法を示した。
-第\ref{chap:method}章では、WCAポテンシャルにおける状態方程式の推定と相図の作成を効率的に行う手法を示す。
+第\ref{chap:introduction}章では、実存気体の状態方程式の推定及び相図作成に用いられている手法を示した。
+第\ref{chap:method}章では、WCAポテンシャル粒子系における状態方程式の推定と相図の作成を効率的に行う手法を示す。
 第\ref{chap:results}章では、第\ref{chap:method}章で提案した手法の精度の確認を行う。
 第\ref{chap:summary}章では本研究で得られた知見を総括し、結論と今後の展望について述べる。
 
 
 \chapter{手法} \label{chap:method}
 \ref{method-sec:WCA-press}節では、Weeks-Chandler-Andersen\,(WCA)ポテンシャル粒子系において各数密度$\rho$における圧力$P$を定義し、
-\ref{method-sec:WCA-equation}節では、\ref{method-sec:WCA-press}節で得た圧力$P$と数密度$\rho$の関係から、WCAポテンシャルの状態方程式を推定し、
+\ref{method-sec:WCA-equation}節では、\ref{method-sec:WCA-press}節で得た圧力$P$と数密度$\rho$の関係から、WCAポテンシャル粒子系の状態方程式を推定し、
 \ref{method-sec:Gauss}節では、\ref{method-sec:WCA-press}節で得た圧力$P$と数密度$\rho$の関係にガウス過程回帰を適用し、
-WCAポテンシャルの状態方程式を効率的に推定しつつ、WCAポテンシャルの相図を効率的に推定する。
+WCAポテンシャル粒子系の状態方程式を効率的に推定しつつ、相図を効率的に作成する。
 
 
-\section{WCAポテンシャルの圧力}\label{method-sec:WCA-press}
-\ref{method-sec:WCA-press}節ではWCAポテンシャルにおける数密度と圧力の関係を調べる。
-\ref{method-subsec:WCA}節ではWCAポテンシャルの説明を示し、
-\ref{method-subsec:WCA-phase}節ではWCAポテンシャルの相図の概念図を示し、
-\ref{method-subsec:WCA-pressure}節ではWCAポテンシャルにおける数密度$\rho$と圧力$P$の関係を調べる具体的な実験方法を示す。
+\section{WCAポテンシャル粒子系の圧力}\label{method-sec:WCA-press}
+\ref{method-sec:WCA-press}節ではWCAポテンシャル粒子系における数密度と圧力の関係を調べる。
+\ref{method-subsec:WCA}節ではWCAポテンシャル粒子系の説明を示し、
+\ref{method-subsec:WCA-phase}節ではWCAポテンシャル粒子系の相図の概念図を示し、
+\ref{method-subsec:WCA-pressure}節ではWCAポテンシャル粒子系における数密度$\rho$と圧力$P$の関係を調べる具体的な実験方法を示す。
 
 
 \subsection{Weeks-Chandler-Andersen\,(WCA)ポテンシャル}\label{method-subsec:WCA}
@@ -123,9 +129,9 @@ P^*=\frac{P\sigma^3}{\varepsilon}\label{eq:P}
 と表される。
 
 このLJポテンシャルの斥力作用と引力作用が入れ替わる$r=2^{\frac{1}{6}}{\approx}1.12246$にカットオフ距離を設けたポテンシャルをWCAポテンシャルと呼ぶ
-(WCAポテンシャルでもLJ単位系を用いる)。
+(WCAポテンシャル粒子系でもLJ単位系を用いる)。
 カットオフ距離とは、その距離内の原子間の相互作用のみを考慮するものであり、それ以上の距離での原子間の力を無視するものである\cite{WATANABE20191}。
-WCAポテンシャルにおいて二つの原子間相互作用ポテンシャルエネルギーは、
+WCAポテンシャル粒子系において二つの原子間相互作用ポテンシャルエネルギーは、
 
 \large
 \begin{equation}
@@ -138,7 +144,7 @@ WCAポテンシャルにおいて二つの原子間相互作用ポテンシャ�
 と表される\cite{doi:10.1063/1.2176675}。
 したがって、WCAポテンシャルとは式(\ref{eq:wca})のように斥力作用と引力作用が入れ替わる$r=2^{\frac{1}{6}}$にカットオフ距離を設けることにより、二原子間の引力作用を無視し、斥力作用のみを考慮したポテンシャルである。
 
-以下の図{\ref{fig:dis-poen}にLJポテンシャルとWCAポテンシャルにおける原子間距離$r$と原子間のポテンシャルエネルギー$E$を示す。
+以下の図{\ref{fig:dis-poen}にLJポテンシャルとWCAポテンシャル粒子系における原子間距離$r$と原子間のポテンシャルエネルギー$E$を示す。
 (図{\ref{fig:dis-poen}ではLJポテンシャルにカットオフ距離2.5を設けている)
 
 \begin{figure}[htbp]
@@ -153,31 +159,31 @@ $r>r_c$でポテンシャルエネルギーが0になっている。
 
 
 \newpage
-\subsection{WCAポテンシャルの相図}\label{method-subsec:WCA-phase}
+\subsection{WCAポテンシャル粒子系の相図}\label{method-subsec:WCA-phase}
 相図とは、熱力学的な状態量と物質や系の関係を表したものであり、相図の作成は、物性物理の分野において非常に重要である\cite{gaussian-phase}。
 
-以下の図\ref{fig:wca-phase-diagram}に式(\ref{eq:wca})に示したWCAポテンシャルの相図の概念図を示す。
+以下の図\ref{fig:wca-phase-diagram}に式(\ref{eq:wca})に示したWCAポテンシャル粒子系の相図の概念図を示す。
 
 \begin{figure}[htbp]
     \begin{center}
         \includegraphics[width=9cm]{fig/wca-phase-diagram.png}
     \end{center}
-    \caption{WCAポテンシャルの相図の概念図
-    数密度、温度とWCAポテンシャルの相の関係を示す相図の概念図。
+    \caption{WCAポテンシャル粒子系の相図の概念図
+    数密度、温度とWCAポテンシャル粒子系の相の関係を示す相図の概念図。
     \ref{method-subsec:WCA-pressure}節では赤線上の状態点($T^*$=1.0)を観測する。}
     
     \label{fig:wca-phase-diagram}
 \end{figure}
 
-図\ref{fig:wca-phase-diagram}に示すように、WCAポテンシャルはfluid(流体相)とsolid(固体相)の二相に分離する。
+図\ref{fig:wca-phase-diagram}に示すように、WCAポテンシャル粒子系はfluid(流体相)とsolid(固体相)の二相に分離する。
 温度一定のまま密度を高くしていくと、ある密度で流体相から固体相への相転移を起こす。
 この相転移近傍では、圧力の振る舞いが大きく変化するので、\ref{method-subsec:WCA-pressure}節では、
 相転移近傍での圧力の振る舞いの変化を正しく捉えられるような手法を構築する。
 
 
-\subsection{WCAポテンシャルの圧力測定}\label{method-subsec:WCA-pressure}
+\subsection{WCAポテンシャル粒子系の圧力測定}\label{method-subsec:WCA-pressure}
 原子や分子の物理的な動きのコンピューターシミュレーション手法を分子動力学法(Molecular Dynamics method, MD)と言う\cite{molecular-dynamics}。
-\ref{method-subsec:WCA-pressure}節では、式(\ref{eq:wca})に示したWCAポテンシャルにおける圧力の測定を分子動力学プログラムLarge-scale Atomic/Molecular Massively Parallel Simulator\,(LAMMPS)\cite{lammps}によるシミュレーションを用いて行う。
+\ref{method-subsec:WCA-pressure}節では、式(\ref{eq:wca})に示したWCAポテンシャル粒子系における圧力の測定を分子動力学プログラムLarge-scale Atomic/Molecular Massively Parallel Simulator\,(LAMMPS)\cite{lammps}によるシミュレーションを用いて行う。
 尚、本研究では、式(\ref{eq:wca})の${\sigma}$(原子直径の長さ)\,,\,${\varepsilon}$(ポテンシャルの深さ)を共に1.0とし、
 図\ref{fig:wca-phase-diagram}で示した赤線上の状態点について、研究を進めるものとする。
 
@@ -211,15 +217,15 @@ PV=NkT+{\frac{1}{3}}\langle\sum_{i=j}^N\vec{q_{ij}} \cdot \vec{r_{ij}}\rangle{\l
 と表される\cite{Theoritical-pressure,virial-therom}。
 ここで、$P$は圧力、$V$は体積、$N$は原子数、$k$はボルツマン定数、$T$は温度、$\vec{q_{ij}}$は粒子iと粒子jの相対位置ベクトル、$\vec{r_{ij}}$は原子間に働く力ベクトルである。
 
-\ref{method-subsec:WCA-phase}節に示したように、WCAポテンシャルはある密度で流体ー固体相転移を起こすことから、
+\ref{method-subsec:WCA-phase}節に示したように、WCAポテンシャル粒子系はある密度で流体ー固体相転移を起こすことから、
 相転移点近傍で圧力の振る舞いが急激に変化すると考えられる。
-\ref{results-sec:WCA-press}節では、MDシミュレーションで測定されたWCAポテンシャルの圧力の振る舞いを、
+\ref{results-sec:WCA-press}節では、MDシミュレーションで測定されたWCAポテンシャル粒子系の圧力の振る舞いを、
 原子間の相互作用をほぼ無視できる低密度状態、流体相から固体層への相転移近傍の中密度状態、原子間の相互作用の寄与が大きい高密度状態において調べる。
 
-\section{WCAポテンシャルの状態方程式の推定}\label{method-sec:WCA-equation}
-\ref{method-sec:WCA-equation}節では、\ref{results-sec:WCA-press}節で調べたWCAポテンシャルにおける圧力$P$を数密度$\rho$の状態方程式で表す。
+\section{WCAポテンシャル粒子系の状態方程式の推定}\label{method-sec:WCA-equation}
+\ref{method-sec:WCA-equation}節では、\ref{results-sec:WCA-press}節で調べたWCAポテンシャル粒子系における圧力$P$を数密度$\rho$の状態方程式で表す。
 \ref{method-subsec:virial}節、\ref{method-subsec:BWR}節では、それぞれ圧力を密度の項で展開するビリアル展開、Benedict-Webb-Rubin(BWR)方程式の説明を示し、
-\ref{method-subsec:WCA-equation}節では、WCAポテンシャルの圧力を状態方程式で表す具体的な手法を示す。
+\ref{method-subsec:WCA-equation}節では、WCAポテンシャル粒子系の圧力を状態方程式で表す具体的な手法を示す。
 
 \subsection{ビリアル展開}\label{method-subsec:virial}
 気体の振る舞いを表す有望な記述の一つにビリアル展開と呼ぶものが存在する。
@@ -270,14 +276,14 @@ P=\sum_{n=1}^9a_n{{\rho}'}^n+\exp(-{\gamma}{{\rho}'}^2)\sum_{n=10}^{15}a_n{{\rho
 依然として気体の状態方程式を完璧に再現することは出来なかった。
 その後も、多くの研究者が気体の状態方程式の項を増やすことで、完璧な再現を試みた\cite{MCCARTY1974276,BWR-equation:13,BWR-equation:25}が、項の個数は際限なく増え、項自体の物理的意味も不明瞭であった。
 
-\subsection{WCAポテンシャルの状態方程式の推定}\label{method-subsec:WCA-equation}
+\subsection{WCAポテンシャル粒子系の状態方程式の推定}\label{method-subsec:WCA-equation}
 \ref{method-subsec:virial}節、\ref{method-subsec:BWR}節のように気体の状態方程式を項を増やすことによって再現しようと試みたが、項の個数は際限なく増え続けた。
 また、BWR方程式に含まれる指数項は経験的に付け加えられたものであり、物理的な意味が不明瞭である。
 
-そこで、機械学習により、より多くの候補からWCAポテンシャルにおける状態方程式を推定する方が効果的であると言える。
+そこで、機械学習により、より多くの候補からWCAポテンシャル粒子系における状態方程式を推定する方が効果的であると言える。
 最終的には、機械学習が推定してきた項の物理的意味を考察することが目標であるが、
-まず本研究では\ref{results-sec:WCA-press}節で示したWCAポテンシャルにおける圧力と数密度の関係に上記で示した最小二乗法を適用し、
-圧力を数密度に関する低次の多項式で近似することにより、WCAポテンシャルの状態方程式を推定する。
+まず本研究では\ref{results-sec:WCA-press}節で示したWCAポテンシャル粒子系における圧力と数密度の関係に上記で示した最小二乗法を適用し、
+圧力を数密度に関する低次の多項式で近似することにより、WCAポテンシャル粒子系の状態方程式を推定する。
 
 以下、最小二乗法の説明を簡潔に示す。
 今、想定される多項式を
@@ -439,16 +445,16 @@ S &=& (Y-XA)^T(Y-XA)\nonumber\\
 \normalsize
 で与えられる$A$を求めることで最小二乗法は完結する\cite{least-squares}。
 
-\ref{results-sec:WCA-equation}節では、上記で述べたように\ref{results-sec:WCA-press}節で示したWCAポテンシャルにおける圧力と数密度の関係に
-上記で示した最小二乗法を適用し、圧力を数密度に関する低次の多項式で近似することにより、WCAポテンシャルの状態方程式を推定する。
-その後、推定したWCAポテンシャルの状態方程式の展開係数が先行研究と矛盾しないことを確認する。
+\ref{results-sec:WCA-equation}節では、上記で述べたように\ref{results-sec:WCA-press}節で示したWCAポテンシャル粒子系における圧力と数密度の関係に
+上記で示した最小二乗法を適用し、圧力を数密度に関する低次の多項式で近似することにより、WCAポテンシャル粒子系の状態方程式を推定する。
+その後、推定したWCAポテンシャル粒子系の状態方程式の展開係数が先行研究と矛盾しないことを確認する。
 
 
-\section{ガウス過程回帰によるWCAポテンシャルの状態方程式及び相図の効率的推定}\label{method-sec:Gauss}
-\ref{method-sec:Gauss}節では、ガウス過程回帰を用いて、WCAポテンシャルの状態方程式を効率的に求める。
+\section{ガウス過程回帰によるWCAポテンシャル粒子系の状態方程式及び相図の効率的推定}\label{method-sec:Gauss}
+\ref{method-sec:Gauss}節では、ガウス過程回帰を用いて、WCAポテンシャル粒子系の状態方程式を効率的に求める。
 \ref{method-subsec:Gauss}節では、ガウス過程回帰の説明を示し、
-\ref{method-subsec:Gaussian-estimation}節では、\ref{results-sec:WCA-press}節で示したWCAポテンシャルにおける数密度と圧力のペア($\rho$\,,\,$P$)の数点にガウス過程回帰を適用し、
-WCAポテンシャルの数密度と圧力の関係を効率的に推定する具体的な方法を示す。
+\ref{method-subsec:Gaussian-estimation}節では、\ref{results-sec:WCA-press}節で示したWCAポテンシャル粒子系における数密度と圧力のペア($\rho$\,,\,$P$)の数点にガウス過程回帰を適用し、
+WCAポテンシャル粒子系の数密度と圧力の関係を効率的に推定する具体的な方法を示す。
 
 
 \subsection{ガウス過程回帰}\label{method-subsec:Gauss}
@@ -587,8 +593,8 @@ p(\bm{y}^*|\bm{x}^*,\mathcal{D})
 獲得関数とは関連分野から借りてきた試行状態の「情報性」を定量化する用語に過ぎない\cite{acquisition-function}。
 
 
-\subsection{ガウス過程回帰によるWCAポテンシャルの状態方程式の効率的推定}\label{method-subsec:Gaussian-estimation}
-\ref{method-subsec:Gauss}節に示したガウス過程回帰を用いて、本研究では、WCAポテンシャルにおける数密度$\rho$と圧力$P$の関係を効率的に推定する。
+\subsection{ガウス過程回帰によるWCAポテンシャル粒子系の状態方程式の効率的推定}\label{method-subsec:Gaussian-estimation}
+\ref{method-subsec:Gauss}節に示したガウス過程回帰を用いて、本研究では、WCAポテンシャル粒子系における数密度$\rho$と圧力$P$の関係を効率的に推定する。
 
 本研究では、カーネル関数として、\cite{Gauss-machine-learning}で導入されている
 
@@ -607,8 +613,8 @@ $\{(P,\rho)\}=\{(0.00,0.00)\,,\,(15.0,1.83×10^7)\}$の二点を初期の入力�
 式(\ref{eq:Gaussian-predicted-average})の平均$E$が入力データから予測される関数を、
 式(\ref{eq:Gaussian-predicted-decentration})の分散$\sigma^2$が入力データから予測される関数の不確かさを示すものとする。
 また、各数密度における分散の平方根を取った標準偏差$\sigma$の大きさを獲得関数とし、この関数を最大にする、すなわち不確かさが最大の数密度を次の試行点として選択する。
-この不確かさが最大となる数密度におけるWCAポテンシャルの圧力をMDシミュレーションにより新たに測定し、入力データを更新し、再度ガウス過程回帰を行う。
-本研究では、以上の工程を繰り返し行い、WCAポテンシャルにおける状態方程式、相図の効率的推定を行う。
+この不確かさが最大となる数密度におけるWCAポテンシャル粒子系の圧力をMDシミュレーションにより新たに測定し、入力データを更新し、再度ガウス過程回帰を行う。
+本研究では、以上の工程を繰り返し行い、WCAポテンシャル粒子系における状態方程式、相図の効率的推定を行う。
 上記に示したアルゴリズムの簡易図を以下の図\ref{fig:algorithm}に示す。
 
 \begin{figure}[htbp]
@@ -621,26 +627,26 @@ $\{(P,\rho)\}=\{(0.00,0.00)\,,\,(15.0,1.83×10^7)\}$の二点を初期の入力�
 
 \chapter{結果} \label{chap:results}
 
-\section{WCAポテンシャルの圧力}\label{results-sec:WCA-press}
-\ref{results-sec:WCA-press}節では、各数密度においてMDシミュレーションで測定されたWCAポテンシャルの圧力の振る舞いを調べる。
-まず、数密度$\rho$とMDシミュレーションで測定されたWCAポテンシャルの圧力$P$の関係を
+\section{WCAポテンシャル粒子系の圧力}\label{results-sec:WCA-press}
+\ref{results-sec:WCA-press}節では、各数密度においてMDシミュレーションで測定されたWCAポテンシャル粒子系の圧力の振る舞いを調べる。
+まず、数密度$\rho$とMDシミュレーションで測定されたWCAポテンシャル粒子系の圧力$P$の関係を
 以下の図\ref{fig:den-pre}に示す。
 
 \begin{figure}[htbp]
     \begin{center}
         \includegraphics[width=14cm]{fig/den-pre.pdf}
     \end{center}
-    \caption{WCAポテンシャルの圧力の測定値}
+    \caption{WCAポテンシャル粒子系の圧力の測定値}
     \label{fig:den-pre}
 \end{figure}
 
 以下、\ref{results-subsec:WCA-press-low-density}節では原子間の相互作用をほぼ無視できる低密度状態、
 \ref{results-subsec:WCA-press-middle-density}節では流体相から固体相への相転移近傍の中密度状態、
 \ref{results-subsec:WCA-press-high-density}節では原子間の相互作用の寄与が大きい高密度状態において、
-MDシミュレーションで測定されたWCAポテンシャルの圧力について具体的に調べる。
+MDシミュレーションで測定されたWCAポテンシャル粒子系の圧力について具体的に調べる。
 
 
-\subsection{低密度状態のWCAポテンシャルの圧力}\label{results-subsec:WCA-press-low-density}
+\subsection{低密度状態のWCAポテンシャル粒子系の圧力}\label{results-subsec:WCA-press-low-density}
 初期状態において、原子間の相互作用が作用する($原子間距離r=カットオフ距離r_c$)数密度は
 
 \large
@@ -699,16 +705,16 @@ P\,{\simeq}\,{\rho} \label{eq:ideal-value}
     \begin{center}
         \includegraphics[width=14cm]{fig/lowden_compare:den-pre.pdf}
     \end{center}
-    \caption{WCAポテンシャルにおける低密度状態の圧力の理論近似値と測定値の比較}
+    \caption{WCAポテンシャル粒子系における低密度状態の圧力の理論近似値と測定値の比較}
     \label{fig:lowden_compare:den-pre}
 \end{figure}
 
-図\ref{fig:lowden_compare:den-pre}から、低密度状態ではWCAポテンシャルの圧力は式(\ref{eq:ideal-gas})
+図\ref{fig:lowden_compare:den-pre}から、低密度状態ではWCAポテンシャル粒子系の圧力は式(\ref{eq:ideal-gas})
 と書けることがわかる。
 これは、低密度状態では、「ほぼ」原子間の相互作用を無視でき、原子が理想気体のように振る舞うことに依存する。
 
 
-\subsection{中密度状態のWCAポテンシャルの圧力}\label{results-subsec:WCA-press-middle-density}
+\subsection{WCAポテンシャル粒子系における中密度状態の圧力}\label{results-subsec:WCA-press-middle-density}
 中密度状態では、相互作用を持つ分子ペアと持たない分子が存在する。
 まず、中密度状態における分子の状態の概念図を以下の図\ref{fig:middledensity.png}に示す。
 
@@ -722,24 +728,24 @@ P\,{\simeq}\,{\rho} \label{eq:ideal-value}
 
 \newpage
 流体相から固体相への相転移近傍の中密度状態では、相転移により圧力の振る舞いが急激に変化すると考えられる。
-相転移近傍の中密度状態での数密度$\rho$とMDシミュレーションで測定されたWCAポテンシャルの圧力$P$の関係を
+相転移近傍の中密度状態での数密度$\rho$とMDシミュレーションで測定されたWCAポテンシャル粒子系の圧力$P$の関係を
 以下の図\ref{fig:middleden_den-pre}に示す。
 
 \begin{figure}[htbp]
     \begin{center}
         \includegraphics[width=14cm]{fig/middleden_den-pre.pdf}
     \end{center}
-    \caption{WCAポテンシャルにおける中密度状態の数密度と圧力の関係}
+    \caption{WCAポテンシャル粒子系における中密度状態の数密度と圧力の関係}
     \label{fig:middleden_den-pre}
 \end{figure}
 
 
 図\ref{fig:middleden_den-pre}から$\rho\,{\simeq}\,1$付近で相転移が起こり、圧力の振る舞いが急激に変化することを確認できた。
-この相転移の存在により、圧力の振る舞いが急激に変化するので、WCAポテンシャルの状態方程式を\ref{method-subsec:virial}節で示したビリアル展開や、
+この相転移の存在により、圧力の振る舞いが急激に変化するので、WCAポテンシャル粒子系の状態方程式を\ref{method-subsec:virial}節で示したビリアル展開や、
 \ref{method-subsec:BWR}節で示したBWR,m-BWR方程式を用いて表すと項の個数が際限なく増え、項自体の物理的意味も不明瞭になると考えられる。
 
 
-\subsection{高密度状態のWCAポテンシャルの圧力}\label{results-subsec:WCA-press-high-density}
+\subsection{高密度状態のWCAポテンシャル粒子系の圧力}\label{results-subsec:WCA-press-high-density}
 高密度状態では、すべての分子ペアが相互作用を持つものと近似できる。
 まず、高密度状態における分子の状態の概念図を以下の図\ref{fig:highdensity.png}に示す。
 
@@ -755,8 +761,8 @@ P\,{\simeq}\,{\rho} \label{eq:ideal-value}
 高密度状態では、
 密度が高くなればなるほど、式(\ref{eq:Theoritical-pressure})の第二項で考慮するものは、再隣接原子の寄与、第二隣接原子の寄与、第三隣接原子の寄与・・・と増えていく。
 
-WCAポテンシャルにおいて原子間に働く力$\vec{r_{ij}}$の大きさは、
-WCAポテンシャルのポテンシャルエネルギーが式(\ref{eq:wca})に従うことから、
+WCAポテンシャル粒子系において原子間に働く力$\vec{r_{ij}}$の大きさは、
+WCAポテンシャル粒子系のポテンシャルエネルギーが式(\ref{eq:wca})に従うことから、
 
 \large
 \begin{eqnarray}
@@ -773,7 +779,7 @@ WCAポテンシャルのポテンシャルエネルギーが式(\ref{eq:wca})に
 は、距離に対して6乗で減衰することがわかる。
 
 以上から、式(\ref{eq:Theoritical-pressure})の第二項への寄与はほとんどが再隣接原子であることから、本研究では、再隣接原子の寄与のみを考えるものとする。
-第五隣接原子の寄与が生じる密度は、第五隣接原子間距離がWCAポテンシャルのカットオフ距離$r_c$と等しい、すなわち
+第五隣接原子の寄与が生じる密度は、第五隣接原子間距離がWCAポテンシャル粒子系のカットオフ距離$r_c$と等しい、すなわち
 $\rho\,{\simeq}\,14.7$と表される。
 これより高密度の状態では、次々に原子間の相互作用が働いていくが、この高密度状態でも圧力が式(\ref{eq:Theoritical-pressure})において
 再隣接原子の寄与のみを考慮したもので十分に表されることを確認する。
@@ -784,27 +790,27 @@ $\rho\,{\simeq}\,14.7$と表される。
     \begin{center}
         \includegraphics[width=14cm]{fig/highden_compare:den-pre.pdf}
     \end{center}
-    \caption{WCAポテンシャルにおける高密度状態の圧力の理論近似値と測定値の比較}
+    \caption{WCAポテンシャル粒子系における高密度状態の圧力の理論近似値と測定値の比較}
     \label{fig:highden_compare:den-pre}
 \end{figure}
 
 図\ref{fig:highden_compare:den-pre}から、理論値と測定値のズレは1.2％以下であることがわかる。
-このことから、第五隣接原子より離れた原子とも相互作用が働くほど高密度の状態でもWCAポテンシャルの圧力は式(\ref{eq:Theoritical-pressure})において
+このことから、第五隣接原子より離れた原子とも相互作用が働くほど高密度の状態でもWCAポテンシャル粒子系の圧力は式(\ref{eq:Theoritical-pressure})において
 再隣接原子の寄与のみを考慮したもので十分に表されていることがわかる。
 
 
 
-以上から、MDシミュレーションにより測定されたWCAポテンシャルの圧力の振る舞いを
+以上から、MDシミュレーションにより測定されたWCAポテンシャル粒子系の圧力の振る舞いを
 原子間の相互作用をほぼ無視できる低密度状態、流体相から固体相への相転移近傍の中密度状態、原子間の相互作用の寄与が大きい高密度状態において確認できた。
 
 
 
-\section{WCAポテンシャルの状態方程式の推定}\label{results-sec:WCA-equation}
+\section{WCAポテンシャル粒子系の状態方程式の推定}\label{results-sec:WCA-equation}
 \ref{results-sec:WCA-press}節で示した圧力を数密度を含む項で展開することを試みたとき、\ref{method-subsec:virial}節で示したビリアル展開、
 \ref{method-subsec:BWR}節で示したBWR,m-BWR方程式を用いると、\ref{results-subsec:WCA-press-middle-density}節で示した相転移の存在により、
 項の個数が際限なく増え、項自体の物理的意味も不明瞭になると考えられる。
-そこで、\ref{results-sec:WCA-equation}節では、\ref{results-sec:WCA-press}節で示したWCAポテンシャルにおける圧力と数密度の関係に上記で示した最小二乗法を適用し、
-圧力を数密度に関する低次の多項式で近似することにより、WCAポテンシャルの状態方程式を推定する。
+そこで、\ref{results-sec:WCA-equation}節では、\ref{results-sec:WCA-press}節で示したWCAポテンシャル粒子系における圧力と数密度の関係に上記で示した最小二乗法を適用し、
+圧力を数密度に関する低次の多項式で近似することにより、WCAポテンシャル粒子系の状態方程式を推定する。
 尚、本研究における多項式近似とは、
 
 \large
@@ -838,7 +844,7 @@ $\rho\,{\simeq}\,14.7$と表される。
 \end{equation}
 \normalsize
 と表される。
-WCAポテンシャルの圧力を式(\ref{eq:modified-search-virial})のように数密度で2次〜5次に近似し、その近似精度を式(\ref{eq:percentage-error})に基づいて評価する。
+WCAポテンシャル粒子系の圧力を式(\ref{eq:modified-search-virial})のように数密度で2次〜5次に近似し、その近似精度を式(\ref{eq:percentage-error})に基づいて評価する。
 この結果を以下の表\ref{table:approximation-accuracy}に示す。
 
 \begin{table}[htbp]
@@ -859,10 +865,10 @@ WCAポテンシャルの圧力を式(\ref{eq:modified-search-virial})のよう�
     \label{table:approximation-accuracy}
 \end{table}
 
-低次から近似を行い、\ref{results-sec:WCA-press}節のMDシミュレーションにより測定されたWCAポテンシャルの圧力を数密度に関する多項式で近似することを試みたが、
+低次から近似を行い、\ref{results-sec:WCA-press}節のMDシミュレーションにより測定されたWCAポテンシャル粒子系の圧力を数密度に関する多項式で近似することを試みたが、
 上記の表\ref{table:approximation-accuracy}に基づくn次近似の近似精度から、本研究では、低次の多項式として5次の多項式を採用した。
 
-最小二乗法により5次に近似されたWCAポテンシャルの状態方程式は、
+最小二乗法により5次に近似されたWCAポテンシャル粒子系の状態方程式は、
 
 \large
 \begin{equation}
@@ -877,16 +883,16 @@ WCAポテンシャルの圧力を式(\ref{eq:modified-search-virial})のよう�
     \begin{center}
         \includegraphics[width=14cm]{fig/5den-pre.pdf}
     \end{center}
-    \caption{WCAポテンシャルにおけるMDシミュレーションによる圧力の測定値と5次近似値の比較}
+    \caption{WCAポテンシャル粒子系におけるMDシミュレーションによる圧力の測定値と5次近似値の比較}
     \label{fig:5den-pre}
 \end{figure}
 
 \newpage
-図\ref{fig:5den-pre}から、WCAポテンシャルの状態方程式は、式(\ref{eq:5den-pre})で書き表せているようではあるが、
+図\ref{fig:5den-pre}から、WCAポテンシャル粒子系の状態方程式は、式(\ref{eq:5den-pre})で書き表せているようではあるが、
 表\ref{table:approximation-accuracy}から、近似精度としては十分と言えない。
 
 
-\section{ガウス過程回帰によるWCAポテンシャルの状態方程式及び相図の効率的推定}\label{results-sec:Gauss}
+\section{ガウス過程回帰によるWCAポテンシャル粒子系の状態方程式及び相図の効率的推定}\label{results-sec:Gauss}
 \ref{results-sec:Gauss}節では、\ref{results-sec:WCA-press}節で示した圧力$P$と数密度$\rho$の関係を効率的に推定する。
 
 \ref{method-subsec:Gaussian-estimation}節に示したように、$\{(\rho,P)\}=\{(0.00,0.00)\,,\,(15.0,1.83×10^7)\}$の二点を初期の入力データとして、圧力$P$と数密度$\rho$の関係にガウス過程回帰を適用する。
@@ -931,7 +937,7 @@ WCAポテンシャルの圧力を式(\ref{eq:modified-search-virial})のよう�
 上図\ref{fig:26plot}から、26点の入力データで\ref{results-sec:WCA-press}節で示した
 圧力$P$と密度$\rho$の関係を再現することに成功していることが読み取れる。
 
-続いて、上図\ref{fig:26plot}に示した試行点を元に、WCAポテンシャルの状態方程式の推定が効率的に行えるかを調べる。
+続いて、上図\ref{fig:26plot}に示した試行点を元に、WCAポテンシャル粒子系の状態方程式の推定が効率的に行えるかを調べる。
 $\rho=0.00,0.60,1.20,\cdots,15.0$と$\rho=0.00〜15.0$に26点等間隔で用意したものとその圧力のペアを入力データ1、
 図\ref{fig:26plot}に示した26点の試行点を入力データ2とする。
 
@@ -970,7 +976,7 @@ $\rho=0.00,0.60,1.20,\cdots,15.0$と$\rho=0.00〜15.0$に26点等間隔で用意
 \end{table}
 
 上記の表\ref{table:compare-approximation-accuracy}から、入力データ2すなわちガウス過程回帰を適用したデータを元にした時、
-WCAポテンシャルの状態方程式を推定出来ていることがわかる。
+WCAポテンシャル粒子系の状態方程式を推定出来ていることがわかる。
 
 以上から、\ref{method-subsec:Gaussian-estimation}節で提示したアルゴリズムにより、WCAポテンシャルの状態方程式を効率的に推定することに成功した。
 
