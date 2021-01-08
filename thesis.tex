@@ -194,9 +194,18 @@ $r>r_c$でポテンシャルエネルギーが0になっている。
 本研究では、初期状態として1辺$L$、体積$V$の立方体の中に$N=2048$個の面心立方face-centered cubic\,(fcc)構造上に配置した分子を用意し、研究を進めるものとする。
 
 \newpage
-まず、以下の図\ref{initial-state-molecule}に、初期状態の分子構造を示す。
+まず、以下の図\ref{fig:initial-state-molecule}に、初期状態の分子構造を示す。
 
-上図\ref{initial-state-molecule}に示すように初期状態では、分子がfcc構造上に配置されている。
+\begin{figure}[htbp]
+    \begin{center}
+        \includegraphics[width=12cm]{fig/initial-state-molecule.png}
+    \end{center}
+    \caption{初期状態の分子構造。
+    fcc構造上に配置されている。}
+    \label{fig:initial-state-molecule}
+\end{figure}
+
+上図\ref{fig:initial-state-molecule}に示すように初期状態では、分子がfcc構造上に配置されている。
 
 この系の数密度は、
 \large
@@ -210,9 +219,6 @@ $r>r_c$でポテンシャルエネルギーが0になっている。
 この初期条件のもと、タイムステップ0.001で20000実行のシミュレーションを行った。
 尚、本研究ではNVTアンサンブルによりシミュレーション中の粒子数$N$、体積$V$、温度$T$が一定であることを前提とし、
 温度は、$T=1.0$で制御できていたものとする。
-
-以下の図\ref{molecule-simulation}に、シミュレーション中の分子構造を示す。
-
 
 二体相互作用をする粒子系における圧力は、ビリアル定理によって
 
@@ -986,8 +992,9 @@ $\rho=0.00,0.60,1.20,\cdots,15.0$と$\rho=0.00〜15.0$に26点等間隔で用意
 
 最後に、上図\ref{fig:26plot}に示した試行点を元に、WCAポテンシャル粒子系の相図を効率的に作成することが出来るかを調べる。
 WCAポテンシャルの相転移は、\ref{results-subsec:WCA-press-middle-density}節の図\ref{fig:middleden_den-pre}から、
-数密度$\rho\,{\simeq}1.00$で起こる。そこで、WCAポテンシャル粒子系において効率的に相図を作成するためには、相転移近傍である$\rho=1.00$付近を重点的に探索するような
-アルゴリズムを構築することを目指したが、表\ref{table:compare-approximation-accuracy}よりこのようなアルゴリズムは構築出来ていない。
+数密度$\rho\,{\simeq}1.00$で起こる。そこで、WCAポテンシャル粒子系において効率的に相図を作成するために、ガウス過程回帰を用いて標準偏差(不確かさ)が最大の点を選択していくような\ref{method-subsec:Gaussian-estimation}節で提示したアルゴリズムにより、
+相転移近傍の急激な圧力の変化を機械が捉えると予測したが、表\ref{table:compare-approximation-accuracy}より
+相転移近傍である$\rho=1.00$付近を重点的に探索するようなアルゴリズムは構築出来ていない。
 以上から、\ref{method-subsec:Gaussian-estimation}節で提示したアルゴリズムでは、WCAポテンシャルの相図を効率的に作成することに失敗した。
 
 \chapter{考察および結論} \label{chap:summary}
