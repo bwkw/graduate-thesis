@@ -106,21 +106,21 @@ LJポテンシャルを用いる系では、パラメータ$\sigma$\,,\,$\vareps
 他にも多くの気体ごとに値が定められている\cite{graphane-parameters,many-parameters}。
 
 \newpage
-LJ単位系では、温度$T^*$はポテンシャル$\varepsilon$\,,ボルツマン定数$k$を用いて、
+LJ単位系では、温度$T^*$はパラメータ$\varepsilon$\,,ボルツマン定数$k$を用いて、
 
 \large
 \begin{equation}
 T^*=\frac{kT}{\varepsilon}\label{eq:T}
 \end{equation}
 \normalsize
-圧力$P^*$はポテンシャル${\sigma}$\,,\,${\varepsilon}$を用いて
+圧力$P^*$はパラメータ${\sigma}$\,,\,${\varepsilon}$を用いて
 
 \large
 \begin{equation}
 P^*=\frac{P\sigma^3}{\varepsilon}\label{eq:P}
 \end{equation}
 \normalsize
-数密度$\rho^*$はポテンシャル$\sigma$を用いて、
+数密度$\rho^*$はパラメータ$\sigma$を用いて、
 
 \large
 \begin{equation}
@@ -818,7 +818,7 @@ $\rho\,{\simeq}\,14.7$と表される。
 \ref{results-sec:WCA-press}節で示した圧力を数密度を含む項で展開することを試みたとき、\ref{method-subsec:virial}節で示したビリアル展開、
 \ref{method-subsec:BWR}節で示したBWR,m-BWR方程式を用いると、\ref{results-subsec:WCA-press-middle-density}節で示した相転移の存在により、
 項の個数が際限なく増え、項自体の物理的意味も不明瞭になると考えられる。
-そこで、\ref{results-sec:WCA-equation}節では、\ref{results-sec:WCA-press}節で示したWCAポテンシャル粒子系における圧力と数密度の関係に上記で示した最小二乗法を適用し、
+そこで、\ref{results-sec:WCA-equation}節では、\ref{results-sec:WCA-press}節で示したWCAパラメーター粒子系における圧力と数密度の関係に上記で示した最小二乗法を適用し、
 圧力を数密度に関する低次の多項式で近似することにより、WCAポテンシャル粒子系の状態方程式を推定する。
 尚、本研究における多項式近似とは、
 
@@ -899,6 +899,7 @@ WCAポテンシャル粒子系の圧力を式(\ref{eq:modified-search-virial})�
 \newpage
 図\ref{fig:5den-pre}から、WCAポテンシャル粒子系の状態方程式は、式(\ref{eq:5den-pre})で書き表せているようではあるが、
 表\ref{table:approximation-accuracy}から、近似精度としては十分と言えない。
+続いて、式(\ref{eq:5den-pre})と推定されたWCAポテンシャルの状態方程式を先行研究と比較する。
 
 
 \section{ガウス過程回帰によるWCAポテンシャル粒子系における効率的な状態方程式推定及び相図作成}\label{results-sec:Gauss}
@@ -946,10 +947,9 @@ WCAポテンシャル粒子系の圧力を式(\ref{eq:modified-search-virial})�
 上図\ref{fig:26plot}から、26点の入力データで\ref{results-sec:WCA-press}節で示した
 圧力$P$と密度$\rho$の関係を再現することに成功していることが読み取れる。
 
-続いて、上図\ref{fig:26plot}に示した試行点を元に、WCAポテンシャル粒子系の状態方程式の推定が効率的に行えるかを調べる。
+続いて、上図\ref{fig:26plot}に示した試行点を元に、WCAポテンシャル粒子系の状態方程式の推定が効率的に行うことが出来るかを調べる。
 $\rho=0.00,0.60,1.20,\cdots,15.0$と$\rho=0.00〜15.0$に26点等間隔で用意したものとその圧力のペアを入力データ1、
 図\ref{fig:26plot}に示した26点の試行点を入力データ2とする。
-
 まず、以下に入力データ1と入力データ2における数密度$\rho$を示す。
 
 \begin{table}[htbp]
@@ -966,10 +966,8 @@ $\rho=0.00,0.60,1.20,\cdots,15.0$と$\rho=0.00〜15.0$に26点等間隔で用意
     \end{center}
     \label{table:compare-Gauss}
 \end{table}
-
 上記の表\ref{table:compare-Gauss}で示した各入力データにおける数密度$\rho$と圧力$P$に対して、\ref{results-sec:WCA-equation}節で採用した最小二乗法の5次式近似
 を適用し、それそれの入力データに対する近似精度を式(\ref{eq:percentage-error})で評価する。
-
 以下の表\ref{table:compare-approximation-accuracy}に、入力データ1と入力データ2に対する近似精度を示す。
 
 \begin{table}[htbp]
@@ -978,19 +976,19 @@ $\rho=0.00,0.60,1.20,\cdots,15.0$と$\rho=0.00〜15.0$に26点等間隔で用意
             \begin{tabular}{c c}
                     入力データ1\,(％) & 入力データ2\,(％) \\ \hline\hline
                     9.191 & 9.139
-                    
             \end{tabular}
     \end{center}
     \label{table:compare-approximation-accuracy}
 \end{table}
-
-上記の表\ref{table:compare-approximation-accuracy}から、入力データ2すなわちガウス過程回帰を適用したデータを元にした時、
-WCAポテンシャル粒子系の状態方程式を推定出来ていることがわかる。
-
+上記の表\ref{table:compare-approximation-accuracy}から、ガウス過程回帰を適用した入力データ2を元にした時、
+数密度を等間隔にとった入力データ1よりもWCAポテンシャル粒子系の状態方程式を推定出来ていることがわかる。
 以上から、\ref{method-subsec:Gaussian-estimation}節で提示したアルゴリズムにより、WCAポテンシャルの状態方程式を効率的に推定することに成功した。
 
-
-
+最後に、上図\ref{fig:26plot}に示した試行点を元に、WCAポテンシャル粒子系の相図を効率的に作成することが出来るかを調べる。
+WCAポテンシャルの相転移は、\ref{results-subsec:WCA-press-middle-density}節の図\ref{fig:middleden_den-pre}から、
+数密度$\rho\,{\simeq}1.00$で起こる。そこで、WCAポテンシャル粒子系において効率的に相図を作成するためには、相転移近傍である$\rho=1.00$付近を重点的に探索するような
+アルゴリズムを構築することを目指したが、表\ref{table:compare-approximation-accuracy}よりこのようなアルゴリズムは構築出来ていない。
+以上から、\ref{method-subsec:Gaussian-estimation}節で提示したアルゴリズムでは、WCAポテンシャルの相図を効率的に作成することに失敗した。
 
 \chapter{考察および結論} \label{chap:summary}
 
