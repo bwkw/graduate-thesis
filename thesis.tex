@@ -760,7 +760,7 @@ P\,{\simeq}\,{\rho} \label{eq:ideal-value}
 この相転移の存在により、圧力の振る舞いが急激に変化するので、WCAポテンシャル粒子系の状態方程式を\ref{method-subsec:virial}節で示したビリアル展開や、
 \ref{method-subsec:BWR}節で示したBWR,m-BWR方程式を用いて表すと項の個数が際限なく増え、項自体の物理的意味も不明瞭になると考えられる。
 
-
+\newpage
 \subsection{WCAポテンシャル粒子系における高密度状態の圧力}\label{results-subsec:WCA-press-high-density}
 高密度状態では、すべての分子ペアが相互作用を持つものと近似できる。
 まず、高密度状態における分子の状態の概念図を以下の図\ref{fig:highdensity.png}に示す。
@@ -773,7 +773,7 @@ P\,{\simeq}\,{\rho} \label{eq:ideal-value}
     \label{fig:highdensity.png}
 \end{figure}
 
-\newpage
+
 原子間の相互作用の寄与が大きい高密度状態では、圧力は式(\ref{eq:Theoritical-pressure})の第二項の影響を強く受ける。
 高密度状態では、
 密度が高くなればなるほど、式(\ref{eq:Theoritical-pressure})の第二項で考慮するものは、再隣接原子の寄与、第二隣接原子の寄与、第三隣接原子の寄与・・・と増えていく。
@@ -811,7 +811,7 @@ $\rho\,{\simeq}\,14.7$と表される。
     \label{fig:highden_compare:den-pre}
 \end{figure}
 
-\newpage
+
 図\ref{fig:highden_compare:den-pre}から、理論値と測定値のズレは1.2％以下であることがわかる。
 このことから、第五隣接原子より離れた原子とも相互作用が働くほど高密度の状態でもWCAポテンシャル粒子系の圧力は式(\ref{eq:Theoritical-pressure})において
 再隣接原子の寄与のみを考慮したもので十分に表されていることがわかる。
@@ -819,7 +819,7 @@ $\rho\,{\simeq}\,14.7$と表される。
 以上から、MDシミュレーションにより測定されたWCAポテンシャル粒子系の圧力の振る舞いを
 原子間の相互作用をほぼ無視できる低密度状態、流体相から固体相への相転移近傍の中密度状態、原子間の相互作用の寄与が大きい高密度状態において確認できた。
 
-
+\newpage
 \section{WCAポテンシャル粒子系における状態方程式の推定}\label{results-sec:WCA-equation}
 \ref{results-sec:WCA-press}節で示した圧力を数密度を含む項で展開することを試みたとき、\ref{method-subsec:virial}節で示したビリアル展開、
 \ref{method-subsec:BWR}節で示したBWR,m-BWR方程式を用いると、\ref{results-subsec:WCA-press-middle-density}節で示した相転移の存在により、
@@ -835,14 +835,14 @@ $\rho\,{\simeq}\,14.7$と表される。
     &=& {\rho}kT \nonumber
 \end{eqnarray}
 \normalsize
-を元に、($k$:ボルツマン定数)式(\ref{eq:virial})のビリアル展開を
+を元に($k$:ボルツマン定数)、式(\ref{eq:virial})のビリアル展開を
 
 \large
 \begin{eqnarray}
     P=kT\rho+b_2\rho^2+b_3\rho^3+b_4\rho^4+\cdots\label{eq:search-virial} \nonumber
 \end{eqnarray}
 \normalsize
-と表したものであるが、\ref{results-sec:WCA-press}節では、ボルツマン定数$k=1.0$、温度$T=1.0$としているので、式(\ref{eq:search-virial})より、
+と表したものであるが、\ref{results-sec:WCA-press}節では、ボルツマン定数$k=1.0$、温度$T=1.0$としているので、
 \large
 \begin{equation}
     P=\rho+b_2\rho^2+b_3\rho^3+b_4\rho^4+\cdots\label{eq:modified-search-virial}
@@ -880,6 +880,7 @@ WCAポテンシャル粒子系の圧力を式(\ref{eq:modified-search-virial})�
     \label{table:approximation-accuracy}
 \end{table}
 
+\newpage
 低次から近似を行い、\ref{results-sec:WCA-press}節のMDシミュレーションにより測定されたWCAポテンシャル粒子系の圧力を数密度に関する多項式で近似することを試みたが、
 上記の表\ref{table:approximation-accuracy}に基づくn次近似の近似精度から、本研究では、低次の多項式として5次の多項式を採用した。
 
@@ -905,9 +906,10 @@ WCAポテンシャル粒子系の圧力を式(\ref{eq:modified-search-virial})�
 \newpage
 図\ref{fig:5den-pre}から、WCAポテンシャル粒子系の状態方程式は、式(\ref{eq:5den-pre})で書き表せているようではあるが、
 表\ref{table:approximation-accuracy}から、近似精度としては十分と言えない。
+
 続いて、式(\ref{eq:5den-pre})と推定されたWCAポテンシャルの状態方程式を先行研究と比較する。
 
-
+\newpage
 \section{ガウス過程回帰によるWCAポテンシャル粒子系における効率的な状態方程式推定及び相図作成}\label{results-sec:Gauss}
 \ref{results-sec:Gauss}節では、\ref{results-sec:WCA-press}節で示した圧力$P$と数密度$\rho$の関係を効率的に推定する。
 
@@ -950,6 +952,7 @@ WCAポテンシャル粒子系の圧力を式(\ref{eq:modified-search-virial})�
     \label{fig:26plot}
 \end{figure}
 
+\newpage
 上図\ref{fig:26plot}から、26点の入力データで\ref{results-sec:WCA-press}節で示した
 圧力$P$と密度$\rho$の関係を再現することに成功していることが読み取れる。
 
@@ -1000,6 +1003,8 @@ WCAポテンシャルの相転移は、\ref{results-subsec:WCA-press-middle-dens
 \chapter{考察および結論} \label{chap:summary}
 
 考察は、「研究の背景」及び「目的」において提起した問題に正しく答えるようにする。得られた結果は満足すべきものだったか？不満があるならその理由はなにか？解決できそうなのか？また、「大きい理由」にも言及する。本研究によりどのような課題が見つかったかを書き、この分野における「研究の流れ」においてのような位置づけにあるかを説明した上で、今後、どのような発展の方向があるかについて書く。
+
+本研究では、ガウス過程回帰を用いることにより、WCAポテンシャルにおける効率的な状態方程式の推定及び、相図作成を目的とした。
 
 \chapter*{謝辞}
 
