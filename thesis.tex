@@ -917,22 +917,23 @@ WCAポテンシャル粒子系の圧力を式(\ref{eq:modified-search-virial})�
 \ref{method-subsec:Gaussian-estimation}節に示したように、$\{(\rho,P)\}=\{(0.00,0.00)\,,\,(15.0,1.83×10^7)\}$の二点を初期の入力データとして、圧力$P$と数密度$\rho$の関係にガウス過程回帰を適用する。
 以下の図\ref{fig:8plot}と\ref{fig:9plot}に本研究で採用したガウス過程回帰の推移の一部を示す。
 
+
 \begin{figure}[htbp]
-    \begin{minipage}{0.5\hsize}
     \begin{center}
-     \includegraphics[width=75mm]{fig/8plot-Gauss.png}
-     \caption{8点を入力とした時の平均と標準偏差}
-     \label{fig:8plot}
+        \includegraphics[width=14cm]{fig/8plot-Gauss.png}
     \end{center}
-    \end{minipage}
-    \begin{minipage}{0.5\hsize}
+    \caption{8点を入力とした時の平均と標準偏差}
+    \label{fig:8plot}
+\end{figure}
+
+\begin{figure}[htbp]
     \begin{center}
-     \includegraphics[width=75mm]{fig/9plot-Gauss.png}
-     \caption{9点を入力とした時の平均と標準偏差}
-     \label{fig:9plot}
+        \includegraphics[width=14cm]{fig/9plot-Gauss.png}
     \end{center}
-    \end{minipage}
-   \end{figure}
+    \caption{9点を入力とした時の平均と標準偏差}
+    \label{fig:9plot}
+\end{figure}
+
 
 上図\ref{fig:8plot}は、測定した8点を入力データとしてガウス過程回帰を適用し、平均と標準偏差を示したものである。
 （尚、本研究では、標準偏差の可視化のために標準偏差を1000000倍に調整している）
@@ -953,7 +954,6 @@ WCAポテンシャル粒子系の圧力を式(\ref{eq:modified-search-virial})�
     \label{fig:26plot}
 \end{figure}
 
-\newpage
 上図\ref{fig:26plot}から、26点の入力データで\ref{results-sec:WCA-press}節で示した
 圧力$P$と密度$\rho$の関係を再現することに成功していることが読み取れる。
 
