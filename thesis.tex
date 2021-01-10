@@ -490,7 +490,7 @@ $N$個の観測値、すなわち入力$x$\,,\,$y$の$N$個のペア
 \end{eqnarray}
 \normalsize
 から生成されているとする。
-尚、$k(x,x')$は、カーネル関数と呼ばれるもので入力$x$の間の類似度を測るために使われるものであり\cite{Gauss-machine-learning}、測定値間の入力$x\,,\,x'$から求められる。
+尚、$k(x,x')$は、カーネル関数と呼ばれるもので入力$x$の間の類似度を測るために使われるものであり\cite{Gauss-machine-learning}、測定値の入力$x\,,\,x'$から求められる。
 
 ここで、
 \large
@@ -769,7 +769,8 @@ P\,{\simeq}\,{\rho} \label{eq:ideal-value}
     \begin{center}
         \includegraphics[width=7cm]{fig/highdensity.png}
     \end{center}
-    \caption{高密度状態における分子の状態の概念図}
+    \caption{高密度状態における分子の状態の概念図。
+    全ての分子ペアが相互作用を持つものと近似。}
     \label{fig:highdensity.png}
 \end{figure}
 
@@ -990,21 +991,32 @@ $\rho=0.00,0.60,1.20,\cdots,15.0$と$\rho=0.00〜15.0$に26点等間隔で用意
     \label{table:compare-approximation-accuracy}
 \end{table}
 上記の表\ref{table:compare-approximation-accuracy}から、ガウス過程回帰を適用した入力データ2を元にした時、
-数密度を等間隔にとった入力データ1よりもWCAポテンシャル粒子系の状態方程式を推定出来ていることがわかる。
-以上から、\ref{method-subsec:Gaussian-estimation}節で提示したアルゴリズムにより、WCAポテンシャルの状態方程式を効率的に推定することに成功した。
+数密度を等間隔にとった入力データ1よりもWCAポテンシャル粒子系における状態方程式を推定出来ていることがわかる。
+以上から、\ref{method-subsec:Gaussian-estimation}節で提示したアルゴリズムにより、WCAポテンシャル粒子系における状態方程式を効率的に推定することに成功した。
 
 最後に、上図\ref{fig:26plot}に示した試行点を元に、WCAポテンシャル粒子系の相図を効率的に作成することが出来るかを調べる。
-WCAポテンシャルの相転移は、\ref{results-subsec:WCA-press-middle-density}節の図\ref{fig:middleden_den-pre}から、
-数密度$\rho\,{\simeq}1.00$で起こる。そこで、WCAポテンシャル粒子系において効率的に相図を作成するために、ガウス過程回帰を用いて標準偏差(不確かさ)が最大の点を選択していくような\ref{method-subsec:Gaussian-estimation}節で提示したアルゴリズムにより、
-相転移近傍の急激な圧力の変化を機械が捉えると予測したが、表\ref{table:compare-approximation-accuracy}より
+WCAポテンシャル粒子系において、相転移は\ref{results-subsec:WCA-press-middle-density}節の図\ref{fig:middleden_den-pre}から、
+数密度$\rho\,{\simeq}1.00$で起こる。そこで、WCAポテンシャル粒子系において効率的に相図を作成するために、ガウス過程回帰を用いて標準偏差(不確かさ)が最大の点を次の試行点として選択していくような\ref{method-subsec:Gaussian-estimation}節で提示したアルゴリズムにより、
+相転移近傍の急激な圧力の変化を機械が重点的に捉えると予測したが、表\ref{table:compare-approximation-accuracy}より
 相転移近傍である$\rho=1.00$付近を重点的に探索するようなアルゴリズムは構築出来ていない。
-以上から、\ref{method-subsec:Gaussian-estimation}節で提示したアルゴリズムでは、WCAポテンシャルの相図を効率的に作成することに失敗した。
+以上から、\ref{method-subsec:Gaussian-estimation}節で提示したアルゴリズムでは、WCAポテンシャル粒子系における相図を効率的に作成することに失敗した。
 
-\chapter{考察および結論} \label{chap:summary}
+\chapter{結果・考察および今後の展望} \label{chap:summary}
 
 考察は、「研究の背景」及び「目的」において提起した問題に正しく答えるようにする。得られた結果は満足すべきものだったか？不満があるならその理由はなにか？解決できそうなのか？また、「大きい理由」にも言及する。本研究によりどのような課題が見つかったかを書き、この分野における「研究の流れ」においてのような位置づけにあるかを説明した上で、今後、どのような発展の方向があるかについて書く。
 
-本研究では、ガウス過程回帰を用いることにより、WCAポテンシャルにおける効率的な状態方程式の推定及び、相図作成を目的とした。
+本研究では、ガウス過程回帰を用いることにより、WCAポテンシャル粒子系における効率的な状態方程式の推定及び、相図作成を目的とした。
+結果としては、ガウス過程回帰を用いて標準偏差(不確かさ)が最大の点を次の試行点として選択していくような\ref{method-subsec:Gaussian-estimation}節で提示したアルゴリズムは、
+WCAポテンシャル粒子系における状態方程式を効率的に推定したが、相図を効率的に作成すなわち相転移近傍を重点的に探索するものではない。
+以降では、本研究で提示したアルゴリズムで相図作成を効率的に行えなかった原因について考察し、今後の方針を示す。
+
+\section{相図を効率的に作成出来なかったのは何故か？}
+本研究では、アルゴリズムとして、ガウス過程回帰を用いて標準偏差(不確かさ)が最大の点を次の試行点として選択していくものを採用した。
+
+
+\section{今後の展望}
+
+
 
 \chapter*{謝辞}
 
