@@ -151,7 +151,7 @@ WCAポテンシャル粒子系において二つの原子間相互作用ポテ�
 \newpage
 \begin{figure}[htbp]
     \begin{center}
-        \includegraphics[width=15cm]{fig/dis-poen.pdf}
+        \includegraphics[width=14cm]{fig/dis-poen.pdf}
     \end{center}
     \caption{WCAとLJの原子間距離-ポテンシャルエネルギー。
     WCAポテンシャルはLJポテンシャルにカットオフ距離$r=r_c$を設けることにより、$r>r_c$でポテンシャルエネルギーが0になっている。}
@@ -632,22 +632,26 @@ $\{(P,\rho)\}=\{(0.00,0.00)\,,\,(15.0,1.83×10^7)\}$の二点を初期の入力�
 
 \begin{figure}[htbp]
     \begin{center}
-        \includegraphics[width=15cm]{fig/algorithm.png}
+        \includegraphics[width=14cm]{fig/algorithm.png}
     \end{center}
     \caption{本研究で用いるアルゴリズムの簡易図}
     \label{fig:algorithm}
 \end{figure}
 
 \chapter{結果} \label{chap:results}
+\ref{results-sec:WCA-press}節では、各数密度においてMDシミュレーションで測定されたWCAポテンシャル粒子系における圧力の振る舞いを示す。
+\ref{results-sec:WCA-equation}節では、\ref{results-sec:WCA-press}節で示したWCAポテンシャル粒子系における圧力と数密度の関係から、WCAポテンシャル粒子系における状態方程式の推定を行う。
+\ref{results-sec:Gauss}節では、\ref{results-sec:WCA-press}節で示したWCAポテンシャル粒子系における圧力と数密度の関係にガウス過程回帰を適用し、WCAポテンシャル粒子系における状態方程式を効率的に推定しつつ、
+相図を効率的に作成する。
 
 \section{WCAポテンシャル粒子系における圧力測定}\label{results-sec:WCA-press}
-\ref{results-sec:WCA-press}節では、各数密度においてMDシミュレーションで測定されたWCAポテンシャル粒子系における圧力の振る舞いを調べる。
+\ref{results-sec:WCA-press}節では、各数密度においてMDシミュレーションで測定されたWCAポテンシャル粒子系における圧力の振る舞いを示す。
 まず、数密度$\rho$とMDシミュレーションで測定されたWCAポテンシャル粒子系における圧力$P$の関係を
 以下の図\ref{fig:den-pre}に示す。
 
 \begin{figure}[htbp]
     \begin{center}
-        \includegraphics[width=15cm]{fig/den-pre.pdf}
+        \includegraphics[width=14cm]{fig/den-pre.pdf}
     \end{center}
     \caption{WCAポテンシャル粒子系の圧力の測定値}
     \label{fig:den-pre}
@@ -657,7 +661,6 @@ $\{(P,\rho)\}=\{(0.00,0.00)\,,\,(15.0,1.83×10^7)\}$の二点を初期の入力�
 \ref{results-subsec:WCA-press-middle-density}節では流体相から固体相への相転移近傍の中密度状態、
 \ref{results-subsec:WCA-press-high-density}節では原子間の相互作用の寄与が大きい高密度状態において、
 MDシミュレーションで測定されたWCAポテンシャル粒子系における圧力の振る舞いを抽出する。
-
 
 \subsection{WCAポテンシャル粒子系における低密度状態の圧力}\label{results-subsec:WCA-press-low-density}
 初期状態において、原子間の相互作用が作用する($原子間距離r=カットオフ距離r_c$)数密度は
@@ -695,7 +698,7 @@ PV\,{\simeq}\,NkT{\label{eq:ideal-gas}}
 \normalsize
 と近似できる。
 
-
+\newpage
 式(\ref{eq:ideal-gas})より、
 \large
 \begin{eqnarray}
@@ -717,7 +720,7 @@ P\,{\simeq}\,{\rho} \label{eq:ideal-value}
 
 \begin{figure}[htbp]
     \begin{center}
-        \includegraphics[width=15cm]{fig/lowden_compare:den-pre.pdf}
+        \includegraphics[width=14cm]{fig/lowden_compare:den-pre.pdf}
     \end{center}
     \caption{WCAポテンシャル粒子系における低密度状態の圧力の理論近似値と測定値の比較}
     \label{fig:lowden_compare:den-pre}
@@ -749,7 +752,7 @@ P\,{\simeq}\,{\rho} \label{eq:ideal-value}
 \newpage
 \begin{figure}[htbp]
     \begin{center}
-        \includegraphics[width=15cm]{fig/middleden_den-pre.pdf}
+        \includegraphics[width=14cm]{fig/middleden_den-pre.pdf}
     \end{center}
     \caption{WCAポテンシャル粒子系における中密度状態の数密度と圧力の関係。}
     \label{fig:middleden_den-pre}
@@ -806,7 +809,7 @@ $\rho\,{\simeq}\,14.7$と表される。
 
 \begin{figure}[htbp]
     \begin{center}
-        \includegraphics[width=15cm]{fig/highden_compare:den-pre.pdf}
+        \includegraphics[width=14cm]{fig/highden_compare:den-pre.pdf}
     \end{center}
     \caption{WCAポテンシャル粒子系における高密度状態の圧力の理論近似値と測定値の比較}
     \label{fig:highden_compare:den-pre}
@@ -948,7 +951,7 @@ WCAポテンシャル粒子系の圧力を式(\ref{eq:modified-search-virial})�
 
 \begin{figure}[htbp]
     \begin{center}
-        \includegraphics[width=15cm]{fig/26plot-Gauss.png}
+        \includegraphics[width=14cm]{fig/26plot-Gauss.png}
     \end{center}
     \caption{26点を入力とした時の平均と標準偏差}
     \label{fig:26plot}
