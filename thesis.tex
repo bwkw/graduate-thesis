@@ -29,7 +29,7 @@
 
 \section{研究の背景} \label{intro-background}
 様々な実存気体の状態方程式の推定や、相図の作成は物性物理の分野において非常に重要な役割を果たす。
-粒子系の相図、特に温度-数密度をパラメタにとった相図作成には、圧力の温度$T$、数密度$\rho$依存性をあらゆる温度$T$、数密度$\rho$で測定する必要が生じるが、
+粒子系の相図、特に温度-数密度をパラメータにとった相図作成には、圧力の温度$T$、数密度$\rho$依存性をあらゆる温度$T$、数密度$\rho$で測定する必要が生じるが、
 これは、圧力$P$を温度$T$、数密度$\rho$に関する項で書き下す状態方程式の微分不連続の線を探すことと同義とみなせる。
 
 実存気体の状態方程式を再現しようとする試みは、1901年にHeikeが提唱したビリアル展開\cite{virial-Heike}、
@@ -101,7 +101,7 @@ LJポテンシャルは、アルゴンのような貴ガスのファンデルワ
 と表される。
 ここで、rは原子間距離、${\sigma}$は原子直径の長さ、${\varepsilon}$はポテンシャルの深さを表す。
 式(\ref{eq:lj})の右辺第一項は原子間の斥力相互作用を表し、右辺第二項は原子間の引力相互作用を表す。
-LJポテンシャルを用いる系では、パラメータ$\sigma$\,,\,$\varepsilon$を用いて物理量を無次元化したLJ単位系と呼ばれる単位を用いる。
+LJポテンシャルを用いる系では、パラメータ$\sigma$\,,\,$\varepsilon$と粒子の質量$m$を用いて物理量を無次元化したLJ単位系と呼ばれる単位を用いる。
 アルゴンでは、${\sigma}=3.40×10^{-10}\,\mathrm{m}$\,,\,${\varepsilon}=1.67×10^{-21}\,\mathrm{J}$であり\cite{argon-parameters}、
 他にも多くの気体ごとに値が定められている\cite{graphane-parameters,many-parameters}。
 
@@ -828,10 +828,15 @@ $\rho\,{\simeq}\,14.7$と表される。
 \ref{results-sec:WCA-press}節で示した圧力を数密度を含む項で展開することを試みたとき、\ref{method-subsec:virial}節で示したビリアル展開、
 \ref{method-subsec:BWR}節で示したBWR,m-BWR方程式を用いると、\ref{results-subsec:WCA-press-middle-density}節で示した相転移の存在により、
 項の個数が際限なく増え、項自体の物理的意味も不明瞭になると考えられる。
-そこで、\ref{results-sec:WCA-equation}節では、\ref{results-sec:WCA-press}節で示したWCAパラメーター粒子系における圧力と数密度の関係に上記で示した最小二乗法を適用し、
-圧力を数密度に関する低次の多項式で近似することにより、WCAポテンシャル粒子系の状態方程式を推定する。
-尚、本研究における多項式近似とは、
 
+そこで、
+\ref{results-subsec:WCA-equation}節では、\ref{results-sec:WCA-press}節で示したWCAポテンシャル粒子系における圧力と数密度の関係に上記で示した最小二乗法を適用し、
+圧力を数密度に関する低次の多項式で近似することにより、WCAポテンシャル粒子系の状態方程式を推定し、
+\ref{results-subsec:previous-research}節では、推定したWCAポテンシャル粒子系における状態方程式が先行研究と矛盾しないことを確認する。
+
+
+\subsection{WCAポテンシャル粒子系における状態方程式の推定}\label{results-subsec:WCA-equation}
+本研究における多項式近似とは、
 \large
 \begin{eqnarray}
     {{\rho}'}RT \nonumber &=& \frac{n}{V}RT \nonumber \\ 
@@ -911,7 +916,10 @@ WCAポテンシャル粒子系の圧力を式(\ref{eq:modified-search-virial})�
 図\ref{fig:5den-pre}から、WCAポテンシャル粒子系の状態方程式は、式(\ref{eq:5den-pre})で書き表せているようではあるが、
 表\ref{table:approximation-accuracy}から、近似精度としては十分と言えない。
 
-続いて、式(\ref{eq:5den-pre})と推定されたWCAポテンシャルの状態方程式を先行研究と比較する。
+\subsection{WCAポテンシャル粒子系における状態方程式の先行研究との比較}\label{results-subsec:previous-research}
+式(\ref{eq:5den-pre})と推定されたWCAポテンシャルの状態方程式を先行研究と比較する。
+本研究では、先行研究として剛体球の状態方程式をビリアル展開により表したものを採用する。
+WCAポテンシャル粒子系は、粒子間に斥力作用しか持たないため
 
 \newpage
 \section{ガウス過程回帰によるWCAポテンシャル粒子系における効率的な状態方程式推定及び相図作成}\label{results-sec:Gauss}
