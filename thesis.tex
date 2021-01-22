@@ -17,7 +17,7 @@
 指導教員 渡辺宙志\\
 学籍番号 61713173\\
 内藤翔太}
-\date{2020年MM月DD日}
+\date{2020年02月01日}
 
 \begin{document}
 
@@ -28,30 +28,30 @@
 \chapter{はじめに} \label{chap:introduction}
 
 \section{研究の背景} \label{intro-background}
-様々な実存気体の状態方程式の推定や、相図の作成は物性物理の分野において非常に重要な役割を果たす。
+様々な実在気体の状態方程式の推定や、相図の作成は物性物理の分野において非常に重要な役割を果たす。
 粒子系の相図、特に温度-数密度をパラメータにとった相図作成には、圧力の温度$T$、数密度$\rho$依存性をあらゆる温度$T$、数密度$\rho$で測定する必要が生じるが、
 これは、圧力$P$を温度$T$、数密度$\rho$に関する項で書き下す状態方程式の微分不連続の線を探すことと同義とみなせる。
 
-実存気体の状態方程式を再現しようとする試みは、1901年にHeikeが提唱したビリアル展開\cite{virial-Heike}、
+実在気体の状態方程式を再現しようとする試みは、1901年にHeikeが提唱したビリアル展開\cite{virial-Heike}、
 1940年にManson、George、Rubinが提唱したBenedict-Webb-Rubin\,(BWR)方程式\cite{BWR-equation:original}、1973年にJacobsen、Stewartが提唱したmodified-Benedict-Webb-Rubin\,(mBWR)方程式\cite{m-BWR-equation}
 を応用することにより、多くの研究者により行われてきた\cite{MCCARTY1974276,BWR-equation:13,BWR-equation:25}。
-これらの多くの研究者の努力により、実存気体を広い範囲で概ね再現する有効な状態方程式を構築することに成功したが、
-その精度は十分とは言えず、項の個数は際限なく増え、項自体の物理的意味も不明瞭であった。
+これらの多くの研究者の努力により、実在気体を広い範囲で概ね再現する有効な状態方程式を構築することに成功したが、
+特に相境界付近の振る舞いを正確に表現するためには項の数を相当数増やす必要があり、項自体の物理的意味も不明瞭であった。
 
 相図の作成は、実用性が高い反面、手間とコストがかかる作業である。
 従来は、この手間とコストを削減するためにグリッド探索\cite{grid1,grid2}を用いていたが、事前にグリッド上に一様に配置された状態点を実験し評価するグリッド探索は、
 以前の実験からの情報を抽出できないため非効率であった。
 そこで、近年では、不確実性サンプリング\cite{uncertainty-sampling1,uncertainty-sampling2}やガウス過程回帰\cite{gaussian-phase}といった高度なサンプリングアルゴリズムを実装することにより、
 手間とコストを削減することに成功している。
-しかし、これらの研究は状態点の相が全て判別されている前提で、それを知らない機械がその中から必要な状態点を取得し、状態点の相を形式的に効率的に特定しているに過ぎない。
+しかし、これらの研究は状態点
 
 
 \section{研究の目的} \label{intro-purpose}
-様々な実存気体の状態方程式は\ref{intro-background}節で述べたように、ビリアル展開・BWR方程式・m-BWR方程式を応用し、項の個数を増やすことによって広範囲である程度有効なものを構築することに成功したが、
-項の個数は際限なく増え、その物理的意味も不明瞭であった。
+様々な実在気体の状態方程式はビリアル展開・BWR方程式・m-BWR方程式を応用し、項の個数を増やすことによって広範囲である程度有効なものを構築することに成功したが、
+展開項には経験的に付け加えられた項もあり、その物理的意味も不明瞭であった。
 そこで、ビリアル展開・BWR方程式・m-BWR方程式を用いて状態方程式の項の係数を決定するのではなく、
 機械学習により、より多くの項の候補から状態方程式を推定することが1点目の目的である。
-また相図の作成は、\ref{intro-background}節で述べたように、様々な高度なサンプリングアルゴリズムにより効率的に行われてきたが、
+また実在期待の相図の作成は、様々な高度なサンプリングアルゴリズムにより効率的に行われてきたが、
 これらの研究は予め状態点の相が全て判別されている前提で、それを知らない機械がその中から必要な状態点を取得し、状態点の相を形式的に効率的に特定しているに過ぎない。
 つまり、この手法は状態点の相が分からない未知の系に適用する際、状態点の相を効率的に特定する手法とは言えない。
 そこで、状態点の相が分からない未知の系に対しても相図作成が自動でできるような手法、すなわち機械が次の状態点を選択し、
@@ -59,7 +59,7 @@
 
 本研究では上記の2点の目的を受け、状態方程式が比較的容易に書け、状態点の相の判別が容易であるWeeks-Chandler-Andersen\,(WCA)ポテンシャル粒子系を採用する。
 WCAポテンシャル粒子系では、温度一定のまま数密度を高くしていくと、ある数密度で流体相から固体相への相転移を起こす。
-\ref{intro-background}節でも述べたように、相転移近傍では、圧力の振る舞いが大きく変化するので、圧力$P$と数密度$\rho$の関係を調べることで状態方程式の推定を行いつつ、相転移の存在を確認し、WCAポテンシャル粒子系における相図も作成することが出来る。
+相転移近傍では、圧力の振る舞いが大きく変化するため、圧力$P$と数密度$\rho$の関係を調べることで状態方程式の推定を行いつつ、相転移の存在を確認し、WCAポテンシャル粒子系における相図も作成することが出来る。
 本研究では、WCAポテンシャル粒子系における圧力$P$を数密度$\rho$に関する低次の多項式で近似することにより状態方程式を推定できることを確認した上で、
 ガウス過程回帰を適用することにより、状態方程式を効率的に推定しつつ、相図を効率的に作成することを目的とする。
 
@@ -68,7 +68,7 @@ WCAポテンシャル粒子系では、温度一定のまま数密度を高く�
 本研究では、WCAポテンシャル粒子系における圧力$P$を数密度$\rho$に関する低次の多項式で近似することにより状態方程式を推定できることを確認した上で、
 ガウス過程回帰を適用することにより、状態方程式を効率的に推定しつつ、相図を効率的に作成することを目的とする。
 
-第\ref{chap:introduction}章では、実存気体の状態方程式の推定及び相図作成に用いられている手法を示した。
+第\ref{chap:introduction}章では、実在機体の状態方程式の推定及び相図作成に用いられている手法を示した。
 第\ref{chap:method}章では、WCAポテンシャル粒子系における状態方程式の推定と相図の作成を効率的に行う手法を示す。
 第\ref{chap:results}章では、第\ref{chap:method}章で提案した手法の精度の確認を行う。
 第\ref{chap:summary}章では本研究で得られた知見を総括し、結論と今後の展望について述べる。
@@ -77,7 +77,7 @@ WCAポテンシャル粒子系では、温度一定のまま数密度を高く�
 \chapter{手法} \label{chap:method}
 \ref{method-sec:WCA-press}節では、WCAポテンシャル粒子系において各数密度$\rho$における圧力$P$を定義し、圧力$P$と数密度$\rho$の関係を調べる。
 \ref{method-sec:WCA-equation}節では、\ref{results-sec:WCA-press}節で得た圧力$P$と数密度$\rho$の関係から、WCAポテンシャル粒子系における状態方程式の推定を行う。
-\ref{method-sec:Gauss}節では、\ref{results-sec:WCA-press}節で得た圧力$P$と数密度$\rho$の関係にガウス過程回帰を適用し、
+\ref{method-sec:Gauss}節では、分子動力学シミュレーションによって得られた圧力$P$と数密度$\rho$の関係にガウス過程回帰を適用し、
 WCAポテンシャル粒子系における状態方程式を効率的に推定しつつ、相図を効率的に作成する。
 
 
@@ -99,7 +99,7 @@ LJポテンシャルは、アルゴンのような貴ガスのファンデルワ
 \end{equation}
 \normalsize
 と表される。
-ここで、rは原子間距離、${\sigma}$は原子直径の長さ、${\varepsilon}$はポテンシャルの深さを表す。
+ここで、$r$は原子間距離、${\sigma}$は原子直径の長さ、${\varepsilon}$はポテンシャルの深さを表す。
 式(\ref{eq:lj})の右辺第一項は原子間の斥力相互作用を表し、右辺第二項は原子間の引力相互作用を表す。
 LJポテンシャルを用いる系では、パラメータ$\sigma$\,,\,$\varepsilon$と粒子の質量$m$を用いて物理量を無次元化したLJ単位系と呼ばれる単位を用いる。
 アルゴンでは、${\sigma}=3.40×10^{-10}\,\mathrm{m}$\,,\,${\varepsilon}=1.67×10^{-21}\,\mathrm{J}$であり\cite{argon-parameters}、
@@ -129,16 +129,16 @@ P^*=\frac{P\sigma^3}{\varepsilon}\label{eq:P}
 \normalsize
 と表される。
 
-このLJポテンシャルの斥力作用と引力作用が入れ替わる$r_c=2^{\frac{1}{6}}{\approx}1.12246$にカットオフ距離を設けたポテンシャルをWCAポテンシャルと呼ぶ
-(WCAポテンシャル粒子系においてもLJ単位系を用いる)。
+このLJポテンシャルの斥力作用と引力作用が入れ替わる$r_c=2^{\frac{1}{6}}{\approx}1.12246$にカットオフ距離を設けたポテンシャルをWCAポテンシャルと呼び、
+WCAポテンシャル粒子系においてもLJ単位系を用いる。
 カットオフ距離とは、その距離内の原子間の相互作用のみを考慮するものであり、それ以上の距離での原子間の力を無視するものである\cite{WATANABE20191}。
 WCAポテンシャル粒子系において二つの原子間相互作用ポテンシャルエネルギーは、
 
 \large
 \begin{equation}
 \phi(r) = \left\{ \begin{array}{ll}
-    4{\varepsilon}\left(\left(\frac{\sigma}{r}\right)^{12}-\left(\frac{\sigma}{r}\right)^6\right) & (r\leq2^{\frac{1}{6}}) \\
-    0 & (r>2^{\frac{1}{6}})\label{eq:wca}
+    4{\varepsilon}\left(\left(\frac{\sigma}{r}\right)^{12}-\left(\frac{\sigma}{r}\right)^6\right) & (r\,{\leq}\,{r_c)} \\
+    0 & (r>r_c)\label{eq:wca}
 \end{array} \right.
 \end{equation}
 \normalsize
@@ -178,48 +178,49 @@ $r>r_c$でポテンシャルエネルギーが0になっている。
 \end{figure}
 
 \newpage
-図\ref{fig:wca-phase-diagram}に示すように、WCAポテンシャル粒子系はfluid(流体相)とsolid(固体相)の二相に分離する。
+図\ref{fig:wca-phase-diagram}に示すように、WCAポテンシャル粒子系はfluid(流体相)とsolid(固体相)の二つの相を持つ。
 温度一定のまま密度を高くしていくと、ある密度で流体相から固体相への相転移を起こす。
-この相転移近傍では、圧力の振る舞いが大きく変化するので、\ref{method-subsec:WCA-pressure}節では、
+この相転移近傍では、圧力の振る舞いが大きく変化するため、\ref{method-subsec:WCA-pressure}節では、
 相転移近傍での圧力の振る舞いの変化を正しく捉えられるような手法を構築する。
 
 
 \subsection{WCAポテンシャル粒子系における圧力測定}\label{method-subsec:WCA-pressure}
-原子や分子の物理的な動きのコンピューターシミュレーション手法を分子動力学法(Molecular Dynamics method, MD)と言う\cite{molecular-dynamics}。
-\ref{method-subsec:WCA-pressure}節では、式(\ref{eq:wca})に示したWCAポテンシャル粒子系における圧力の測定を分子動力学プログラムLarge-scale Atomic/Molecular Massively Parallel Simulator\,(LAMMPS)\cite{lammps}によるシミュレーションを用いて行う。
-尚、本研究では、式(\ref{eq:wca})の${\sigma}$(原子直径の長さ)\,,\,${\varepsilon}$(ポテンシャルの深さ)を共に1.0とし、
-図\ref{fig:wca-phase-diagram}で示した赤線上の状態点について、研究を進めるものとする。
-
-
-本研究では、初期状態として1辺$L$、体積$V$の立方体の中に$N=2048$個の面心立方face-centered cubic\,(fcc)構造上に配置した分子を用意し、研究を進めるものとする。
+原子や分子間に働く力を計算し、位置や運動量の時間発展を数値的に追う手法を分子動力学法(Molecular Dynamics method, MD)と言う\cite{molecular-dynamics}。
+本節では、圧力の測定を分子動力学シミュレーションにより行う。
+尚、分子動力学シミュレーションには、分子動力学プログラムLarge-scale Atomic/Molecular Massively Parallel Simulator\,(LAMMPS)\cite{lammps}を用いた。
+本研究では、初期状態として1辺$L$、体積$V$の立方体の中に$N=2048$個の面心立方face-centered cubic\,(fcc)構造上に配置した分子を用意し、
+式(\ref{eq:wca})の${\sigma}$(原子直径の長さ)\,,\,${\varepsilon}$(ポテンシャルの深さ)を共に1.0とし、
+図\ref{fig:wca-phase-diagram}で示した赤線上の状態点について、研究を進める。
 
 \newpage
-まず、以下の図\ref{fig:initial-state-molecule}に、初期状態の分子構造を示す。
+図\ref{fig:initial-state-molecule}に、原子の初期配置を示す。
 
 \begin{figure}[htbp]
     \begin{center}
-        \includegraphics[width=12cm]{fig/initial-state-molecule.png}
+        \includegraphics[width=8cm]{fig/initial-state-molecule.png}
     \end{center}
     \caption{初期状態の分子構造。
     fcc構造上に配置されている。}
     \label{fig:initial-state-molecule}
 \end{figure}
 
-上図\ref{fig:initial-state-molecule}に示すように初期状態では、分子がfcc構造上に配置されている。
 
-この系の数密度は、
-\large
-\begin{equation}
-\rho = {\frac{N}{V}}{\label{eq:density}}
-\end{equation}
-\normalsize
-と表される。
+この初期条件のもと、タイムステップ0.001で20000実行のシミュレーションを行い、数密度$\rho=0.01$から15.0まで、0.01刻みで圧力$P$を測定した。
+本研究における温度$T$の時間発展を図\ref{fig:d2.0-tt.pdf}に示す。尚、本研究ではカノニカル分布で時間発展をさせることで、温度$T=1.0$で制御した。
 
-数密度$\rho=0.01$から15.0まで、0.01刻みで圧力$P$を測定した。圧力の測定にはLAMMPSを用いた。
-この初期条件のもと、タイムステップ0.001で20000実行のシミュレーションを行った。
-尚、本研究ではNVTアンサンブルによりシミュレーション中の粒子数$N$、体積$V$、温度$T$が一定であることを前提とし、
-温度は、$T=1.0$で制御できていたものとする。
+\begin{figure}[htbp]
+    \begin{center}
+        \includegraphics[width=12cm]{fig/d2.0-tt.pdf}
+    \end{center}
+    \caption{温度$T$の時間発展。初期緩和があり、初期緩和後も$T=1.0$の周りで揺らぎが見られる。}
+    \label{fig:d2.0-tt.pdf}
+\end{figure}
 
+図\ref{fig:d2.0-tt.pdf}に示すように、温度$T$の時間発展において、初期緩和後も$T=1.0$の周りで揺らぎが見られるが、
+初期緩和後には、温度$T=1.0$であるして、解析を行った。
+
+
+\newpage
 二体相互作用をする粒子系における圧力は、ビリアル定理によって
 
 \large
@@ -228,9 +229,9 @@ PV=NkT+{\frac{1}{3}}\langle\sum_{i=j}^N\vec{q_{ij}} \cdot \vec{r_{ij}}\rangle{\l
 \end{equation}
 \normalsize
 と表される\cite{Theoritical-pressure,virial-therom}。
-ここで、$P$は圧力、$V$は体積、$N$は原子数、$k$はボルツマン定数、$T$は温度、$\vec{q_{ij}}$は粒子iと粒子jの相対位置ベクトル、$\vec{r_{ij}}$は原子間に働く力ベクトルである。
+ここで、$\vec{q_{ij}}$は粒子$i$と粒子$j$の相対位置ベクトル、$\vec{r_{ij}}$は粒子$i,j$間に働く力ベクトルである。
 
-\ref{method-subsec:WCA-phase}節に示したように、WCAポテンシャル粒子系はある密度で流体ー固体相転移を起こすことから、
+WCAポテンシャル粒子系はある密度で流体ー固体相転移を起こすことから、
 相転移点近傍で圧力の振る舞いが急激に変化すると考えられる。
 \ref{results-sec:WCA-press}節では、MDシミュレーションで測定されたWCAポテンシャル粒子系における圧力の振る舞いを、
 原子間の相互作用をほぼ無視できる低密度状態、流体相から固体相への相転移近傍の中密度状態、原子間の相互作用の寄与が大きい高密度状態において調べる。
@@ -252,7 +253,7 @@ P=RT{\rho}' \label{eq:ideal-gas-virial}
 \end{equation}
 \normalsize
 と表されるが、
-実存気体の状態方程式のビリアル展開は、式(\ref{eq:ideal-gas-virial})にずれを補正する項を付け加えたもので、
+実在気体の状態方程式のビリアル展開は、式(\ref{eq:ideal-gas-virial})にずれを補正する項を付け加えたもので、
 
 \large
 \begin{equation}
