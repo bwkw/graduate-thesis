@@ -266,9 +266,10 @@ P=RT{\rho}'+b_2{{\rho}'}^2+b_3{{\rho}'}^3+b_4{{\rho}'}^4+\cdots \label{eq:virial
 これらのビリアル係数は、増加する原子数で構成される集団群における原子の相互作用を表し、第2、第3、第4のビリアル係数は、2つ、3つ、4つ...の分子を含む衝突が気体中で重要になったときの理想的な振る舞いからの逸脱を表す。
 高密度になるほど、多体の相互作用の寄与が大きくなるので、圧力が高くなるにつれて、考慮されなければならないビリアル項が増加する\cite{virial-Heike}。
 
+\newpage
 \subsection{Benedict-Webb-Rubin(BWR)方程式}\label{method-subsec:BWR}
 \ref{method-subsec:virial}節のように、Heikeが提唱したビリアル展開は、圧力を密度の冪級数を用いて表現したものであるが、この式に経験則的に指数の項を付け加えたものをBenedict-Webb-Rubin(BWR)方程式と呼ぶ。
-BWR方程式は、軽質炭化水素の熱力学的性質を予測するために、1940年にManson、George、Rubinによって提唱された\cite{BWR-equation:original}。
+BWR方程式は、軽質炭化水素の熱力学的性質を予測するために、1940年にBenedict、Webb、Rubinによって提唱された\cite{BWR-equation:original}。
 BWR方程式の原式は、圧力$P$をモル密度${\rho}'$と絶対温度$T$の関数として表現したもので、
 
 \large
@@ -286,17 +287,19 @@ BWR方程式は、気体の状態方程式を表すことに概ね成功して�
 P=\sum_{n=1}^9a_n{{\rho}'}^n+\exp(-{\gamma}{{\rho}'}^2)\sum_{n=10}^{15}a_n{{\rho}'}^{2n-17}\label{eq:mBWR}
 \end{equation}
 \normalsize
-と表されるmodified-Benedict–Webb–Rubin\,(mBWR)方程式が提唱\cite{m-BWR-equation}されたが、
+と表されるmodified-Benedict-Webb-Rubin\,(mBWR)方程式が提唱\cite{m-BWR-equation}されたが、
 依然として気体の状態方程式を完璧に再現することは出来なかった。
-その後も、多くの研究者が気体の状態方程式の項を増やすことで、完璧な再現を試みた\cite{MCCARTY1974276,BWR-equation:13,BWR-equation:25}が、項の個数は際限なく増え、項自体の物理的意味も不明瞭であった。
+その後も、多くの研究者が気体の状態方程式の項を増やすことで、完璧な再現を試みた\cite{MCCARTY1974276,BWR-equation:13,BWR-equation:25}が、
+特に相境界付近の振る舞いを正確に表現するためには、項の数を相当数増やす必要があり、項自体の物理的意味も不明瞭であった。
 
 \subsection{WCAポテンシャル粒子系における状態方程式の推定}\label{method-subsec:WCA-equation}
-\ref{method-subsec:virial}節、\ref{method-subsec:BWR}節のように気体の状態方程式を項を増やすことによって再現しようと試みたが、項の個数は際限なく増え続けた。
-また、BWR方程式に含まれる指数項は経験的に付け加えられたものであり、物理的な意味が不明瞭である。
+\ref{method-subsec:virial}節、\ref{method-subsec:BWR}節のように気体の状態方程式を項数を増やすことによって再現しようと試みた。
+しかし、これらの手法では、所望の精度のためにはどれくらいの項が必要かが事前にはわからず、経験的に追加された指数項の物理的な意味も不明瞭であった。
 
-そこで、機械学習により、より多くの候補からWCAポテンシャル粒子系における状態方程式を推定する方が効果的であると言える。
+
+そこで、機械学習により、より多くの候補からWCAポテンシャル粒子系における状態方程式を推定する方法を検討する。
 最終的には、機械学習が推定してきた項の物理的意味を考察することが目標であるが、
-まず本研究では\ref{results-sec:WCA-press}節で示したWCAポテンシャル粒子系における圧力と数密度の関係に上記で示した最小二乗法を適用し、
+まず本研究では分子動力学シミュレーションにより測定したWCAポテンシャル粒子系における圧力と数密度の関係に最小二乗法を適用し、
 圧力を数密度に関する低次の多項式で近似することにより、WCAポテンシャル粒子系における状態方程式を推定する。
 
 以下、最小二乗法の説明を簡潔に示す。
@@ -321,7 +324,7 @@ f(x)=\sum_{j=0}^m a_jx^j \nonumber
 S=\sum_{i=1}^n (y_i-f(x_i))^2\label{eq:residual-error}
 \end{eqnarray}
 \normalsize
-と表され、これを最小にする$f(x)$を求めることで最小二乗法は実現される。
+と表され、これを最小にする$f(x)$を求めることが最小二乗法の目的である。
 
 
 式(\ref{eq:residual-error})を行列表示にすると、
