@@ -300,7 +300,8 @@ P=\sum_{n=1}^9a_n{{\rho}'}^n+\exp(-{\gamma}{{\rho}'}^2)\sum_{n=10}^{15}a_n{{\rho
 そこで、機械学習により、より多くの候補からWCAポテンシャル粒子系における状態方程式を推定する方法を検討する。
 最終的には、機械学習が推定してきた項の物理的意味を考察することが目標であるが、
 まず本研究では分子動力学シミュレーションにより測定したWCAポテンシャル粒子系における圧力と数密度の関係に最小二乗法を適用し、
-圧力を数密度に関する低次の多項式で近似することにより、WCAポテンシャル粒子系における状態方程式を推定する。
+圧力を数密度に関する低次の多項式で近似することにより、WCAポテンシャル粒子系における状態方程式を推定し、
+推定したWCAポテンシャル粒子系における状態方程式の展開係数が先行研究と矛盾しないことを確認する。
 
 以下、最小二乗法の説明を簡潔に示す。
 今、想定される多項式を
@@ -460,11 +461,8 @@ S &=& (Y-XA)^T(Y-XA)\nonumber\\
     &{\Leftrightarrow}&{\ }{\ }A=(X^TX)^{-1}X^TY\label{eq:normal-equation}
 \end{eqnarray}
 \normalsize
-で与えられる$A$を求めることで最小二乗法は完結する\cite{least-squares}。
+で与えられる$A$を求めることで想定される多項式の係数が決定され、多項式で近似される\cite{least-squares}。
 
-\ref{results-sec:WCA-equation}節では、上記で述べたように\ref{results-sec:WCA-press}節で示したWCAポテンシャル粒子系における圧力と数密度の関係に
-上記で示した最小二乗法を適用し、圧力を数密度に関する低次の多項式で近似することにより、WCAポテンシャル粒子系の状態方程式を推定する。
-その後、推定したWCAポテンシャル粒子系における状態方程式の展開係数が先行研究と矛盾しないことを確認する。
 
 
 \section{ガウス過程回帰によるWCAポテンシャル粒子系における効率的な状態方程式推定及び相図作成}\label{method-sec:Gauss}
@@ -606,14 +604,13 @@ p(\bm{y}^*|\bm{x}^*,\mathcal{D})
 
 式(\ref{eq:Gaussian-predicted-distribution})に示すようなガウス分布に基づき、未知のデータを推定するが、
 このガウス分布を元に次に評価する点を決定する必要が生じる。この際に、式(\ref{eq:Gaussian-predicted-decentration})の分散$\sigma^2$の関数として
-「獲得関数」と呼ばれるものを使用する。
-獲得関数とは関連分野から借りてきた試行状態の「情報性」を定量化する用語に過ぎない\cite{acquisition-function}。
+「獲得関数」と呼ばれるものを使用し、試行状態の「情報性」を定量化する\cite{acquisition-function}。
 
 
 \subsection{ガウス過程回帰によるWCAポテンシャル粒子系の状態方程式の効率的推定}\label{method-subsec:Gaussian-estimation}
-\ref{method-subsec:Gauss}節に示したガウス過程回帰を用いて、本研究では、WCAポテンシャル粒子系における数密度$\rho$と圧力$P$の関係を効率的に推定する。
+ガウス過程回帰を用いて、本研究では、WCAポテンシャル粒子系における数密度$\rho$と圧力$P$の関係を効率的に推定する。
 
-本研究では、カーネル関数として、\cite{Gauss-machine-learning}で導入されている
+本研究では、カーネル関数として、
 
 \large
 \begin{eqnarray}
@@ -623,7 +620,7 @@ p(\bm{y}^*|\bm{x}^*,\mathcal{D})
     (x\,{\neq}\,x':\delta(x,x')=0) \nonumber
 \end{eqnarray}
 \normalsize
-を採用する。
+を採用する\cite{Gauss-machine-learning}。
 
 \ref{results-sec:WCA-press}節に、数密度$\rho=\{0.00,0.01,0.02,\cdots,15.0\}$と圧力$P$の関係を示したが、全データのうち端点となる、
 $\{(P,\rho)\}=\{(0.00,0.00)\,,\,(15.0,1.83×10^7)\}$の二点を初期の入力データとして、ガウス過程回帰を適用する。
