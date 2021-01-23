@@ -628,36 +628,37 @@ $\{(P,\rho)\}=\{(0.00,0.00)\,,\,(15.0,1.83×10^7)\}$の二点を初期の入力�
 式(\ref{eq:Gaussian-predicted-decentration})の分散$\sigma^2$が入力データから予測される関数の不確かさを示すものとする。
 また、各数密度における分散の平方根を取った標準偏差$\sigma$の大きさを獲得関数とし、この関数を最大にする、すなわち不確かさが最大の数密度を次の試行点として選択する。
 この不確かさが最大となる数密度におけるWCAポテンシャル粒子系の圧力をMDシミュレーションにより新たに測定し、入力データを更新し、再度ガウス過程回帰を行う。
-本研究では、以上の工程を繰り返し行い、WCAポテンシャル粒子系における状態方程式、相図の効率的推定を行う。
-上記に示したアルゴリズムの簡易図を以下の図\ref{fig:algorithm}に示す。
+本研究では、以上の工程を繰り返し行い、WCAポテンシャル粒子系における効率的な状態方程式の推定、相図の作成を目指す。
+上記のアルゴリズムの概念図を図\ref{fig:algorithm}に示す。
 
 \begin{figure}[htbp]
     \begin{center}
         \includegraphics[width=14cm]{fig/algorithm.png}
     \end{center}
-    \caption{本研究で用いるアルゴリズムの簡易図}
+    \caption{本研究で用いるアルゴリズムの概念図}
     \label{fig:algorithm}
 \end{figure}
 
 \chapter{結果} \label{chap:results}
 \ref{results-sec:WCA-press}節では、各数密度においてMDシミュレーションで測定されたWCAポテンシャル粒子系における圧力の振る舞いを示す。
 \ref{results-sec:WCA-equation}節では、\ref{results-sec:WCA-press}節で示したWCAポテンシャル粒子系における圧力と数密度の関係から、WCAポテンシャル粒子系における状態方程式の推定を行う。
-\ref{results-sec:Gauss}節では、\ref{results-sec:WCA-press}節で示したWCAポテンシャル粒子系における圧力と数密度の関係にガウス過程回帰を適用し、WCAポテンシャル粒子系における状態方程式を効率的に推定しつつ、
-相図を効率的に作成する。
+\ref{results-sec:Gauss}節では、\ref{results-sec:WCA-press}節で示したWCAポテンシャル粒子系における圧力と数密度の関係にガウス過程回帰を適用し、WCAポテンシャル粒子系における
+効率的な状態方程式の推定、相図の作成を目指す。
+
 
 \section{WCAポテンシャル粒子系における圧力測定}\label{results-sec:WCA-press}
-\ref{results-sec:WCA-press}節では、各数密度においてMDシミュレーションで測定されたWCAポテンシャル粒子系における圧力の振る舞いを示す。
 まず、数密度$\rho$とMDシミュレーションで測定されたWCAポテンシャル粒子系における圧力$P$の関係を
-以下の図\ref{fig:den-pre}に示す。
+図\ref{fig:den-pre}に示す。
 
 \begin{figure}[htbp]
     \begin{center}
         \includegraphics[width=14cm]{fig/den-pre.pdf}
     \end{center}
-    \caption{WCAポテンシャル粒子系の圧力の測定値}
+    \caption{WCAポテンシャル粒子系における圧力の密度依存性}
     \label{fig:den-pre}
 \end{figure}
 
+\newpage
 以下、\ref{results-subsec:WCA-press-low-density}節では原子間の相互作用をほぼ無視できる低密度状態、
 \ref{results-subsec:WCA-press-middle-density}節では流体相から固体相への相転移近傍の中密度状態、
 \ref{results-subsec:WCA-press-high-density}節では原子間の相互作用の寄与が大きい高密度状態において、
@@ -690,34 +691,26 @@ MDシミュレーションで測定されたWCAポテンシャル粒子系にお
     \label{fig:lowdensity.png}
 \end{figure}
 
-上図の図\ref{fig:lowdensity.png}のような低密度状態においては、原子間の相互作用をほとんど無視できるので、
+図\ref{fig:lowdensity.png}のような低密度状態においては、原子間の相互作用をほとんど無視できるので、
 圧力は式(\ref{eq:Theoritical-pressure})の第一項のみを用いて、
 \large
-\begin{equation}
-PV\,{\simeq}\,NkT{\label{eq:ideal-gas}}
-\end{equation}
+\begin{eqnarray}
+PV\,{\simeq}\,NkT　\nonumber
+\end{eqnarray}
 \normalsize
-と近似できる。
+と近似でき、
 
 \newpage
-式(\ref{eq:ideal-gas})より、
 \large
 \begin{eqnarray}
 PV\,&{\simeq}&\,NkT\nonumber\\
 {\Leftrightarrow}{\ }{\ }P\,&{\simeq}&\,{\frac{N}{V}}kT\nonumber\\
-{\Leftrightarrow}{\ }{\ }P\,&{\simeq}&\,{\rho}kT\nonumber
+{\Leftrightarrow}{\ }{\ }P\,&{\simeq}&\,{\rho}kT \label{eq:ideal-gas}
 \end{eqnarray}
 \normalsize
-と書け、本研究では、$k=1$、$T=1$と設定し、MDシミュレーションにより圧力測定を行ったので、
+と表されることが予測される。
 
-\large
-\begin{equation}
-P\,{\simeq}\,{\rho} \label{eq:ideal-value}
-\end{equation}
-\normalsize
-と表現できることが予測される。
-
-式(\ref{eq:ideal-value})を「理論近似値」、本研究におけるMDシミュレーションにより測定された圧力を「測定値」とし、その結果を図\ref{fig:lowden_compare:den-pre}に示す。
+式(\ref{eq:ideal-gas})を「理論近似値」、本研究におけるMDシミュレーションにより測定された圧力を「測定値」とし、その結果を図\ref{fig:lowden_compare:den-pre}に示す。
 
 \begin{figure}[htbp]
     \begin{center}
@@ -727,9 +720,9 @@ P\,{\simeq}\,{\rho} \label{eq:ideal-value}
     \label{fig:lowden_compare:den-pre}
 \end{figure}
 
-図\ref{fig:lowden_compare:den-pre}から、低密度状態ではWCAポテンシャル粒子系の圧力は式(\ref{eq:ideal-gas})
-と書けることがわかる。
-これは、低密度状態では、「ほぼ」原子間の相互作用を無視でき、原子が理想気体のように振る舞うことに依存する。
+図\ref{fig:lowden_compare:den-pre}から、低密度状態ではWCAポテンシャル粒子系の圧力は
+式(\ref{eq:ideal-gas})で表されていることが確認できる。
+これは、低密度状態では、「ほぼ」原子間の相互作用を無視でき、原子が理想気体のように振る舞うからである。
 
 \newpage
 \subsection{WCAポテンシャル粒子系における中密度状態の圧力}\label{results-subsec:WCA-press-middle-density}
