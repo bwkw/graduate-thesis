@@ -76,8 +76,8 @@ WCAポテンシャル粒子系では、温度一定のまま数密度を高く�
 
 \chapter{手法} \label{chap:method}
 \ref{method-sec:WCA-press}節では、WCAポテンシャル粒子系において各数密度$\rho$における圧力$P$を定義し、圧力$P$と数密度$\rho$の関係を調べる手法を示す。
-\ref{method-sec:WCA-equation}節では、分子動力学シミュレーションによって得られ圧力$P$と数密度$\rho$の関係から、WCAポテンシャル粒子系における状態方程式の推定を行う手法を示す。
-\ref{method-sec:Gauss}節では、分子動力学シミュレーションによって得られた圧力$P$と数密度$\rho$の関係にガウス過程回帰を適用し、
+\ref{method-sec:WCA-equation}節では、MDシミュレーションによって得られ圧力$P$と数密度$\rho$の関係から、WCAポテンシャル粒子系における状態方程式の推定を行う手法を示す。
+\ref{method-sec:Gauss}節では、MDシミュレーションによって得られた圧力$P$と数密度$\rho$の関係にガウス過程回帰を適用し、
 WCAポテンシャル粒子系における状態方程式を効率的に推定しつつ、相図を効率的に作成する手法を示す。
 
 
@@ -194,8 +194,8 @@ $r>r_c$でポテンシャルエネルギーが0になっている。
 
 \subsection{WCAポテンシャル粒子系における圧力測定}\label{method-subsec:WCA-pressure}
 原子や分子間に働く力を計算し、位置や運動量の時間発展を数値的に追う手法を分子動力学法(Molecular Dynamics method, MD)と言う\cite{molecular-dynamics}。
-本節では、圧力の測定を分子動力学シミュレーションにより行う。
-尚、分子動力学シミュレーションには、分子動力学プログラムLarge-scale Atomic/Molecular Massively Parallel Simulator\,(LAMMPS)\cite{lammps}を用いた。
+本節では、圧力の測定をMDシミュレーションにより行う。
+尚、MDシミュレーションには、分子動力学プログラムLarge-scale Atomic/Molecular Massively Parallel Simulator\,(LAMMPS)\cite{lammps}を用いた。
 本研究では、初期状態として1辺$L$、体積$V$の立方体の中に$N=2048$個の面心立方face-centered cubic\,(fcc)構造上に配置した原子を用意し、
 ${\sigma}$\,,\,${\varepsilon}$を共に1.0とし、
 図\ref{fig:wca-phase-diagram}で示した赤線上の状態点について、研究を進める。
@@ -247,7 +247,7 @@ WCAポテンシャル粒子系はある密度で流体ー固体相転移を起�
 \section{WCAポテンシャル粒子系における状態方程式の推定}\label{method-sec:WCA-equation}
 \ref{method-sec:WCA-equation}節では、WCAポテンシャル粒子系における状態方程式の推定を行う。
 \ref{method-subsec:virial}節、\ref{method-subsec:BWR}節では、圧力を密度に関する項で展開するビリアル展開、Benedict-Webb-Rubin\,(BWR)方程式、modified-Benedict–Webb–Rubin\,(m-BWR)方程式の説明を示し、
-\ref{method-subsec:WCA-equation}節では、分子動力学シミュレーションによって得られた圧力$P$と数密度$\rho$の関係からWCAポテンシャル粒子系における状態方程式の推定を行う具体的な手法を示す。
+\ref{method-subsec:WCA-equation}節では、MDシミュレーションによって得られた圧力$P$と数密度$\rho$の関係からWCAポテンシャル粒子系における状態方程式の推定を行う具体的な手法を示す。
 
 \subsection{ビリアル展開}\label{method-subsec:virial}
 気体の振る舞いを表す有望な記述の一つにビリアル展開と呼ぶものが存在する。
@@ -307,7 +307,7 @@ P=\sum_{n=1}^9a_n{{\rho}'}^n+\exp(-{\gamma}{{\rho}'}^2)\sum_{n=10}^{15}a_n{{\rho
 
 そこで、機械学習により、より多くの候補からWCAポテンシャル粒子系における状態方程式を推定する手法を検討する。
 最終的には、機械学習が推定してきた項の物理的意味を考察することが目標であるが、
-まず本研究では分子動力学シミュレーションによって得られたWCAポテンシャル粒子系における圧力と数密度の関係に最小二乗法を適用し、
+まず本研究ではMDシミュレーションによって得られたWCAポテンシャル粒子系における圧力と数密度の関係に最小二乗法を適用し、
 圧力を数密度に関する低次の多項式で近似することにより、状態方程式を推定し、
 推定した状態方程式の展開係数が先行研究と矛盾しないことを確認する。
 
@@ -476,7 +476,7 @@ S &=& (Y-XA)^T(Y-XA)\nonumber\\
 \section{ガウス過程回帰によるWCAポテンシャル粒子系における効率的な状態方程式推定及び相図作成}\label{method-sec:Gauss}
 \ref{method-sec:Gauss}節では、WCAポテンシャル粒子系における状態方程式を効率的に推定しつつ、相図を効率的に作成する。
 \ref{method-subsec:Gauss}節では、ガウス過程回帰の説明を示し、
-\ref{method-subsec:Gaussian-estimation}節では、分子動力学シミュレーションによって得られた圧力$P$と数密度$\rho$の関係にガウス過程回帰を適用し、
+\ref{method-subsec:Gaussian-estimation}節では、MDシミュレーションによって得られた圧力$P$と数密度$\rho$の関係にガウス過程回帰を適用し、
 WCAポテンシャル粒子系における状態方程式を効率的に推定しつつ、相図を効率的に作成する具体的な手法を示す。
 
 
@@ -688,14 +688,14 @@ MDシミュレーションで測定されたWCAポテンシャル粒子系にお
 \end{equation}
 \normalsize
 では、原子間の相互作用をほぼ無視できる。
-式(\ref{eq:lowdensity-density})を満たすような低密度状態における分子の状態の概念図を図\ref{fig:lowdensity.png}に示す。
+式(\ref{eq:lowdensity-density})を満たすような低密度状態における原子の状態の概念図を図\ref{fig:lowdensity.png}に示す。
 
 \begin{figure}[htbp]
     \begin{center}
         \includegraphics[width=7cm]{fig/lowdensity.png}
     \end{center}
-    \caption{低密度状態における分子の状態の概念図。
-    低密度状態では、分子間の相互作用はほぼ無視できる。}
+    \caption{低密度状態における原子の状態の概念図。
+    低密度状態では、原子間の相互作用はほぼ無視できる。}
     \label{fig:lowdensity.png}
 \end{figure}
 
@@ -718,7 +718,7 @@ PV\,&{\simeq}&\,NkT\nonumber\\
 \normalsize
 と表されることが予測される。
 
-式(\ref{eq:ideal-gas})を「理論近似値」、本研究におけるMDシミュレーションにより測定された圧力を「測定値」とし、その結果を図\ref{fig:lowden_compare:den-pre}に示す。
+式(\ref{eq:ideal-gas})を「理論近似値」、MDシミュレーションにより測定された圧力を「測定値」とし、その結果を図\ref{fig:lowden_compare:den-pre}に示す。
 
 \begin{figure}[htbp]
     \begin{center}
@@ -734,15 +734,15 @@ PV\,&{\simeq}&\,NkT\nonumber\\
 
 \newpage
 \subsection{WCAポテンシャル粒子系における中密度状態の圧力}\label{results-subsec:WCA-press-middle-density}
-中密度状態では、相互作用がある分子ペアと持たない分子が存在する。
-まず、中密度状態における分子の状態の概念図を図\ref{fig:middledensity.png}に示す。
+中密度状態では、相互作用がある原子ペアと持たない原子が存在する。
+まず、中密度状態における原子の状態の概念図を図\ref{fig:middledensity.png}に示す。
 
 \begin{figure}[htbp]
     \begin{center}
         \includegraphics[width=7cm]{fig/middledensity.png}
     \end{center}
-    \caption{中密度状態における分子の状態の概念図。
-    中密度状態では、相互作用がある分子ペアと持たない分子が存在する。}
+    \caption{中密度状態における原子の状態の概念図。
+    中密度状態では、相互作用がある原子ペアと持たない原子が存在する。}
     \label{fig:middledensity.png}
 \end{figure}
 
@@ -765,32 +765,32 @@ PV\,&{\simeq}&\,NkT\nonumber\\
 
 \newpage
 \subsection{WCAポテンシャル粒子系における高密度状態の圧力}\label{results-subsec:WCA-press-high-density}
-高密度状態では、すべての分子ペアが相互作用を持つものと近似できる。
-まず、高密度状態における分子の状態の概念図を以下の図\ref{fig:highdensity.png}に示す。
+高密度状態では、すべての原子ペアが相互作用を持つものと近似できる。
+まず、高密度状態における原子の状態の概念図を図\ref{fig:highdensity.png}に示す。
 
 \begin{figure}[htbp]
     \begin{center}
         \includegraphics[width=7cm]{fig/highdensity.png}
     \end{center}
-    \caption{高密度状態における分子の状態の概念図。
-    全ての分子ペアが相互作用を持つものと近似。}
+    \caption{高密度状態における原子の状態の概念図。
+    全ての原子ペアが相互作用を持つものと近似。}
     \label{fig:highdensity.png}
 \end{figure}
 
 
-原子間の相互作用の寄与が大きい高密度状態では、圧力は式(\ref{eq:Theoritical-pressure})の第二項の影響を強く受ける。
+原子間の相互作用の寄与が大きい高密度状態では、圧力は式(\ref{eq:Theoritical-pressure})の右辺第二項の影響を強く受ける。
 高密度状態では、
-密度が高くなればなるほど、式(\ref{eq:Theoritical-pressure})の第二項で考慮するものは、再隣接原子の寄与、第二隣接原子の寄与、第三隣接原子の寄与・・・と増えていく。
+密度が高くなればなるほど、式(\ref{eq:Theoritical-pressure})の右辺第二項で考慮するものは、再隣接原子の寄与、第二隣接原子の寄与、第三隣接原子の寄与・・・と増えていく。
 
 WCAポテンシャル粒子系において原子間に働く力$\vec{r_{ij}}$の大きさは、
-WCAポテンシャル粒子系のポテンシャルエネルギーが式(\ref{eq:wca})に従うことから、
+ポテンシャルエネルギーが式(\ref{eq:wca})に従うことから、
 
 \large
 \begin{eqnarray}
     | {\vec{r_{ij}}} |=\frac{d}{dr}\left(4\left(\left(\frac{1}{r}\right)^{12}-\left(\frac{1}{r}\right)^6\right)\right)=| 48r^{-13}-24r^{-7}| \nonumber
 \end{eqnarray}
 \normalsize
-と書くことができるため、式(\ref{eq:Theoritical-pressure})の第二項の
+と表せるため、式(\ref{eq:Theoritical-pressure})の右辺第二項
 
 \large
 \begin{eqnarray}
@@ -799,13 +799,13 @@ WCAポテンシャル粒子系のポテンシャルエネルギーが式(\ref{eq
 \normalsize
 は、距離に対して6乗で減衰することがわかる。
 
-以上から、式(\ref{eq:Theoritical-pressure})の第二項への寄与はほとんどが再隣接原子であることから、本研究では、再隣接原子の寄与のみを考えるものとする。
+以上から、式(\ref{eq:Theoritical-pressure})の右辺第二項への寄与はほとんどが再隣接原子であることから、本研究では、再隣接原子の寄与のみを考えるものとする。
 第五隣接原子の寄与が生じる密度は、第五隣接原子間距離がWCAポテンシャル粒子系のカットオフ距離$r_c$と等しい、すなわち
 $\rho\,{\simeq}\,14.7$と表される。
 これより高密度の状態では、次々に原子間の相互作用が働いていくが、この高密度状態でも圧力が式(\ref{eq:Theoritical-pressure})において
 再隣接原子の寄与のみを考慮したもので十分に表されることを確認する。
 
-式(\ref{eq:Theoritical-pressure})において再隣接原子の寄与のみを考慮したものを「理論近似値」、本研究におけるMDシミュレーションにより測定された圧力を「測定値」とし、その結果を図\ref{fig:highden_compare:den-pre}に示す。
+式(\ref{eq:Theoritical-pressure})において再隣接原子の寄与のみを考慮したものを「理論近似値」、MDシミュレーションにより測定された圧力を「測定値」とし、その結果を図\ref{fig:highden_compare:den-pre}に示す。
 
 \begin{figure}[htbp]
     \begin{center}
@@ -816,7 +816,7 @@ $\rho\,{\simeq}\,14.7$と表される。
 \end{figure}
 
 
-図\ref{fig:highden_compare:den-pre}から、理論値と測定値のズレは1.2％以下であることがわかる。
+図\ref{fig:highden_compare:den-pre}から、理論値と測定値のズレは1.2％以下である。
 このことから、第五隣接原子より離れた原子とも相互作用が働くほど高密度の状態でもWCAポテンシャル粒子系の圧力は式(\ref{eq:Theoritical-pressure})において
 再隣接原子の寄与のみを考慮したもので十分に表されていることがわかる。
 
@@ -902,7 +902,7 @@ WCAポテンシャル粒子系の圧力を式(\ref{eq:modified-search-virial})�
 \normalsize
 と表された。
 本研究で得られたMDシミュレーションによる圧力の値を「測定値」、式(\ref{eq:5den-pre})から得られる圧力の値を「5次近似値」とし、
-以下の図\ref{fig:5den-pre}に示す。
+図\ref{fig:5den-pre}に示す。
 
 \begin{figure}[htbp]
     \begin{center}
@@ -916,26 +916,27 @@ WCAポテンシャル粒子系の圧力を式(\ref{eq:modified-search-virial})�
 図\ref{fig:5den-pre}から、WCAポテンシャル粒子系の状態方程式は、最小二乗法による5次式の近似で
 十分に表せていることが分かる。
 
+
 \subsection{WCAポテンシャル粒子系における状態方程式の先行研究との比較}\label{results-subsec:previous-research}
-式(\ref{eq:5den-pre})と推定されたWCAポテンシャルの状態方程式を先行研究と比較する。
+\ref{results-subsec:WCA-equation}節で得た5次式に近似されたWCAポテンシャルの状態方程式を先行研究と比較する。
 本研究では、先行研究として剛球流体の状態方程式をビリアル展開により表したものを採用する\cite{hard-sphere}。
 WCAポテンシャル粒子系は、粒子間に斥力作用しか持たないため概ね剛体粒子に近似することが出来ると考えられる。
 
 まず、本研究のWCAポテンシャル粒子の直径$\sigma=1$と剛体粒子の直径$(=1)$が等しい時の
-\ref{results-subsec:WCA-equation}節で示した5次近似値と\cite{hard-sphere}で提示された剛球流体における各数密度$\rho$の圧力値$P$を
-以下の図\ref{fig:compare_previous-research}に示す。
+\ref{results-subsec:WCA-equation}節で示した5次近似値と剛球流体における各数密度$\rho$の圧力値$P$を
+図\ref{fig:compare_previous-research}に示す。
 
 \begin{figure}[htbp]
     \begin{center}
         \includegraphics[width=14cm]{fig/compare_previous-research.pdf}
     \end{center}
-    \caption{WCAポテンシャルの5次近似値と剛球流体における圧力の比較(WCAポテンシャル粒子と剛体球の直径が等しいと過程)}
+    \caption{WCAポテンシャルの5次近似値と剛球流体における圧力の比較。WCAポテンシャル粒子と剛体球の直径が等しいと過程。}
     \label{fig:compare_previous-research}
 \end{figure}
 
 ここで、WCAポテンシャル粒子は剛体ではないため剛体粒子同士の衝突時とは異なり、
 粒子同士の衝突時にWCAポテンシャル粒子は粒子の形状が変化する。
-その様子の概念図を以下の図\ref{fig:WCA-collision}に示す。
+その様子の概念図を図\ref{fig:WCA-collision}に示す。
 
 \begin{figure}[htbp]
     \begin{center}
@@ -946,29 +947,30 @@ WCAポテンシャル粒子系は、粒子間に斥力作用しか持たない�
 \end{figure}
 
 \newpage
-上図\ref{fig:WCA-collision}より、WCAポテンシャル粒子は衝突時に凹みが生じるため、
+図\ref{fig:WCA-collision}より、WCAポテンシャル粒子は衝突時に凹みが生じるため、
 WCAポテンシャル粒子を剛体粒子だと仮定した場合の直径$\sigma$を、フィッティングパラメーター${\sigma}'$として調整する。
 
 剛球流体と5次近似値の誤差を最小にするようにフィッティングパラメーター${\sigma}'$を調整した時の
-\ref{results-subsec:WCA-equation}節で示した5次近似値の調整後の値と\cite{hard-sphere}で提示された剛球流体における各数密度$\rho$の圧力値$P$を
-以下の図\ref{fig:fit_compare_previous-research}に示す。
+\ref{results-subsec:WCA-equation}節で示した5次近似値の調整後の値と剛球流体における各数密度$\rho$の圧力値$P$を
+図\ref{fig:fit_compare_previous-research}に示す。
 
 \begin{figure}[htbp]
     \begin{center}
         \includegraphics[width=14cm]{fig/fit_compare_previous-research.pdf}
     \end{center}
-    \caption{調整後のWCAポテンシャルの5次近似値と剛球流体における圧力の比較(WCAポテンシャル粒子の直径を調整)}
+    \caption{調整後のWCAポテンシャルの5次近似値と剛球流体における圧力の比較。WCAポテンシャル粒子の直径を調整。}
     \label{fig:fit_compare_previous-research}
 \end{figure}
 
 \newpage
-上図\ref{fig:fit_compare_previous-research}より、\ref{results-subsec:WCA-equation}節で推定したWCAポテンシャル粒子系の状態方程式は、
+図\ref{fig:fit_compare_previous-research}より、\ref{results-subsec:WCA-equation}節で推定したWCAポテンシャル粒子系の状態方程式は、
 剛球流体のビリアル展開の結果とは、厳密的な一致は見られなかった。
+
 
 \section{ガウス過程回帰によるWCAポテンシャル粒子系における効率的な状態方程式推定及び相図作成}\label{results-sec:Gauss}
 \ref{results-sec:Gauss}節では、\ref{results-sec:WCA-press}節で示した圧力$P$と数密度$\rho$の関係を効率的に推定する。
 
-\ref{method-subsec:Gaussian-estimation}節に示したように、$\{(\rho,P)\}=\{(0.00,0.00)\,,\,(15.0,1.83×10^7)\}$の二点を初期の入力データとして、圧力$P$と数密度$\rho$の関係にガウス過程回帰を適用する。
+$\{(\rho,P)\}=\{(0.00,0.00)\,,\,(15.0,1.83×10^7)\}$の二点を初期の入力データとして、圧力$P$と数密度$\rho$の関係にガウス過程回帰を適用する。
 以下の図\ref{fig:8plot}と\ref{fig:9plot}に本研究で採用したガウス過程回帰の推移の一部を示す。
 
 
