@@ -33,7 +33,7 @@
 これは、圧力$P$を温度$T$、数密度$\rho$に関する項で書き下す状態方程式の微分不連続の線を探すことと同義とみなせる。
 
 実在気体の状態方程式を再現しようとする試みは、1901年にHeikeが提唱したビリアル展開\cite{virial-Heike}、
-1940年にManson、George、Rubinが提唱したBenedict-Webb-Rubin\,(BWR)方程式\cite{BWR-equation:original}、1973年にJacobsen、Stewartが提唱したmodified-Benedict-Webb-Rubin\,(mBWR)方程式\cite{m-BWR-equation}
+1940年にBenedict、Webb、Rubinが提唱したBenedict-Webb-Rubin\,(BWR)方程式\cite{BWR-equation:original}、1973年にJacobsen、Stewartが提唱したmodified-Benedict-Webb-Rubin\,(m-BWR)方程式\cite{m-BWR-equation}
 を応用することにより、多くの研究者により行われてきた\cite{MCCARTY1974276,BWR-equation:13,BWR-equation:25}。
 これらの多くの研究者の努力により、実在気体を広い範囲で概ね再現する有効な状態方程式を構築することに成功したが、
 特に相境界付近の振る舞いを正確に表現するためには項の数を相当数増やす必要があり、項自体の物理的意味も不明瞭であった。
@@ -51,9 +51,9 @@
 展開項には経験的に付け加えられた項もあり、その物理的意味も不明瞭であった。
 そこで、ビリアル展開・BWR方程式・m-BWR方程式を用いて状態方程式の項の係数を決定するのではなく、
 機械学習により、より多くの項の候補から状態方程式を推定することが1点目の目的である。
-また実在期待の相図の作成は、様々な高度なサンプリングアルゴリズムにより効率的に行われてきたが、
-これらの研究は予め状態点の相が全て判別されている前提で、それを知らない機械がその中から必要な状態点を取得し、状態点の相を形式的に効率的に特定しているに過ぎない。
-つまり、この手法は状態点の相が分からない未知の系に適用する際、状態点の相を効率的に特定する手法とは言えない。
+また実在気体の相図の作成は、様々な高度なサンプリングアルゴリズムにより効率的に行われてきたが、
+これらの研究は
+
 そこで、状態点の相が分からない未知の系に対しても相図作成が自動でできるような手法、すなわち機械が次の状態点を選択し、
 その状態点における相を自動的に特定していくような手法を構築するのが2点目の目的である。
 
@@ -68,21 +68,21 @@ WCAポテンシャル粒子系では、温度一定のまま数密度を高く�
 本研究では、WCAポテンシャル粒子系における圧力$P$を数密度$\rho$に関する低次の多項式で近似することにより状態方程式を推定できることを確認した上で、
 ガウス過程回帰を適用することにより、状態方程式を効率的に推定しつつ、相図を効率的に作成することを目的とする。
 
-第\ref{chap:introduction}章では、実在機体の状態方程式の推定及び相図作成に用いられている手法を示した。
+第\ref{chap:introduction}章では、実在気体の状態方程式の推定及び相図作成に用いられている手法を示した。
 第\ref{chap:method}章では、WCAポテンシャル粒子系における状態方程式の推定と相図の作成を効率的に行う手法を示す。
 第\ref{chap:results}章では、第\ref{chap:method}章で提案した手法の精度の確認を行う。
 第\ref{chap:summary}章では本研究で得られた知見を総括し、結論と今後の展望について述べる。
 
 
 \chapter{手法} \label{chap:method}
-\ref{method-sec:WCA-press}節では、WCAポテンシャル粒子系において各数密度$\rho$における圧力$P$を定義し、圧力$P$と数密度$\rho$の関係を調べる。
-\ref{method-sec:WCA-equation}節では、\ref{results-sec:WCA-press}節で得た圧力$P$と数密度$\rho$の関係から、WCAポテンシャル粒子系における状態方程式の推定を行う。
+\ref{method-sec:WCA-press}節では、WCAポテンシャル粒子系において各数密度$\rho$における圧力$P$を定義し、圧力$P$と数密度$\rho$の関係を調べる手法を示す。
+\ref{method-sec:WCA-equation}節では、分子動力学シミュレーションによって得られ圧力$P$と数密度$\rho$の関係から、WCAポテンシャル粒子系における状態方程式の推定を行う手法を示す。
 \ref{method-sec:Gauss}節では、分子動力学シミュレーションによって得られた圧力$P$と数密度$\rho$の関係にガウス過程回帰を適用し、
-WCAポテンシャル粒子系における状態方程式を効率的に推定しつつ、相図を効率的に作成する。
+WCAポテンシャル粒子系における状態方程式を効率的に推定しつつ、相図を効率的に作成する手法を示す。
 
 
 \section{WCAポテンシャル粒子系における圧力測定}\label{method-sec:WCA-press}
-\ref{method-sec:WCA-press}節ではWCAポテンシャル粒子系において各数密度$\rho$における圧力$P$を定義し、圧力$P$と数密度$\rho$の関係を調べる。
+\ref{method-sec:WCA-press}節ではWCAポテンシャル粒子系において各数密度$\rho$における圧力$P$を定義し、圧力$P$と数密度$\rho$の関係を調べる手法を示す。
 \ref{method-subsec:WCA}節ではWCAポテンシャルの説明を示し、
 \ref{method-subsec:WCA-phase}節ではWCAポテンシャル粒子系における相図の概念図を示し、
 \ref{method-subsec:WCA-pressure}節ではWCAポテンシャル粒子系における数密度$\rho$と圧力$P$の関係を調べる具体的な手法を示す。
@@ -127,6 +127,13 @@ P^*=\frac{P\sigma^3}{\varepsilon}\label{eq:P}
 \rho^*=\rho{\sigma}^3\label{eq:rho}
 \end{equation}
 \normalsize
+時間$t^*$はパラメータ${\sigma}$\,,\,${\varepsilon}$\,,\,質量$m$を用いて
+
+\large
+\begin{equation}
+t^*=t\sqrt{\frac{\varepsilon}{m{\sigma}^2}}\label{eq:time}
+\end{equation}
+\normalsize
 と表される。
 
 このLJポテンシャルの斥力作用と引力作用が入れ替わる$r_c=2^{\frac{1}{6}}{\approx}1.12246$にカットオフ距離を設けたポテンシャルをWCAポテンシャルと呼び、
@@ -145,8 +152,8 @@ WCAポテンシャル粒子系において二つの原子間相互作用ポテ�
 と表される\cite{doi:10.1063/1.2176675}。
 したがって、WCAポテンシャルとはLJポテンシャルの斥力作用と引力作用が入れ替わる$r=r_c$にカットオフ距離を設けることにより、式(\ref{eq:wca})のように二原子間の引力作用を無視し、斥力作用のみを考慮したポテンシャルである。
 
-以下の図{\ref{fig:dis-poen}にLJポテンシャルとWCAポテンシャル粒子系における原子間距離$r$と原子間のポテンシャルエネルギー$E$を示す。
-(図{\ref{fig:dis-poen}ではLJポテンシャルにカットオフ距離2.5を設けている)
+図{\ref{fig:dis-poen}にLJポテンシャルとWCAポテンシャル粒子系における原子間距離$r$と原子間のポテンシャルエネルギー$E$を示す。
+尚、図{\ref{fig:dis-poen}ではLJポテンシャルにカットオフ距離2.5を設けているものとする。
 
 \newpage
 \begin{figure}[htbp]
@@ -157,6 +164,7 @@ WCAポテンシャル粒子系において二つの原子間相互作用ポテ�
     WCAポテンシャルはLJポテンシャルにカットオフ距離$r=r_c$を設けることにより、$r>r_c$でポテンシャルエネルギーが0になっている。}
     \label{fig:dis-poen}
 \end{figure}
+
 図{\ref{fig:dis-poen}に示すように、WCAポテンシャルはLJポテンシャルにカットオフ距離$r=r_c$を設けることにより、
 $r>r_c$でポテンシャルエネルギーが0になっている。
 
@@ -164,15 +172,15 @@ $r>r_c$でポテンシャルエネルギーが0になっている。
 \subsection{WCAポテンシャル粒子系の相図}\label{method-subsec:WCA-phase}
 相図とは、熱力学的な状態量と物質や系の関係を表したものであり、相図の作成は、物性物理の分野において非常に重要である\cite{gaussian-phase}。
 
-以下の図\ref{fig:wca-phase-diagram}に式(\ref{eq:wca})に示したWCAポテンシャル粒子系の相図の概念図を示す。
+図\ref{fig:wca-phase-diagram}にWCAポテンシャル粒子系の相図の概念図を示す。
 
 \begin{figure}[htbp]
     \begin{center}
         \includegraphics[width=12cm]{fig/wca-phase-diagram.png}
     \end{center}
     \caption{WCAポテンシャル粒子系の相図の概念図。
-    数密度、温度とWCAポテンシャル粒子系の相の関係を示す。
-    \ref{method-subsec:WCA-pressure}節では赤線上の状態点($T^*$=1.0)を観測する。}
+    数密度$\rho$,温度$T$とWCAポテンシャル粒子系の相の関係を示す。
+    \ref{method-subsec:WCA-pressure}節では赤線上の状態点($T$=1.0)を観測する。}
     
     \label{fig:wca-phase-diagram}
 \end{figure}
@@ -188,8 +196,8 @@ $r>r_c$でポテンシャルエネルギーが0になっている。
 原子や分子間に働く力を計算し、位置や運動量の時間発展を数値的に追う手法を分子動力学法(Molecular Dynamics method, MD)と言う\cite{molecular-dynamics}。
 本節では、圧力の測定を分子動力学シミュレーションにより行う。
 尚、分子動力学シミュレーションには、分子動力学プログラムLarge-scale Atomic/Molecular Massively Parallel Simulator\,(LAMMPS)\cite{lammps}を用いた。
-本研究では、初期状態として1辺$L$、体積$V$の立方体の中に$N=2048$個の面心立方face-centered cubic\,(fcc)構造上に配置した分子を用意し、
-式(\ref{eq:wca})の${\sigma}$(原子直径の長さ)\,,\,${\varepsilon}$(ポテンシャルの深さ)を共に1.0とし、
+本研究では、初期状態として1辺$L$、体積$V$の立方体の中に$N=2048$個の面心立方face-centered cubic\,(fcc)構造上に配置した原子を用意し、
+${\sigma}$\,,\,${\varepsilon}$を共に1.0とし、
 図\ref{fig:wca-phase-diagram}で示した赤線上の状態点について、研究を進める。
 
 \newpage
@@ -199,7 +207,7 @@ $r>r_c$でポテンシャルエネルギーが0になっている。
     \begin{center}
         \includegraphics[width=8cm]{fig/initial-state-molecule.png}
     \end{center}
-    \caption{初期状態の分子構造。
+    \caption{原子の初期配置。
     fcc構造上に配置されている。}
     \label{fig:initial-state-molecule}
 \end{figure}
@@ -212,7 +220,7 @@ $r>r_c$でポテンシャルエネルギーが0になっている。
     \begin{center}
         \includegraphics[width=12cm]{fig/d2.0-tt.pdf}
     \end{center}
-    \caption{温度$T$の時間発展。初期緩和があり、初期緩和後も$T=1.0$の周りで揺らぎが見られる。}
+    \caption{温度$T$の時間発展。初期緩和があり、初期緩和後も$T=1.0$の周りで揺らぎが観測される。}
     \label{fig:d2.0-tt.pdf}
 \end{figure}
 
@@ -238,8 +246,8 @@ WCAポテンシャル粒子系はある密度で流体ー固体相転移を起�
 
 \section{WCAポテンシャル粒子系における状態方程式の推定}\label{method-sec:WCA-equation}
 \ref{method-sec:WCA-equation}節では、WCAポテンシャル粒子系における状態方程式の推定を行う。
-\ref{method-subsec:virial}節、\ref{method-subsec:BWR}節では、圧力を密度に関する項で展開するビリアル展開、Benedict-Webb-Rubin\,(BWR)方程式、modified-Benedict–Webb–Rubin\,(mBWR)方程式の説明を示し、
-\ref{method-subsec:WCA-equation}節では、\ref{results-sec:WCA-press}節で得た圧力$P$と数密度$\rho$の関係からWCAポテンシャル粒子系における状態方程式の推定を行う具体的な手法を示す。
+\ref{method-subsec:virial}節、\ref{method-subsec:BWR}節では、圧力を密度に関する項で展開するビリアル展開、Benedict-Webb-Rubin\,(BWR)方程式、modified-Benedict–Webb–Rubin\,(m-BWR)方程式の説明を示し、
+\ref{method-subsec:WCA-equation}節では、分子動力学シミュレーションによって得られた圧力$P$と数密度$\rho$の関係からWCAポテンシャル粒子系における状態方程式の推定を行う具体的な手法を示す。
 
 \subsection{ビリアル展開}\label{method-subsec:virial}
 気体の振る舞いを表す有望な記述の一つにビリアル展開と呼ぶものが存在する。
@@ -261,14 +269,14 @@ P=RT{\rho}'+b_2{{\rho}'}^2+b_3{{\rho}'}^3+b_4{{\rho}'}^4+\cdots \label{eq:virial
 \end{equation}
 \normalsize
 と表され、圧力$P$をモル密度${\rho}'$の冪級数を用いて表現する。
-ここで、$T$は温度、$R$は気体定数である。
+ここで、$R$は気体定数である。
 式(\ref{eq:virial})のモル密度${\rho}'$のn番目の累乗の係数を第nビリアル係数と呼ぶ\cite{virial-expansion}。
-これらのビリアル係数は、増加する原子数で構成される集団群における原子の相互作用を表し、第2、第3、第4のビリアル係数は、2つ、3つ、4つ...の分子を含む衝突が気体中で重要になったときの理想的な振る舞いからの逸脱を表す。
+これらのビリアル係数は、増加する原子数で構成される集団群における原子の相互作用を表し、第2、第3、第4のビリアル係数は、2つ、3つ、4つ...の原子を含む衝突が気体中で重要になったときの理想的な振る舞いからの逸脱を表す。
 高密度になるほど、多体の相互作用の寄与が大きくなるので、圧力が高くなるにつれて、考慮されなければならないビリアル項が増加する\cite{virial-Heike}。
 
 \newpage
 \subsection{Benedict-Webb-Rubin(BWR)方程式}\label{method-subsec:BWR}
-\ref{method-subsec:virial}節のように、Heikeが提唱したビリアル展開は、圧力を密度の冪級数を用いて表現したものであるが、この式に経験則的に指数の項を付け加えたものをBenedict-Webb-Rubin(BWR)方程式と呼ぶ。
+Heikeが提唱したビリアル展開は、圧力を密度の冪級数を用いて表現したものであるが、この式に経験的に指数の項を付け加えたものをBenedict-Webb-Rubin(BWR)方程式と呼ぶ。
 BWR方程式は、軽質炭化水素の熱力学的性質を予測するために、1940年にBenedict、Webb、Rubinによって提唱された\cite{BWR-equation:original}。
 BWR方程式の原式は、圧力$P$をモル密度${\rho}'$と絶対温度$T$の関数として表現したもので、
 
@@ -284,10 +292,10 @@ BWR方程式は、気体の状態方程式を表すことに概ね成功して�
 
 \large
 \begin{equation}
-P=\sum_{n=1}^9a_n{{\rho}'}^n+\exp(-{\gamma}{{\rho}'}^2)\sum_{n=10}^{15}a_n{{\rho}'}^{2n-17}\label{eq:mBWR}
+P=\sum_{n=1}^9a_n{{\rho}'}^n+\exp(-{\gamma}{{\rho}'}^2)\sum_{n=10}^{15}a_n{{\rho}'}^{2n-17}\label{eq:m-BWR}
 \end{equation}
 \normalsize
-と表されるmodified-Benedict-Webb-Rubin\,(mBWR)方程式が提唱\cite{m-BWR-equation}されたが、
+と表されるmodified-Benedict-Webb-Rubin\,(m-BWR)方程式が提唱\cite{m-BWR-equation}されたが、
 依然として気体の状態方程式を完璧に再現することは出来なかった。
 その後も、多くの研究者が気体の状態方程式の項を増やすことで、完璧な再現を試みた\cite{MCCARTY1974276,BWR-equation:13,BWR-equation:25}が、
 特に相境界付近の振る舞いを正確に表現するためには、項の数を相当数増やす必要があり、項自体の物理的意味も不明瞭であった。
@@ -297,11 +305,11 @@ P=\sum_{n=1}^9a_n{{\rho}'}^n+\exp(-{\gamma}{{\rho}'}^2)\sum_{n=10}^{15}a_n{{\rho
 しかし、これらの手法では、所望の精度のためにはどれくらいの項が必要かが事前にはわからず、経験的に追加された指数項の物理的な意味も不明瞭であった。
 
 
-そこで、機械学習により、より多くの候補からWCAポテンシャル粒子系における状態方程式を推定する方法を検討する。
+そこで、機械学習により、より多くの候補からWCAポテンシャル粒子系における状態方程式を推定する手法を検討する。
 最終的には、機械学習が推定してきた項の物理的意味を考察することが目標であるが、
-まず本研究では分子動力学シミュレーションにより測定したWCAポテンシャル粒子系における圧力と数密度の関係に最小二乗法を適用し、
-圧力を数密度に関する低次の多項式で近似することにより、WCAポテンシャル粒子系における状態方程式を推定し、
-推定したWCAポテンシャル粒子系における状態方程式の展開係数が先行研究と矛盾しないことを確認する。
+まず本研究では分子動力学シミュレーションによって得られたWCAポテンシャル粒子系における圧力と数密度の関係に最小二乗法を適用し、
+圧力を数密度に関する低次の多項式で近似することにより、状態方程式を推定し、
+推定した状態方程式の展開係数が先行研究と矛盾しないことを確認する。
 
 以下、最小二乗法の説明を簡潔に示す。
 今、想定される多項式を
@@ -468,7 +476,7 @@ S &=& (Y-XA)^T(Y-XA)\nonumber\\
 \section{ガウス過程回帰によるWCAポテンシャル粒子系における効率的な状態方程式推定及び相図作成}\label{method-sec:Gauss}
 \ref{method-sec:Gauss}節では、WCAポテンシャル粒子系における状態方程式を効率的に推定しつつ、相図を効率的に作成する。
 \ref{method-subsec:Gauss}節では、ガウス過程回帰の説明を示し、
-\ref{method-subsec:Gaussian-estimation}節では、\ref{results-sec:WCA-press}節で得た圧力$P$と数密度$\rho$の関係にガウス過程回帰を適用し、
+\ref{method-subsec:Gaussian-estimation}節では、分子動力学シミュレーションによって得られた圧力$P$と数密度$\rho$の関係にガウス過程回帰を適用し、
 WCAポテンシャル粒子系における状態方程式を効率的に推定しつつ、相図を効率的に作成する具体的な手法を示す。
 
 
@@ -558,7 +566,7 @@ $\bm{y}$に$\bm{y}^*$を含めたものを新しく
 \normalsize
 が成立する。
 
-つまり、ガウス過程回帰は、\cite{Gaussian-Processes-for-Machine-Learning}で開発された導出に従って、観測された$\bm{y}$と予測された$\bm{y}^*$の同時分布が
+つまり、ガウス過程回帰は、観測された$\bm{y}$と予測された$\bm{y}^*$の同時分布が
 
 \large
 \begin{eqnarray}
@@ -579,7 +587,7 @@ $\bm{y}$に$\bm{y}^*$を含めたものを新しく
     \right) \label{eq:Gaussian-distribution}
 \end{eqnarray}
 \normalsize
-のようなガウス分布に従う。
+のようなガウス分布に従う\cite{Gaussian-Processes-for-Machine-Learning}。
 尚、$\bm{K}$は測定値の入力$x$と$x'$から求められ、$\bm{k}_*$は測定値の入力$x$と測定されていない入力$x'^*$から求められ、
 $\bm{k}_{**}$は測定されていない入力$x^*$と測定されていない入力$x'^*$から求められる。
 
@@ -625,7 +633,7 @@ p(\bm{y}^*|\bm{x}^*,\mathcal{D})
 \ref{results-sec:WCA-press}節に、数密度$\rho=\{0.00,0.01,0.02,\cdots,15.0\}$と圧力$P$の関係を示したが、全データのうち端点となる、
 $\{(P,\rho)\}=\{(0.00,0.00)\,,\,(15.0,1.83×10^7)\}$の二点を初期の入力データとして、ガウス過程回帰を適用する。
 式(\ref{eq:Gaussian-predicted-average})の平均$E$が入力データから予測される関数を、
-式(\ref{eq:Gaussian-predicted-decentration})の分散$\sigma^2$が入力データから予測される関数の不確かさを示すものとする。
+ここで、式(\ref{eq:Gaussian-predicted-decentration})の分散$\sigma^2$が入力データから予測される関数の不確かさを示す。
 また、各数密度における分散の平方根を取った標準偏差$\sigma$の大きさを獲得関数とし、この関数を最大にする、すなわち不確かさが最大の数密度を次の試行点として選択する。
 この不確かさが最大となる数密度におけるWCAポテンシャル粒子系の圧力をMDシミュレーションにより新たに測定し、入力データを更新し、再度ガウス過程回帰を行う。
 本研究では、以上の工程を繰り返し行い、WCAポテンシャル粒子系における効率的な状態方程式の推定、相図の作成を目指す。
@@ -680,7 +688,7 @@ MDシミュレーションで測定されたWCAポテンシャル粒子系にお
 \end{equation}
 \normalsize
 では、原子間の相互作用をほぼ無視できる。
-上記の式(\ref{eq:lowdensity-density})を満たすような低密度状態における分子の状態の概念図を以下の図\ref{fig:lowdensity.png}に示す。
+式(\ref{eq:lowdensity-density})を満たすような低密度状態における分子の状態の概念図を図\ref{fig:lowdensity.png}に示す。
 
 \begin{figure}[htbp]
     \begin{center}
@@ -692,7 +700,7 @@ MDシミュレーションで測定されたWCAポテンシャル粒子系にお
 \end{figure}
 
 図\ref{fig:lowdensity.png}のような低密度状態においては、原子間の相互作用をほとんど無視できるので、
-圧力は式(\ref{eq:Theoritical-pressure})の第一項のみを用いて、
+圧力は式(\ref{eq:Theoritical-pressure})の右辺第一項のみを用いて、
 \large
 \begin{eqnarray}
 PV\,{\simeq}\,NkT　\nonumber
@@ -727,7 +735,7 @@ PV\,&{\simeq}&\,NkT\nonumber\\
 \newpage
 \subsection{WCAポテンシャル粒子系における中密度状態の圧力}\label{results-subsec:WCA-press-middle-density}
 中密度状態では、相互作用がある分子ペアと持たない分子が存在する。
-まず、中密度状態における分子の状態の概念図を以下の図\ref{fig:middledensity.png}に示す。
+まず、中密度状態における分子の状態の概念図を図\ref{fig:middledensity.png}に示す。
 
 \begin{figure}[htbp]
     \begin{center}
@@ -740,8 +748,8 @@ PV\,&{\simeq}&\,NkT\nonumber\\
 
 
 流体相から固体相への相転移近傍の中密度状態では、相転移により圧力の振る舞いが急激に変化すると考えられる。
-相転移近傍の中密度状態での数密度$\rho$とMDシミュレーションで測定されたWCAポテンシャル粒子系の圧力$P$の関係を
-以下の図\ref{fig:middleden_den-pre}に示す。
+相転移近傍の中密度状態での数密度$\rho$とMDシミュレーションによって得られたWCAポテンシャル粒子系の圧力$P$の関係を
+図\ref{fig:middleden_den-pre}に示す。
 
 \newpage
 \begin{figure}[htbp]
