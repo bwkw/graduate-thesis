@@ -43,7 +43,8 @@
 以前の実験からの情報を抽出できないため非効率であった。
 そこで、近年では、不確実性サンプリング\cite{uncertainty-sampling1,uncertainty-sampling2}やガウス過程回帰\cite{gaussian-phase}といった高度なサンプリングアルゴリズムを実装することにより、
 手間とコストを削減することに成功している。
-しかし、これらの研究は状態点
+しかし、これらの研究は系の秩序変数が判明していることを前提に、相境界を効率的に推定し、相図を作成しているに過ぎなかった。
+
 
 
 \section{研究の目的} \label{intro-purpose}
@@ -52,14 +53,14 @@
 そこで、ビリアル展開・BWR方程式・m-BWR方程式を用いて状態方程式の項の係数を決定するのではなく、
 機械学習により、より多くの項の候補から状態方程式を推定することが1点目の目的である。
 また実在気体の相図の作成は、様々な高度なサンプリングアルゴリズムにより効率的に行われてきたが、
-これらの研究は
-
-そこで、状態点の相が分からない未知の系に対しても相図作成が自動でできるような手法、すなわち機械が次の状態点を選択し、
-その状態点における相を自動的に特定していくような手法を構築するのが2点目の目的である。
+これらの研究は系の秩序変数が判明していることを前提としているため、系の秩序変数が分からない未知の相図を
+効率的に作成する手法であるとは言えない。
+そこで、系の秩序変数が分からない未知の系に対しても相図作成ができるような手法を構築するのが2点目の目的である。
 
 本研究では上記の2点の目的を受け、状態方程式が比較的容易に書け、状態点の相の判別が容易であるWeeks-Chandler-Andersen\,(WCA)ポテンシャル粒子系を採用する。
 WCAポテンシャル粒子系では、温度一定のまま数密度を高くしていくと、ある数密度で流体相から固体相への相転移を起こす。
 相転移近傍では、圧力の振る舞いが大きく変化するため、圧力$P$と数密度$\rho$の関係を調べることで状態方程式の推定を行いつつ、相転移の存在を確認し、WCAポテンシャル粒子系における相図も作成することが出来る。
+この手法は、系の秩序変数を必要とせず、圧力の測定から相図を作成することが出来るため、系の秩序変数が分からない未知の相図を作成する足掛かりとなり得る。
 本研究では、WCAポテンシャル粒子系における圧力$P$を数密度$\rho$に関する低次の多項式で近似することにより状態方程式を推定できることを確認した上で、
 ガウス過程回帰を適用することにより、状態方程式を効率的に推定しつつ、相図を効率的に作成することを目的とする。
 
@@ -82,11 +83,6 @@ WCAポテンシャル粒子系における状態方程式を効率的に推定�
 
 
 \section{WCAポテンシャル粒子系における圧力測定}\label{method-sec:WCA-press}
-\ref{method-sec:WCA-press}節ではWCAポテンシャル粒子系において各数密度$\rho$における圧力$P$を定義し、圧力$P$と数密度$\rho$の関係を調べる手法を示す。
-\ref{method-subsec:WCA}節ではWCAポテンシャルの説明を示し、
-\ref{method-subsec:WCA-phase}節ではWCAポテンシャル粒子系における相図の概念図を示し、
-\ref{method-subsec:WCA-pressure}節ではWCAポテンシャル粒子系における数密度$\rho$と圧力$P$の関係を調べる具体的な手法を示す。
-
 
 \subsection{WCAポテンシャル}\label{method-subsec:WCA}
 分子動力学計算において頻繁に用いられるモデルの一つにLennard-Jones\,(LJ)ポテンシャルと呼ばれるものが存在する。
@@ -196,7 +192,7 @@ $r>r_c$でポテンシャルエネルギーが0になっている。
 原子や分子間に働く力を計算し、位置や運動量の時間発展を数値的に追う手法を分子動力学法(Molecular Dynamics method, MD)と言う\cite{molecular-dynamics}。
 本節では、圧力の測定をMDシミュレーションにより行う。
 尚、MDシミュレーションには、分子動力学プログラムLarge-scale Atomic/Molecular Massively Parallel Simulator\,(LAMMPS)\cite{lammps}を用いた。
-本研究では、初期状態として1辺$L$、体積$V$の立方体の中に$N=2048$個の面心立方face-centered cubic\,(fcc)構造上に配置した原子を用意し、
+本研究では、初期状態として1辺$L$、体積$V$の立方体の中に$N=2048$個の面心立方face-centered cubic\,(fcc)構造上に配置した原子を用意した上で、
 ${\sigma}$\,,\,${\varepsilon}$を共に1.0とし、
 図\ref{fig:wca-phase-diagram}で示した赤線上の状態点について、研究を進める。
 
@@ -245,9 +241,7 @@ WCAポテンシャル粒子系はある密度で流体ー固体相転移を起�
 原子間の相互作用をほぼ無視できる低密度状態、流体相から固体相への相転移近傍の中密度状態、原子間の相互作用の寄与が大きい高密度状態において調べる。
 
 \section{WCAポテンシャル粒子系における状態方程式の推定}\label{method-sec:WCA-equation}
-\ref{method-sec:WCA-equation}節では、WCAポテンシャル粒子系における状態方程式の推定を行う。
-\ref{method-subsec:virial}節、\ref{method-subsec:BWR}節では、圧力を密度に関する項で展開するビリアル展開、Benedict-Webb-Rubin\,(BWR)方程式、modified-Benedict–Webb–Rubin\,(m-BWR)方程式の説明を示し、
-\ref{method-subsec:WCA-equation}節では、MDシミュレーションによって得られた圧力$P$と数密度$\rho$の関係からWCAポテンシャル粒子系における状態方程式の推定を行う具体的な手法を示す。
+
 
 \subsection{ビリアル展開}\label{method-subsec:virial}
 気体の振る舞いを表す有望な記述の一つにビリアル展開と呼ぶものが存在する。
@@ -309,7 +303,7 @@ P=\sum_{n=1}^9a_n{{\rho}'}^n+\exp(-{\gamma}{{\rho}'}^2)\sum_{n=10}^{15}a_n{{\rho
 最終的には、機械学習が推定してきた項の物理的意味を考察することが目標であるが、
 まず本研究ではMDシミュレーションによって得られたWCAポテンシャル粒子系における圧力と数密度の関係に最小二乗法を適用し、
 圧力を数密度に関する低次の多項式で近似することにより、状態方程式を推定し、
-推定した状態方程式の展開係数が先行研究と矛盾しないことを確認する。
+推定した状態方程式が先行研究と矛盾しないことを確認する。
 
 以下、最小二乗法の説明を簡潔に示す。
 今、想定される多項式を
@@ -469,15 +463,11 @@ S &=& (Y-XA)^T(Y-XA)\nonumber\\
     &{\Leftrightarrow}&{\ }{\ }A=(X^TX)^{-1}X^TY\label{eq:normal-equation}
 \end{eqnarray}
 \normalsize
-で与えられる$A$を求めることで想定される多項式の係数が決定され、多項式で近似される\cite{least-squares}。
+で与えられる$A$を求めることで近似される多項式の係数が決定され、近似多項式が決定される\cite{least-squares}。
 
 
 
 \section{ガウス過程回帰によるWCAポテンシャル粒子系における効率的な状態方程式推定及び相図作成}\label{method-sec:Gauss}
-\ref{method-sec:Gauss}節では、WCAポテンシャル粒子系における状態方程式を効率的に推定しつつ、相図を効率的に作成する。
-\ref{method-subsec:Gauss}節では、ガウス過程回帰の説明を示し、
-\ref{method-subsec:Gaussian-estimation}節では、MDシミュレーションによって得られた圧力$P$と数密度$\rho$の関係にガウス過程回帰を適用し、
-WCAポテンシャル粒子系における状態方程式を効率的に推定しつつ、相図を効率的に作成する具体的な手法を示す。
 
 
 \subsection{ガウス過程回帰}\label{method-subsec:Gauss}
@@ -630,7 +620,7 @@ p(\bm{y}^*|\bm{x}^*,\mathcal{D})
 \normalsize
 を採用する\cite{Gauss-machine-learning}。
 
-\ref{results-sec:WCA-press}節に、数密度$\rho=\{0.00,0.01,0.02,\cdots,15.0\}$と圧力$P$の関係を示したが、全データのうち端点となる、
+全数密度・圧力データのうち端点となる、
 $\{(P,\rho)\}=\{(0.00,0.00)\,,\,(15.0,1.83×10^7)\}$の二点を初期の入力データとして、ガウス過程回帰を適用する。
 式(\ref{eq:Gaussian-predicted-average})の平均$E$が入力データから予測される関数を、
 ここで、式(\ref{eq:Gaussian-predicted-decentration})の分散$\sigma^2$が入力データから予測される関数の不確かさを示す。
@@ -647,11 +637,15 @@ $\{(P,\rho)\}=\{(0.00,0.00)\,,\,(15.0,1.83×10^7)\}$の二点を初期の入力�
     \label{fig:algorithm}
 \end{figure}
 
+
+
+
 \chapter{結果} \label{chap:results}
 \ref{results-sec:WCA-press}節では、各数密度においてMDシミュレーションで測定されたWCAポテンシャル粒子系における圧力の振る舞いを示す。
-\ref{results-sec:WCA-equation}節では、\ref{results-sec:WCA-press}節で示したWCAポテンシャル粒子系における圧力と数密度の関係から、WCAポテンシャル粒子系における状態方程式の推定を行う。
+\ref{results-sec:WCA-equation}節では、\ref{results-sec:WCA-press}節で示したWCAポテンシャル粒子系における圧力と数密度の関係から、WCAポテンシャル粒子系における状態方程式の推定を行い、推定した状態方程式が先行研究と矛盾しないことを確認する。
 \ref{results-sec:Gauss}節では、\ref{results-sec:WCA-press}節で示したWCAポテンシャル粒子系における圧力と数密度の関係にガウス過程回帰を適用し、WCAポテンシャル粒子系における
 効率的な状態方程式の推定、相図の作成を目指す。
+
 
 
 \section{WCAポテンシャル粒子系における圧力測定}\label{results-sec:WCA-press}
@@ -671,6 +665,7 @@ $\{(P,\rho)\}=\{(0.00,0.00)\,,\,(15.0,1.83×10^7)\}$の二点を初期の入力�
 \ref{results-subsec:WCA-press-middle-density}節では流体相から固体相への相転移近傍の中密度状態、
 \ref{results-subsec:WCA-press-high-density}節では原子間の相互作用の寄与が大きい高密度状態において、
 MDシミュレーションで測定されたWCAポテンシャル粒子系における圧力の振る舞いを抽出する。
+
 
 \subsection{WCAポテンシャル粒子系における低密度状態の圧力}\label{results-subsec:WCA-press-low-density}
 初期状態において、原子間の相互作用が作用する($原子間距離r=カットオフ距離r_c$)数密度は
@@ -732,6 +727,7 @@ PV\,&{\simeq}&\,NkT\nonumber\\
 式(\ref{eq:ideal-gas})で表されていることが確認できる。
 これは、低密度状態では、「ほぼ」原子間の相互作用を無視でき、原子が理想気体のように振る舞うからである。
 
+
 \newpage
 \subsection{WCAポテンシャル粒子系における中密度状態の圧力}\label{results-subsec:WCA-press-middle-density}
 中密度状態では、相互作用がある原子ペアと持たない原子が存在する。
@@ -746,7 +742,6 @@ PV\,&{\simeq}&\,NkT\nonumber\\
     \label{fig:middledensity.png}
 \end{figure}
 
-
 流体相から固体相への相転移近傍の中密度状態では、相転移により圧力の振る舞いが急激に変化すると考えられる。
 相転移近傍の中密度状態での数密度$\rho$とMDシミュレーションによって得られたWCAポテンシャル粒子系の圧力$P$の関係を
 図\ref{fig:middleden_den-pre}に示す。
@@ -760,8 +755,8 @@ PV\,&{\simeq}&\,NkT\nonumber\\
     \label{fig:middleden_den-pre}
 \end{figure}
 
-
 図\ref{fig:middleden_den-pre}から$\rho\,{\simeq}\,1$付近で相転移が起こり、圧力の振る舞いが急激に変化することを確認できる。
+
 
 \newpage
 \subsection{WCAポテンシャル粒子系における高密度状態の圧力}\label{results-subsec:WCA-press-high-density}
@@ -776,7 +771,6 @@ PV\,&{\simeq}&\,NkT\nonumber\\
     全ての原子ペアが相互作用を持つものと近似。}
     \label{fig:highdensity.png}
 \end{figure}
-
 
 原子間の相互作用の寄与が大きい高密度状態では、圧力は式(\ref{eq:Theoritical-pressure})の右辺第二項の影響を強く受ける。
 高密度状態では、
@@ -815,7 +809,6 @@ $\rho\,{\simeq}\,14.7$と表される。
     \label{fig:highden_compare:den-pre}
 \end{figure}
 
-
 図\ref{fig:highden_compare:den-pre}から、理論値と測定値のズレは1.2％以下である。
 このことから、第五隣接原子より離れた原子とも相互作用が働くほど高密度の状態でもWCAポテンシャル粒子系の圧力は式(\ref{eq:Theoritical-pressure})において
 再隣接原子の寄与のみを考慮したもので十分に表されていることがわかる。
@@ -823,15 +816,13 @@ $\rho\,{\simeq}\,14.7$と表される。
 以上から、MDシミュレーションにより測定されたWCAポテンシャル粒子系の圧力の振る舞いを
 原子間の相互作用をほぼ無視できる低密度状態、流体相から固体相への相転移近傍の中密度状態、原子間の相互作用の寄与が大きい高密度状態において確認できた。
 
+
+
 \newpage
 \section{WCAポテンシャル粒子系における状態方程式の推定}\label{results-sec:WCA-equation}
-\ref{results-sec:WCA-press}節で示した圧力を数密度を含む項で展開することを試みたとき、\ref{method-subsec:virial}節で示したビリアル展開、
-\ref{method-subsec:BWR}節で示したBWR,m-BWR方程式を用いると、\ref{results-subsec:WCA-press-middle-density}節で示した相転移の存在により、
-項の個数が際限なく増え、項自体の物理的意味も不明瞭になると考えられる。
 
-そこで、
 \ref{results-subsec:WCA-equation}節では、\ref{results-sec:WCA-press}節で示したWCAポテンシャル粒子系における圧力と数密度の関係に上記で示した最小二乗法を適用し、
-圧力を数密度に関する低次の多項式で近似することにより、WCAポテンシャル粒子系の状態方程式を推定し、
+圧力を数密度に関する低次の多項式で近似することにより、WCAポテンシャル粒子系の状態方程式を推定する。
 \ref{results-subsec:previous-research}節では、推定したWCAポテンシャル粒子系における状態方程式が先行研究と矛盾しないことを確認する。
 
 
@@ -868,8 +859,8 @@ $\rho\,{\simeq}\,14.7$と表される。
 \end{equation}
 \normalsize
 と表される。
-WCAポテンシャル粒子系の圧力を式(\ref{eq:modified-search-virial})のように数密度で2次〜5次に近似し、その近似精度を式(\ref{eq:percentage-error})に基づいて評価する。
-この結果を以下の表\ref{table:approximation-accuracy}に示す。
+WCAポテンシャル粒子系の圧力を式(\ref{eq:modified-search-virial})のように数密度でに関する低次の多項式で近似し、その近似精度を式(\ref{eq:percentage-error})に基づいて評価すると、
+5次式近似で
 
 \begin{table}[htbp]
     \begin{center}
