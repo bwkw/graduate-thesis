@@ -821,10 +821,6 @@ $\rho\,{\simeq}\,14.7$と表される。
 \newpage
 \section{WCAポテンシャル粒子系における状態方程式の推定}\label{results-sec:WCA-equation}
 
-\ref{results-subsec:WCA-equation}節では、\ref{results-sec:WCA-press}節で示したWCAポテンシャル粒子系における圧力と数密度の関係に上記で示した最小二乗法を適用し、
-圧力を数密度に関する低次の多項式で近似することにより、WCAポテンシャル粒子系の状態方程式を推定する。
-\ref{results-subsec:previous-research}節では、推定したWCAポテンシャル粒子系における状態方程式が先行研究と矛盾しないことを確認する。
-
 
 \subsection{WCAポテンシャル粒子系における状態方程式の推定}\label{results-subsec:WCA-equation}
 本研究における多項式近似とは、
@@ -859,21 +855,22 @@ $\rho\,{\simeq}\,14.7$と表される。
 \end{equation}
 \normalsize
 と表される。
-WCAポテンシャル粒子系の圧力を式(\ref{eq:modified-search-virial})のように数密度でに関する低次の多項式で近似し、その近似精度を式(\ref{eq:percentage-error})に基づいて評価すると、
-5次式近似で
+WCAポテンシャル粒子系の圧力を式(\ref{eq:modified-search-virial})のように数密度に関する低次の多項式で近似し、その近似精度を式(\ref{eq:percentage-error})に基づいて評価する。
+この評価に基づいて、本研究では低次の多項式として5次式を採用した。
+
+WCAポテンシャル粒子系の状態方程式を式(\ref{eq:modified-search-virial})のように5次近似式で表した時の、
+係数を表\ref{table:5-coefficient}に示す。
 
 \begin{table}[htbp]
     \begin{center}
-        \caption{最小二乗法によるn次近似の近似精度}
-        \label{table:approximation-accuracy}
+        \caption{n次の係数$b_n$の値}
+        \label{table:5-coefficient}
             \begin{tabular}{c c}
-                    n\,(次) & {\it{A}}\,(％) \\ \hline\hline
-                    2 & 1.93E5 \\ 
-                    3 & 2.32E5 \\ 
-                    4 & 7.10E4\\ 
-                    5 & 9.37\\ 
-                    6 & 9.87 \\ 
-                    7 & 19.77 \\ \hline
+                    n & $b_n$ \\ \hline\hline
+                    2 & 8.4(1) \\ 
+                    3 & -29.08(4) \\ 
+                    4 & 0.015(4)\\ 
+                    5 & 24.2634(1)\\ \hline
                 
             \end{tabular}
     \end{center}
@@ -881,18 +878,7 @@ WCAポテンシャル粒子系の圧力を式(\ref{eq:modified-search-virial})�
 \end{table}
 
 \newpage
-低次から近似を行い、\ref{results-sec:WCA-press}節のMDシミュレーションにより測定されたWCAポテンシャル粒子系の圧力を数密度に関する多項式で近似することを試みたが、
-上記の表\ref{table:approximation-accuracy}に基づくn次近似の近似精度から、本研究では、低次の多項式として5次の多項式を採用した。
-
-最小二乗法により5次に近似されたWCAポテンシャル粒子系の状態方程式は、
-
-\large
-\begin{equation}
-    P=\rho+8.40579\rho^2+-29.0885\rho^3+0.0158545\rho^4+24.2634\rho^5 \label{eq:5den-pre}
-\end{equation}
-\normalsize
-と表された。
-本研究で得られたMDシミュレーションによる圧力の値を「測定値」、式(\ref{eq:5den-pre})から得られる圧力の値を「5次近似値」とし、
+この近似により得られた圧力の密度依存性と、MDシミュレーションによる圧力の値の比較を
 図\ref{fig:5den-pre}に示す。
 
 \begin{figure}[htbp]
@@ -903,7 +889,6 @@ WCAポテンシャル粒子系の圧力を式(\ref{eq:modified-search-virial})�
     \label{fig:5den-pre}
 \end{figure}
 
-\newpage
 図\ref{fig:5den-pre}から、WCAポテンシャル粒子系の状態方程式は、最小二乗法による5次式の近似で
 十分に表せていることが分かる。
 
@@ -913,8 +898,8 @@ WCAポテンシャル粒子系の圧力を式(\ref{eq:modified-search-virial})�
 本研究では、先行研究として剛球流体の状態方程式をビリアル展開により表したものを採用する\cite{hard-sphere}。
 WCAポテンシャル粒子系は、粒子間に斥力作用しか持たないため概ね剛体粒子に近似することが出来ると考えられる。
 
-まず、本研究のWCAポテンシャル粒子の直径$\sigma=1$と剛体粒子の直径$(=1)$が等しい時の
-\ref{results-subsec:WCA-equation}節で示した5次近似値と剛球流体における各数密度$\rho$の圧力値$P$を
+まず、WCAポテンシャル粒子の直径$\sigma=1$と剛体粒子の直径$(=1)$が等しい時の
+5次近似値と剛球流体における圧力値$P$の比較を
 図\ref{fig:compare_previous-research}に示す。
 
 \begin{figure}[htbp]
@@ -925,6 +910,7 @@ WCAポテンシャル粒子系は、粒子間に斥力作用しか持たない�
     \label{fig:compare_previous-research}
 \end{figure}
 
+\newpage
 ここで、WCAポテンシャル粒子は剛体ではないため剛体粒子同士の衝突時とは異なり、
 粒子同士の衝突時にWCAポテンシャル粒子は粒子の形状が変化する。
 その様子の概念図を図\ref{fig:WCA-collision}に示す。
