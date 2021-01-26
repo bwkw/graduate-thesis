@@ -113,7 +113,14 @@ LJポテンシャルを用いる系では、パラメータ$\sigma$\,,\,$\vareps
 他にも多くの気体ごとに値が定められている\cite{graphane-parameters,many-parameters}。
 
 \newpage
-LJ単位系では、温度$T^*$はパラメータ$\varepsilon$\,,ボルツマン定数$k$を用いて、
+LJ単位系では、ボルツマン定数$k$は
+
+\large
+\begin{equation}
+k=1.0\label{eq:k}
+\end{equation}
+\normalsize
+温度$T^*$はパラメータ$\varepsilon$\,,ボルツマン定数$k$を用いて、
 
 \large
 \begin{equation}
@@ -708,7 +715,7 @@ MDシミュレーションで測定されたWCAポテンシャル粒子系にお
 圧力は式(\ref{eq:Theoritical-pressure})の右辺第一項のみを用いて、
 \large
 \begin{eqnarray}
-PV\,{\simeq}\,NkT　\nonumber
+PV\,{\simeq}\,NkT \nonumber
 \end{eqnarray}
 \normalsize
 と近似でき、
@@ -729,7 +736,7 @@ PV\,&{\simeq}&\,NkT\nonumber\\
     \begin{center}
         \includegraphics[width=14cm]{fig/lowden_compare:den-pre.pdf}
     \end{center}
-    \caption{WCAポテンシャル粒子系における低密度状態の圧力の理論近似値と測定値の比較}
+    \caption{WCAポテンシャル粒子系における低密度状態の圧力の理論近似値と測定値の比較。$T=1.0$。}
     \label{fig:lowden_compare:den-pre}
 \end{figure}
 
@@ -845,16 +852,10 @@ $\rho\,{\simeq}\,14.7$と表される。
 
 \large
 \begin{eqnarray}
-    P=kT\rho+b_2\rho^2+b_3\rho^3+b_4\rho^4+\cdots\label{eq:search-virial} \nonumber
+    P=kT\rho+b_2\rho^2+b_3\rho^3+b_4\rho^4+\cdots\label{eq:modified-search-virial}
 \end{eqnarray}
 \normalsize
-と表したものであるが、\ref{results-sec:WCA-press}節では、ボルツマン定数$k=1.0$、温度$T=1.0$としているので、
-\large
-\begin{equation}
-    P=\rho+b_2\rho^2+b_3\rho^3+b_4\rho^4+\cdots\label{eq:modified-search-virial}
-\end{equation}
-\normalsize
-と表される。
+と表したものである。
 
 近似精度$A$を、各数密度$\rho$における圧力の測定値$P$と近似値$P'$の百分率誤差の絶対値の平均として定義すると、
 近似精度$A$は、
